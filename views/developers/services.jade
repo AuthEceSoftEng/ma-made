@@ -1,0 +1,51 @@
+h2(style="text-align:left; font-style:italic;") Services Seach
+.tab-content(ng-controller="ServicesCtrl as servicesCtrl")
+  .row.clearfix
+    form.form-horizontal(name="search_services")
+      .col-md-6
+        input.form-control(type="text" name="keyword" placeholder="Keyword (E.g. distance calculator)" ng-model="servicesCtrl.keyword", style="margin:10px;")
+        input.form-control(type="text" name="provider" placeholder="Provider (E.g. )" ng-model="servicesCtrl.provider", ng-required="required", style="margin:10px;")
+      .col-md-6
+        button(type="submit" class="ma-button margin-top-20" ng-click="servicesCtrl.getServices()") Search
+  div(ng-if="servicesCtrl.hasSearched")
+    p(style="text-align: left;font-size: 25px;padding: 15px;") Results ({{ servicesCtrl.services_info.result.length }} found)
+    table.table.table-striped(ng-repeat="service in servicesCtrl.services_info.result")
+      thead
+        tr
+          th.info(colspan='8', style='font-weight:bold;font-style:italic;') 
+            span(class="glyphicon glyphicon-menu-right" aria-hidden="true" style='margin-right:10px;')
+            | {{ service.info.title }}
+          th.info(colspan='2', style='font-weight:bold;font-style:italic;text-align:right;border-left:0;') 
+            span(class="glyphicon glyphicon-info-sign" aria-hidden="true" style='margin-right:10px;') 
+            | Provided By: {{ service.provider }}
+      tbody
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;vertical-align: middle;') Description
+          th(colspan='8', style='text-align:center;') {{ service.info.description }}
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;vertical-align: middle;') Base URL(s)
+          th(colspan='8', style='text-align:center;') 
+            div 
+              {{ service.schemes }} :// {{ service.host }}
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;') Endpoints
+          th(colspan='8', style='text-align:center;')
+            div(ng-repeat="endpoint in service.paths")
+              div(style="margin-top:5px;")
+                span(style='background-color:black;color:white;padding: 5px;border-radius: 8px;float:left;') {{ endpoint.method }}
+                a.btn.btn-primary(data-toggle='collapse', href='#'+'{{ $index }}'+'{{ endpoint.description.length }}', aria-expanded='false', aria-controls="collapseExample") 
+                  | {{ endpoint.path }}
+              div(id='{{ $index }}'+'{{ endpoint.description.length }}', class='collapse')
+                .card.card-body(style="margin-top:5px;")
+                  div(ng-repeat="parameter in endpoint.parameters" style="border-top:1px dashed black; padding-top:10px;padding-bottom:10px;")
+                    .row.clearfix(style='margin:10px;')
+                      .col-md-1(style='padding-top:10px;padding-bottom:10px;width:15px;margin-right:10px;')
+                        span(ng-if='parameter.required', class="glyphicon glyphicon-warning-sign" aria-hidden="true" style='margin-right:10px;', title='Required')
+                      .col-md-2(style='background-color: #c84040;color:white;padding-top:10px;padding-bottom:10px;border-radius:7px;')
+                        | {{ parameter.name }}
+                      .col-md-1(style='width:7px;')
+                        | 
+                      .col-md-2(style='background-color:#11467a;color:white;padding-top:10px;padding-bottom:10px;border-radius:7px;')
+                        | ({{ parameter.type }})
+                      .col-md-6(style='padding-top:10px;padding-bottom:10px;')
+                        | {{ parameter.description }}

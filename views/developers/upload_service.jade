@@ -1,0 +1,113 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+
+  body.hold-transition.skin-blue.sidebar-mini.ng-cloak
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")
+        section.content-header
+          h1
+            | Upload
+            small Services
+          ol.breadcrumb
+            li
+              a(href='#')
+                i.fa.fa-upload
+                |  Upload
+            li.active Services
+
+        section.content(style="margin-top: 50px;")
+          .row
+            .col-md-2
+            .col-md-8
+              .box.box-primary
+                .box-header.with-border
+                  h3.box-title Add a new Service
+                .box-body(ng-init="devDashboardCtrl.addNewEndpoint(); devDashboardCtrl.getLocaleList(); devDashboardCtrl.getSchemaTypes();")
+                  form(role="form") 
+                    h4 Details            
+                    .form-group
+                      .row
+                        .col-md-12
+                          label(for="inputName") Name *
+                          input.form-control#inputName(ng-model="name" type="text" placeholder="e.g. Get Greek Pharmacies")
+                        .col-md-12
+                          label(for="inputUrl") URL *
+                          input.form-control#inputUrl(ng-model="url" type="url" placeholder="e.g. http://example.com/pharmacies")
+                        .col-md-12
+                          label(for="inputDesc") Description *
+                          textarea.form-control#inputDesc(ng-model="description" rows='3' placeholder="Give a small service description...")
+                        .col-md-5
+                          label(style="margin-top:10px;") Locale *
+                          input(
+                            style="display:block; margin:2px; padding: 0 0 0 5px; height:35px; font-size: 14px"
+                            type="text"
+                            ng-model="devDashboardCtrl.locale"
+                            placeholder="Filter locales..."
+                            uib-typeahead="locale for locale in devDashboardCtrl.localeList | filter:$viewValue | limitTo:8")
+                        .col-md-5.col-md-offset-1
+                          label(style="margin-top:10px;") Tags (optional)
+                          tags-input(ng-model="devDashboardCtrl.uploadTags" placeholder="Add tags...")
+                    .row(style="margin-top:15px;")
+                      .col-md-3
+                        <label>Third Party?: &nbsp;<input type="checkbox" ng-model="devDashboardCtrl.curator.isThirdParty" style="vertical-align: text-top;"></label><br/>
+                      .col-md-6(ng-if="devDashboardCtrl.curator && devDashboardCtrl.curator.isThirdParty")
+                        label Service Curator *
+                        input.form-control(type='text' ng-model="devDashboardCtrl.curator.name")
+                    .row(style="margin-top:25px;")
+                      .col-md-2 
+                        //- Schema dot org
+                        strong Set Schema Type (optional)
+                      .col-md-10
+                        input(
+                            style="width:90%;"
+                            type="text"
+                            ng-model="devDashboardCtrl.schemaDotOrgType"
+                            placeholder="Filter schema types..."
+                            uib-typeahead="type for type in devDashboardCtrl.schemaDotOrgTypes | filter:$viewValue | limitTo:8"
+                            class="form-control")
+
+                    <br>
+                    .form-group
+                      h4 Endpoints
+                      div(ng-repeat="endpoint in devDashboardCtrl.endpoints")
+                        .row
+                          .col-md-2
+                            .form-group
+                              label(for="inputMethod") Method *
+                              select.form-control#inputMethod(ng-model="endpoint.method")
+                                option GET
+                                option POST
+                                option PUT
+                                option DELETE
+                          .col-md-4
+                            .from-group
+                              label(for="inputEndpoint") Endpoint *
+                              input.form-control#inputEndpoint(ng-model="endpoint.endpoint" type="text" placeholder="e.g. /getPharmacies")
+                          .col-md-6
+                            .form-group
+                              label(for="inputEndpointDesc") Description *
+                              input.form-control#inputEndpointDesc(ng-model="endpoint.description" type="text" placeholder="Give a small endpoint description...")                        
+                        .row
+                          .col-md-6
+                            .form-group
+                              label(for="inputRequest") Request
+                              textarea.form-control#inputRequest(ng-model="endpoint.example.request" rows='8' placeholder="$http({\n    method:'GET',\n    url:'http://example.com/pharmacies/getPharmacies'\n })")
+                          .col-md-6
+                            .form-group
+                              label(for="inputResponse") Response
+                              textarea.form-control#inputResponse(ng-model="endpoint.example.response" rows='8' placeholder="pharmacies: [\n    {\n        name: 'Example',\n        address:'Example address',\n        location:'coordinates'\n    },\n   ...\n ]")
+                      div.pull-right
+                        button.btn.btn-danger(ng-if="devDashboardCtrl.endpoints.length > 1" type="button" ng-click="devDashboardCtrl.removeLastEndpoint()") Remove last endpoint
+                        &nbsp; &nbsp;
+                        button.btn.btn-default(type="button" ng-click="devDashboardCtrl.addNewEndpoint()") Add endpoint 
+
+                .box-footer
+                  button.btn.btn-primary(type="button" ng-click="devDashboardCtrl.addNewService(name, url, description)") Add Service
+
+      include ../static_content/dashboard_footer

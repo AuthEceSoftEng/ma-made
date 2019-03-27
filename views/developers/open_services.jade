@@ -1,0 +1,159 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+    link(rel='stylesheet' href='/octopus/vendor/magnific-popup/magnific-popup.css')
+    link(rel='stylesheet' href='/octopus/vendor/bootstrap-datepicker/css/datepicker3.css')
+    link(rel='stylesheet' href='/octopus/vendor/select2/select2.css')
+    link(rel='stylesheet' href='/octopus/vendor/jquery-datatables-bs3/assets/css/datatables.css')
+    link(rel="stylesheet" href="/octopus/stylesheets/theme.css")
+    link(rel="stylesheet" href="/octopus/stylesheets/skins/default.css")
+ 
+  body.hold-transition.skin-blue.sidebar-mini.ng-cloak
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")
+        section.content-header
+          h1
+            i.fa.fa-gear(style="margin-right: 7px;")
+            | Services
+            small Available
+          ol.breadcrumb
+            li
+              a(href='#')
+                i.fa.fa-gear
+                |  Services
+            li.active Available
+
+        section.content.ng-cloak(ng-init="devDashboardCtrl.showFullScreenSpinner(); devDashboardCtrl.getServices()")
+          a.btn.btn-primary(style="float: right;" href="/developers/upload_service") Add new service
+          input.form-control(placeholder="Filter services..." ng-model="devDashboardCtrl.datasetAndServicefilterInput" style="width:25%")
+          br
+          div(style="background-color: white; min-height: 50vh; padding: 25px;")
+            .row.row-eq-height(style="margin-top:15px;")
+              .col-xs-12.col-sm-6.col-md-4(ng-repeat="service in devDashboardCtrl.services | filter: devDashboardCtrl.myFilter")
+                pre(ng-style="(!service.appliedFilters || devDashboardCtrl.isObjectEmpty(service.appliedFilters)) && {display:'none'}") {{service.appliedFilters | json}} 
+                div.container-choose-component(
+                  ng-click="devDashboardCtrl.openServicesModal(service)")
+                  h3(style="text-align:center; word-break: break-all;") {{service.name}}
+                  hr
+                  p(style="text-align:center;") {{service.description}}
+                  h4(style="text-align:center; word-break: break-all;")
+                    span.label.label-info(ng-repeat="tag in service.tags" style="margin-right:5px; display:-webkit-inline-box") {{tag.text}}
+          br
+
+      include ../static_content/dashboard_footer
+
+  script(type="text/ng-template" id="fullScreenModal.html")
+    .modal-body
+      <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
+  script(type="text/ng-template" id="serviceModal.html")
+    .modal-header
+      button.close(type='button' ng-click="devDashboardCtrl.closeServiceModal()") &times;
+      h3.modal-title(style="text-align: center;") 
+        i.fa.fa-gear(style="margin-right:7px;")
+        | {{ devDashboardCtrl.openServiceForModal.name }}
+      h4(style="text-align:center")
+        span.label.label-info(ng-repeat="tag in devDashboardCtrl.openServiceForModal.tags" style="margin-right:5px;") {{tag.text}}
+    .modal-body 
+      h3 
+        a(href="{{devDashboardCtrl.openServiceForModal.url}}" target='_blank') {{ devDashboardCtrl.openServiceForModal.url }}
+      div(style="font-size:1.7rem")
+        .row
+          .col-md-6
+            .row
+              .col-md-12
+                strong Description:
+                &nbsp; 
+                span {{devDashboardCtrl.openServiceForModal.description}}
+              .col-md-12
+                strong Locale: 
+                &nbsp;
+                span {{ devDashboardCtrl.openServiceForModal.locale  || 'en-GB'}}
+          .col-md-6
+            .row
+              .col-md-12
+                span(ng-if="devDashboardCtrl.openServiceForModal.curator &&  devDashboardCtrl.openServiceForModal.curator.isThirdParty")
+                  strong Data Curator:
+                  &nbsp;
+                  span {{devDashboardCtrl.openServiceForModal.curator.name}}
+              .col-md-12
+                span(ng-if="devDashboardCtrl.openServiceForModal.schemaDotOrg && devDashboardCtrl.openServiceForModal.schemaDotOrg.type")
+                  strong Schema Type:
+                  &nbsp;
+                  span {{devDashboardCtrl.openServiceForModal.schemaDotOrg.type}}
+      .box(style="margin-top:15px;")
+        .box-header
+          h3.box-title Endpoints
+        .box-body(style="margin-bottom:20px;")
+          div(style="overflow-x: auto; overflow-y: auto;")
+            table.table.table-hover
+              thead
+                tr
+                  th(style='font-weight:bold; width:1px; white-space:nowrap;') Method
+                  th(style='font-weight:bold; width:1px; white-space:nowrap;') Endpoint
+                  th(style='font-weight:bold; width:1px; white-space:nowrap;') Description
+                  th(style='font-weight:bold; width:1px; white-space:nowrap;') Request
+                  th(style='font-weight:bold; width:1px; white-space:nowrap;') Response
+                  th(style='font-weight:bold; width:1px; white-space:nowrap;')
+              tbody
+                tr(ng-repeat='endpoint in devDashboardCtrl.openServiceForModal.endpoints')
+                  td 
+                    span.label.label-primary(ng-if="endpoint.method === 'GET'") {{ endpoint.method }}
+                    span.label.label-success(ng-if="endpoint.method === 'POST'") {{ endpoint.method }}
+                    span.label.label-warning(ng-if="endpoint.method === 'PUT'") {{ endpoint.method }}
+                    span.label.label-danger(ng-if="endpoint.method === 'DELETE'") {{ endpoint.method }}
+                  td {{ endpoint.endpoint }}
+                  td {{ endpoint.description }}
+                  td(ng-if="endpoint.example.request !== ''") {{ endpoint.example.request }}
+                  td(ng-if="endpoint.example.request === ''" style="font-style: italic;") Not given an example request
+                  td(ng-if="endpoint.example.response !== ''")
+                    div(style="height:250px;overflow:hidden") {{ endpoint.example.response }}
+                  td(ng-if="endpoint.example.response === ''" style="font-style: italic;") Not given an example response
+                  td
+                    i.fa.fa-trash(style="color:red; cursor:pointer;" ng-click="devDashboardCtrl.removeServiceEndpoint(devDashboardCtrl.openServiceForModal._id, $index)")
+      button.btn.btn-primary.btn-sm(ng-click="devDashboardCtrl.showServiceAddEndpoint = true;" ng-hide="devDashboardCtrl.showServiceAddEndpoint === true")
+        i.fa.fa-plus
+        &nbsp;
+        | Add endpoint
+      div(ng-if="devDashboardCtrl.showServiceAddEndpoint" style="border-radius: 3px; padding: 20px; border: 1px solid #8c8c8c;")
+        .row
+          .col-md-2
+            .form-group
+              label(for="inputMethod") Method *
+              select.form-control#inputMethod(ng-model="devDashboardCtrl.addNewServiceEndPoint.method")
+                option GET
+                option POST
+                option PUT
+                option DELETE
+          .col-md-4
+            .from-group
+              label(for="inputEndpoint") Endpoint *
+              input.form-control#inputEndpoint(ng-model="devDashboardCtrl.addNewServiceEndPoint.endpoint" type="text" placeholder="e.g. /getPharmacies")
+          .col-md-6
+            .form-group
+              label(for="inputEndpointDesc") Description *
+              input.form-control#inputEndpointDesc(ng-model="devDashboardCtrl.addNewServiceEndPoint.description" type="text" placeholder="Give a small endpoint description...")                        
+        .row
+          .col-md-6
+            .form-group
+              label(for="inputRequest") Request
+              textarea.form-control#inputRequest(ng-model="devDashboardCtrl.addNewServiceEndPoint.example.request" rows='8' placeholder="$http({\n    method:'GET',\n    url:'http://example.com/pharmacies/getPharmacies'\n })")
+          .col-md-6
+            .form-group
+              label(for="inputResponse") Response
+              textarea.form-control#inputResponse(ng-model="devDashboardCtrl.addNewServiceEndPoint.example.response" rows='8' placeholder="pharmacies: [\n    {\n        name: 'Example',\n        address:'Example address',\n        location:'coordinates'\n    },\n   ...\n ]")
+      button.btn.btn-success.btn-sm(ng-show="devDashboardCtrl.showServiceAddEndpoint === true" style="margin-top:10px;" ng-click="devDashboardCtrl.addServiceEndpoint(devDashboardCtrl.openServiceForModal._id)")
+        i.fa.fa-save
+        &nbsp;
+        | Save
+    
+    .modal-footer
+      button.btn.btn-danger.btn-sm(ng-click="devDashboardCtrl.deleteService(devDashboardCtrl.openServiceForModal._id)")
+        i.fa.fa-trash 
+        &nbsp;
+        | Delete service

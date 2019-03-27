@@ -1,0 +1,47 @@
+if login
+  header.main-header.ng-cloak(style="position: fixed; width: 100%; top: 0; left: 0")
+    a.logo(href='../developers/dashboard' ng-click="devDashboardCtrl.setMainDashboard(true, 50);")
+      span.logo-mini
+        b M
+        | A
+      span.logo-lg
+        img(src="/images/logo.png" title="Mobile-Age" alt="Mobile-Age" height="36")
+    nav.navbar.navbar-static-top(role='navigation')
+      a.sidebar-toggle(href='#', data-toggle='push-menu', role='button')
+        span.sr-only Toggle navigation
+      .navbar-custom-menu
+        ul.nav.navbar-nav
+  
+          li.dropdown.user.user-menu
+            a.dropdown-toggle(href='#', data-toggle='dropdown')
+              span.hidden-xs {{ devDashboardCtrl.username }}
+            ul.dropdown-menu
+              li.user-header
+                img.img-circle(ng-src="{{devDashboardCtrl.avatar}}", alt='User Image')
+                p
+                  | {{ devDashboardCtrl.username }}
+              li.user-body
+                .pull-left
+                  a.btn.btn-default.btn-flat(href="../examples/profile") Profile
+                .pull-right
+                  a.btn.btn-default.btn-flat(href='/' ng-click="devDashboardCtrl.logout();") Sign out
+else
+  header#ma-header
+    .container-fluid#ma-header-container
+      nav(id="ma-main-nav" class="navbar navbar-default navbar-fixed-top")
+        if !login
+          .navbar-header
+            button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar")
+              span(class="sr-only") Toggle navigation
+              span(class="icon-bar")
+              span(class="icon-bar")
+              span(class="icon-bar")
+            a(href="/" class="navbar-brand")
+              img(src="/images/logo.png" title="Mobile-Age" alt="Mobile-Age" height="36")
+              p Open Senior Citizen Public Services Engagement Platform
+          #navbar.navbar-nav.navbar-right.navbar-collapse.collapse
+            ul(class="nav navbar-nav navbar-right")
+              li
+                a Platform Overview
+              li
+                a Documentation

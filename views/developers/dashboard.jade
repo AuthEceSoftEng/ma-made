@@ -1,0 +1,209 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+    link(rel='stylesheet' href='/octopus/vendor/magnific-popup/magnific-popup.css')
+    link(rel='stylesheet' href='/octopus/vendor/bootstrap-datepicker/css/datepicker3.css')
+    link(rel='stylesheet' href='/octopus/vendor/select2/select2.css')
+    link(rel='stylesheet' href='/octopus/vendor/jquery-datatables-bs3/assets/css/datatables.css')
+    link(rel="stylesheet" href="/octopus/stylesheets/theme.css")
+    link(rel="stylesheet" href="/octopus/stylesheets/skins/default.css")
+    script(src='https://cdn.jsdelivr.net/npm/vega@4.4.0')
+
+  body.hold-transition.skin-blue.sidebar-mini.ng-cloak
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")
+        div(ng-if="devDashboardCtrl.getMainDashboard() === 'true'")
+          include main_dashboard
+
+        div(ng-if="devDashboardCtrl.getMainDashboard() === 'false'")
+          div(id="new_app" ng-if="devDashboardCtrl.getCurrentAppIdx() === '-1'")
+            section.content-header
+              h1
+                | Add New Application
+              ol.breadcrumb
+                li
+                  a(href='#')
+                    i.fa.fa-dashboard
+                    |  Home
+                li.active New Application
+            
+            section.content
+              <br>
+              form.form-horizontal(name="add_app")
+                .row.clearfix
+                  .col-md-12.col-lg-6.col-lg-offset-3(style="margin-top:10px;")
+                    .alert.alert-danger.ma-alert(ng-show="add_app.app_name.$error.required && add_app.$dirty")
+                      p The application name cannot be empty!
+                    .text-center 
+                      label Application Name
+                    input.form-control(type="text" name="app_name" placeholder="my_application_name" ng-model="devDashboardCtrl.appName" ng-required="true")
+                  .col-md-12.col-lg-6.col-lg-offset-3(style="margin-top:10px;")
+                    .text-center 
+                      label Application Description (optional)
+                    input.form-control(type="text" name="app_description" placeholder="App description" ng-model="devDashboardCtrl.appDescription")
+                  .col-md-12.col-lg-6.col-lg-offset-3(style="margin-top:10px;")
+                    .text-center 
+                      label Application Tags (optional)
+                    tags-input(ng-model="devDashboardCtrl.appTags" placeholder="Add tags...")
+                  .col-md-12.col-lg-6.col-lg-offset-3(style="text-align:center;")
+                    button(type="submit" class="btn btn-primary" style="margin-top:25px" ng-click="devDashboardCtrl.addApplication()") 
+                      span(class="glyphicon glyphicon-refresh glyphicon-spin", ng-show="devDashboardCtrl.addAppLoading", style="margin-right:10px;")
+                      | {{ devDashboardCtrl.addAppBtnText }}
+                      
+          div(id="apps" class="ng-cloak" ng-if="devDashboardCtrl.getCurrentAppIdx() !== '-1'")
+            section.content-header
+              h1
+                | {{ devDashboardCtrl.getAppNameById(devDashboardCtrl.getCurrentAppIdx()) }}
+              ol.breadcrumb
+                li
+                  a(href='#')
+                    i.fa.fa-dashboard
+                    |  Home
+                li.active My Applications / {{ devDashboardCtrl.getAppNameById(devDashboardCtrl.getCurrentAppIdx()) }}
+
+            section.content.ng-cloak
+              div(ng-if="devDashboardCtrl.getContainer() === 'false'")
+                .row.clearfix
+                  form.form-horizontal
+                    .col-md-6
+                      .text-left
+                        label Select preconfigured container (select one):
+                      select#sel1.form-control
+                        option(disabled='', selected='', value='') -- Select among the available images --  
+                        option(ng-repeat="option in devDashboardCtrl.images", value='{{ option.image.name }}') {{ option.image.name }} : {{ option.image.tag }}
+                    .col-md-6
+                      button(type="submit" class="btn btn-primary" style="margin-top:25px" ng-click="devDashboardCtrl.deployContainer()") Deploy Container
+                <br><br>
+                .row.clearfix
+                  .col-md-6
+                    h3 Operating System
+                      <br><br>
+                      .row
+                        .col-md-4
+                          .box.box-primary
+                            .box-body.box-profile
+                              center
+                                img(src="/images/picto-ubuntu.png" height="70" width="70")
+                              h3.profile-username.text-center Ubuntu
+                              p.text-muted.text-center v.16.04
+                  .col-md-6
+                    h3 Development Tools
+                      <br><br>
+                      .row
+                        .col-md-4
+                          .box.box-primary
+                            .box-body.box-profile
+                              center
+                                img(src="/images/java.png" height="70" width="40")
+                              h3.profile-username.text-center Java
+                              p.text-muted.text-center v.8
+                        .col-md-4
+                          .box.box-primary
+                            .box-body.box-profile
+                              center
+                                img(src="/images/nodejs.png" height="70" width="100")
+                              h3.profile-username.text-center NodeJS
+                              p.text-muted.text-center v.8.9.4
+                        .col-md-4
+                          .box.box-primary
+                            .box-body.box-profile
+                              center
+                                img(src="/images/php.png" height="70" width="120")
+                              h3.profile-username.text-center PHP
+                              p.text-muted.text-center v.7
+
+              div(class="ng-cloak" ng-if="devDashboardCtrl.getContainer() === 'true'")
+                .row
+                  .col-md-12
+                    .box.box-default
+                      .box-header
+                        h3.box-title Information
+                        .box-tools.pull-right
+                          button.btn.btn-box-tool(type='button', data-toggle='collapse', data-target=".multi-collapse#info")
+                            i.fa.fa-minus
+                      .box-body.collapse.in.multi-collapse#info
+                        .row
+                          .col-md-6
+                            .box.box-default
+                              .box-body
+                                p.text-center
+                                  strong Container Info
+                                table.table.table-hover(style="word-break: break-all;")
+                                  tbody
+                                    tr
+                                      th(colspan='1') Container ID
+                                      td(colspan='2') {{ devDashboardCtrl.container_info.container.id }}
+                                    tr
+                                      th(colspan='1') Owner
+                                      td(colspan='2') {{ devDashboardCtrl.container_info.container.owner }}
+                                    tr
+                                      th(colspan='1') Exposed Port
+                                      td(colspan='2') {{ devDashboardCtrl.container_info.container.port }}
+                                    tr
+                                      th(colspan='1') Image
+                                      td(colspan='2') {{ devDashboardCtrl.container_info.image.image.name }} : {{ devDashboardCtrl.container_info.image.image.tag }}
+                                    tr
+                                      th(colspan='1') Dev Tools
+                                      td(colspan='2')
+                                        ul(style='list-style-type:none;padding-left:20px;')
+                                          li(ng-repeat='(tool, value) in devDashboardCtrl.container_info.image.devTools' )
+                                            span(class='glyphicon glyphicon-ok', style='padding-right:8px;' area-hidden='true') 
+                                            | {{ tool }}
+                            
+                          .col-md-6
+                            .box.box-default
+                              .box-body
+                                p.text-center
+                                  strong Repository Details
+                                table.table.table-hover(style="word-break: break-all;")
+                                  tbody
+                                    tr
+                                      th(colspan='1') Path
+                                      td(colspan='2') {{ devDashboardCtrl.repository_info.path_with_namespace }}
+                                    tr
+                                      th(colspan='1') Http URL
+                                      td(colspan='2') {{ devDashboardCtrl.repository_info.http_url_to_repo }}
+                                    tr
+                                      th(colspan='1') Created at
+                                      td(colspan='2') {{ devDashboardCtrl.repository_info.created_at }}
+                                    tr
+                                      th(colspan='1') Last update at:
+                                      td(colspan='2') {{ devDashboardCtrl.repository_info.last_activity_at }}
+                                    tr
+                                      th(colspan='1') Status
+                                      th.text-green(ng-if='devDashboardCtrl.active_container == true', colspan='2') Running
+                                      th.text-red(ng-if='devDashboardCtrl.active_container == false', colspan='2') Stopped
+
+                      .box-footer.collapse.in.multi-collapse#info
+                        button.btn.btn-success.pull-right(type='button', style="margin-right: 8px" ng-disabled="devDashboardCtrl.active_container == true", ng-click="devDashboardCtrl.startContainer()")
+                          i(class="fa fa-play")
+                          |  Start Container
+                        span.pull-right
+                          | &nbsp;&nbsp;&nbsp;&nbsp;
+                        button.btn.btn-danger.pull-right(type='button', ng-disabled="devDashboardCtrl.active_container == false", ng-click="devDashboardCtrl.stopContainer()")
+                          i(class="fa fa-stop")
+                          |  Stop Container
+
+                .row
+                  .col-md-12
+                    include code
+                .row
+                  .col-md-12
+                    include source_inspector
+                .row
+                  .col-lg-6
+                    include logs
+                  .col-lg-6
+                    include requestAnalytics
+
+
+      include ../static_content/dashboard_footer
+    
+    script(type="text/ng-template" id="fullScreenModal.html")
+      .modal-body
+        <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>

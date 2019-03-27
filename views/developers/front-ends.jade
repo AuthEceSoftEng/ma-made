@@ -1,0 +1,81 @@
+h2(style="text-align:left; font-style:italic;") Reusable Front-Ends
+.tab-content(ng-controller="FrontEndsCtrl as frontCtrl")
+  .row.clearfix
+    table.table.table-striped(ng-repeat="frontEnd in frontCtrl.frontEnds.info")
+      thead
+        tr
+          th.info(colspan='8', style='font-weight:bold;font-style:italic;') {{ frontEnd.name }}
+      tbody
+        tr
+          th(colspan='8', style='font-weight:bold;text-align:center;vertical-align: middle;background-color:#d8d8d8;border: 1px solid;') How to create a list
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;vertical-align: middle;') Description
+          th(colspan='6', style='text-align:center;') {{ frontEnd.description }}
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;vertical-align: middle;') HTML
+          th(colspan='6', style='text-align:center;padding:5px;')
+            span(style='font-weight:bold') {{ frontEnd.html_expl }}
+            p(style='padding-top:8px') {{ frontEnd.html }}
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;vertical-align: middle;') Javascript
+          th(colspan='6', style='text-align:center;padding:5px;')
+            span(style='font-weight:bold') {{ frontEnd.js_expl }}
+            p(style='padding-top:8px') {{ frontEnd.js }}
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;vertical-align: middle;') Creation
+          th(colspan='6', style='text-align:center;padding:5px;')
+            span(style='font-weight:bold') {{ frontEnd.create_expl }}
+            p(style='padding-top:8px') {{ frontEnd.create }}
+        tr
+          th(colspan='8', style='font-weight:bold;text-align:center;vertical-align: middle;background-color:#d8d8d8;border: 1px solid;') Parameters
+        tr(ng-repeat="parameter in frontEnd.params")
+          th(colspan='2', style='text-align:center;vertical-align: middle;') {{ parameter.name }} (
+            span(style='font-weight:bold') {{ parameter.type }}
+            | )
+            div 
+              span(style='font-weight:bold') Default: {{ parameter.default }}
+          th(colspan='6', style='text-align:center;vertical-align: middle;') {{ parameter.description }}
+        tr
+          th(colspan='8', style='font-weight:bold;text-align:center;vertical-align: middle;background-color:#d8d8d8;border: 1px solid;') Examples
+        tr(ng-repeat="example in frontEnd.examples")
+          th(colspan='2', style='text-align:center;vertical-align: middle;') {{ example.title }}
+          th(colspan='6', style='text-align:center;vertical-align: middle;') 
+            span {{ example.description }}
+            div(style='border-top: 1px solid black;border-bottom: 1px solid black;margin: 15px;padding: 5px;')
+              span(style='font-weight:bold;') Usage
+            div(style='padding: 10px;background-color: #d0defc;')
+              span {{ example.html }}
+            div(style='padding: 10px;background-color: #fbfbd0;')
+              span {{ example.js }}
+              
+            div(style='border-top: 1px solid black;border-bottom: 1px solid black;margin: 15px;padding: 5px;')
+              span(style='font-weight:bold;') Result
+
+            div(style='padding: 10px;background-color: #d0defc;')
+
+//              div
+//                != example.html
+//                script
+//                  != example.js
+// 
+//              -var data = {};
+//              -data.title = example.title;
+//              -data.private = false;
+//              -data.editors = "111"
+//              -data.layout = "top";
+//              -data.html = example.html;
+//              -data.css = example.css;
+//              -data.css_pre_processor = "none";
+//              -data.css_prefix = "autoprefixer";
+//              -data.js = example.js;
+//              -data.js_pre_processor = "none";
+//              -data.head = "<meta name='viewport' content='width=device-width'>";
+//              -data.css_external = "https://mobileage.ftb-esv.de/frontend/assets/css/mobileage.min.css";
+//              -data.js_external = "https://mobileage.ftb-esv.de/frontend/assets/js/mobileage.js";
+// 
+//              -var JSONstring = JSON.stringify(data).replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+// 
+//              form(action='https://codepen.io/pen/define', method='POST', target='')
+//                  input(type='hidden', name='data', 
+//                          value=JSONstring)
+//                  input(type='submit', value='Edit on Codepen')

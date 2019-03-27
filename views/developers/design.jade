@@ -1,0 +1,542 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+
+    link(rel='stylesheet' href='/octopus/vendor/magnific-popup/magnific-popup.css')
+    link(rel='stylesheet' href='/octopus/vendor/bootstrap-datepicker/css/datepicker3.css')
+    link(rel='stylesheet' href='/octopus/vendor/select2/select2.css')
+    link(rel='stylesheet' href='/octopus/vendor/jquery-datatables-bs3/assets/css/datatables.css')
+    link(rel="stylesheet" href="/octopus/stylesheets/theme.css")
+    link(rel="stylesheet" href="/octopus/stylesheets/skins/default.css")
+    script(src='https://cdn.jsdelivr.net/npm/vega@4.4.0')
+
+  body.hold-transition.skin-blue.sidebar-mini.ng-cloak
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")
+        section.content-header
+          h1
+            | Design
+            small App
+
+        section.content(style="margin-top: 10px;" ng-init="devDashboardCtrl.designAppInit();")
+
+          button.btn.btn-default.btn-lg(
+            style="float: right;"
+            ng-if="devDashboardCtrl.isAnAppSelected()"
+            ng-click="devDashboardCtrl.redirectToSketch()")
+            | Sketch your app
+            i.fa.fa-external-link(style="margin-left: 7px; vertical-align:middle;")
+          //- Select app, components and datasets
+          .row
+            div(style="text-align:center;")
+              span(style="font-size:17px;font-weight:bold;") Select your app: &nbsp;
+              select.ng-cloak(
+                ng-model="devDashboardCtrl.designApp.selectedApp"
+                ng-change="devDashboardCtrl.onAppSelected()"
+                ng-options="app.name for app in devDashboardCtrl.designApp.myApps")
+                option.disabled.selected(value='') -- Select app --
+          
+          div(ng-if="devDashboardCtrl.shouldHideTabs()")
+            h2(style="text-align:center; color:#7b7b7b;")
+              i(class="fa fa-exclamation-circle" aria-hidden="true" style="margin-right:10px; margin-top: 90px;") 
+              | Select your <strong>app</strong> to continue
+              
+          .row(style="margin-top: 30px;" ng-if="!devDashboardCtrl.shouldHideTabs()") 
+            .col-md-10.col-md-offset-1
+              uib-tabset(active="devDashboardCtrl.designApp.activeTab" justified="true")
+
+                //- Components Tab
+                uib-tab(index="0" ng-click="devDashboardCtrl.setActiveTab(0);")
+                  uib-tab-heading(style="font-size: 17px;")
+                    i.fa.fa-tablet(style="margin-right:7px;")
+                    | Components
+                  .row
+                    .col-md-12(ng-if="devDashboardCtrl.designApp.myFavoriteComponents && devDashboardCtrl.designApp.myFavoriteComponents.length >0")  
+                      h3(style="text-align:center; color: #464646; font-size:20px;") 
+                        | Select the components you wish to use
+                      .row.row-eq-height(style="margin-top:45px;")
+                        .col-xs-12.col-sm-6.col-md-4(ng-repeat="component in devDashboardCtrl.designApp.myFavoriteComponents")
+                          div(style="text-align:center; margin-right:20px; margin-left:20px; margin-bottom:3px;")
+                            span.label.label-default(ng-repeat="tag in component.tags" ng-if="tag !== ''" style="display: inline; font-size: 1.3rem; font-weight:600; margin-left:5px;") {{tag}}
+                          div.container-choose-component(
+                            ng-click="devDashboardCtrl.toggleComponentToDesign(component._id)"
+                            ng-class="{ 'container-choose-component-hover': devDashboardCtrl.isComponentSelected(component._id) }"
+                            ng-bind-html="trustAsHtml(component.code)")
+                          i(ng-if="devDashboardCtrl.isComponentSelected(component._id)"
+                            ng-click="devDashboardCtrl.toggleComponentToDesign(component._id)"
+                            class="fa fa-check"
+                            aria-hidden="true"
+                            style="cursor:pointer; position:absolute; right:4px; top:2px; font-size:3rem; color:#00b500")
+                    .col-md-6.col-md-offset-3(ng-if="devDashboardCtrl.designApp.myFavoriteComponents && devDashboardCtrl.designApp.myFavoriteComponents.length <= 0")
+                      .alert.alert-warning(style="margin-top:30px;")
+                        p(style="text-align:center; font-size:2rem") You do not have any favorite components! You can select from <a href="/examples/widgets">here</a>
+
+                  hr(style="border-top: 1px solid #9a9a9a;")
+                  .row(style="margin-top: 50px;")
+                    .col-md-4.col-md-offset-4
+                      button.btn.btn-primary.btn-lg.btn-block(ng-click="devDashboardCtrl.saveSelectedComponents(); devDashboardCtrl.setActiveTab(1)") 
+                        | Next
+                        i.fa.fa-arrow-right(style="margin-left: 8px;")
+
+                //- Datasets & Services tab
+                uib-tab(index="1" ng-click="devDashboardCtrl.saveSelectedComponents(); devDashboardCtrl.setActiveTab(1);")
+                  uib-tab-heading(style="font-size: 17px;")
+                    i.fa.fa-gear(style="margin-right:7px;")
+                    | Data & Services
+                  .row
+                    .col-md-12(ng-if="devDashboardCtrl.designApp.myDatasets && devDashboardCtrl.designApp.myDatasets.length > 0")
+                      h3(style="text-align:center; color: #464646; font-size:20px;") Select the <strong>datasets</strong> you wish to use
+                      input.form-control(placeholder="Filter datasets..." style="width:25%" ng-model="datasetNameFilter.name")
+                      .row.row-eq-height(style="margin-top:30px;")
+                        .col-xs-12.col-sm-6.col-md-3(ng-repeat="dataset in devDashboardCtrl.designApp.myDatasets | filter: datasetNameFilter")
+                          div.container-choose-component(
+                            ng-click="devDashboardCtrl.toggleDatasetToDesign(dataset._id)"
+                            ng-class="{ 'container-choose-component-hover': devDashboardCtrl.isDatasetSelected(dataset._id) }")
+                            h3(style="text-align:center; word-break: break-word;") {{dataset.name}}
+                            hr
+                            p(style="text-align:center;") {{dataset.description}}
+                            h4(style="text-align:center")
+                              span.label.label-info(ng-repeat="tag in dataset.tags" style="margin-right:5px; display:-webkit-inline-box") {{tag.text}}
+                          i(ng-if="devDashboardCtrl.isDatasetSelected(dataset._id)"
+                            ng-click="devDashboardCtrl.toggleDatasetToDesign(dataset._id)"
+                            class="fa fa-check"
+                            aria-hidden="true"
+                            style="cursor:pointer; position:absolute; right:10px; top:-12px; font-size:25px; color:#00b500")
+
+                    .col-md-6.col-md-offset-3(ng-if="devDashboardCtrl.designApp.myDatasets && devDashboardCtrl.designApp.myDatasets.length <= 0")
+                      .alert.alert-warning(style="margin-top:30px;")
+                        p(style="text-align:center; font-size:2rem") You do not have any datasets! You can upload from <a href="/developers/upload_dataset">here</a>
+                  
+                  hr
+                  .row
+                    .col-md-12(ng-if="devDashboardCtrl.designApp.myServices && devDashboardCtrl.designApp.myServices.length > 0")
+                      h3(style="text-align:center; color: #464646; font-size:20px;") Select the <strong>services</strong> you wish to use
+                      input.form-control(placeholder="Filter services..." style="width:25%" ng-model="serviceNameFilter.name")
+                      .row.row-eq-height(style="margin-top:30px;")
+                        .col-xs-12.col-sm-6.col-md-3(ng-repeat="service in devDashboardCtrl.designApp.myServices | filter: serviceNameFilter")
+                          div.container-choose-component(
+                            ng-click="devDashboardCtrl.toggleServiceToDesign(service._id)"
+                            ng-class="{ 'container-choose-component-hover': devDashboardCtrl.isServiceSelected(service._id) }")
+                            h3(style="text-align:center; word-break: break-word;") {{service.name}}
+                            hr
+                            p(style="text-align:center;") {{service.description}}
+                            h4(style="text-align:center")
+                              span.label.label-info(ng-repeat="tag in service.tags" style="margin-right:5px; display:-webkit-inline-box") {{tag.text}}
+                          i(ng-if="devDashboardCtrl.isServiceSelected(service._id)"
+                            ng-click="devDashboardCtrl.toggleServiceToDesign(service._id)"
+                            class="fa fa-check"
+                            aria-hidden="true"
+                            style="cursor:pointer; position:absolute; right:10px; top:-12px; font-size:25px; color:#00b500")
+                    
+                    .col-md-6.col-md-offset-3(ng-if="devDashboardCtrl.designApp.myServices && devDashboardCtrl.designApp.myServices.length <= 0")
+                      .alert.alert-warning(style="margin-top:30px;")
+                        p(style="text-align:center; font-size:2rem") You do not have any services! You can upload from <a href="/developers/upload_service">here</a>
+
+                    
+                  hr(style="border-top: 1px solid #9a9a9a;")
+                  .row(style="margin-top: 50px;")
+                    .col-md-4.col-md-offset-4
+                      button.btn.btn-primary.btn-lg.btn-block(
+                        ng-click="!(!devDashboardCtrl.designApp.selectedDatasets || devDashboardCtrl.designApp.selectedDatasets.length <= 0) && devDashboardCtrl.setActiveTab(2)"
+                        ng-disabled="!devDashboardCtrl.designApp.selectedDatasets || devDashboardCtrl.designApp.selectedDatasets.length <= 0") 
+                        | Next
+                        i.fa.fa-arrow-right(style="margin-left: 8px;")
+
+                //- Graphs tab
+                uib-tab(
+                  index="2"
+                  ng-click="!(!devDashboardCtrl.designApp.selectedDatasets || devDashboardCtrl.designApp.selectedDatasets.length <= 0) && devDashboardCtrl.setActiveTab(2);"
+                  disable="!devDashboardCtrl.designApp.selectedDatasets || devDashboardCtrl.designApp.selectedDatasets.length <= 0")
+                  uib-tab-heading(style="font-size: 17px;")
+                    i.fa.fa-line-chart(style="margin-right:7px;")
+                    | Graphs
+                  .row
+                    .col-md-12
+                      h3(style="text-align:center; color: #464646; font-size:20px;") 
+                        | Select the data you wish to plot
+                      .row( style="margin-top:25px;")
+
+                        .col-md-4
+                          span(style="font-size:17px;font-weight:bold;") Select your dataset: 
+                          &nbsp;
+                          select.ng-cloak(
+                            ng-model="devDashboardCtrl.designApp.datasetToVisualize"
+                            ng-change="devDashboardCtrl.onDatasetToVisualizeChange()"
+                            ng-options="dataset as dataset.name for dataset in devDashboardCtrl.designApp.selectedDatasets")
+                            option.disabled.selected(value='') -- Select dataset --
+                        
+                        .col-md-8
+                          .col-md-2
+                            strong Data columns:
+                          .col-md-8
+                            label(ng-repeat='columnHeader in devDashboardCtrl.extractColumnHeadersFromDatasetToVisualize()' style="cursor:pointer;margin-right:15px;")
+                              #[input(type="checkbox" ng-checked="devDashboardCtrl.isDataColumnSelectedToVisualize(columnHeader)" ng-click="devDashboardCtrl.toggleDataColumnToVisualize(columnHeader)" style="cursor:pointer;")] {{ columnHeader }}
+                  
+                  //- Special message if graphs are not shown
+                  div(ng-if="devDashboardCtrl.shouldHideGraphs()" style="margin-top:60px;")
+                    h3(style="text-align:center; color:#7b7b7b;")
+                      i(class="fa fa-exclamation-circle" aria-hidden="true" style="margin-right:10px;") 
+                      | Pick a <strong>dataset</strong> and <strong>columns</strong> in order to continue
+
+                  //- Graphs Below here
+                  section.panel.ng-cloak(ng-if="!devDashboardCtrl.shouldHideGraphs()" style="margin-top:30px;")
+                    header.panel-heading
+                      h2.panel-title Graphs   
+
+                    .panel-body
+
+                      .btn-toolbar(role='toolbar' style="margin-right:88px;")
+                        .btn-group(role='group')
+                          button.btn.btn-success(
+                            ng-click="devDashboardCtrl.setShowSaveGraphPopover(true)"
+                            ng-disabled="devDashboardCtrl.shouldHidePlots() || devDashboardCtrl.isSomePlotShownFromSaved()"
+                            uib-popover-template="'saveGraphName.html'"
+                            popover-trigger="'outsideClick'"
+                            popover-is-open="devDashboardCtrl.designApp.showSaveGraphPopover"
+                            popover-placement="top-left"
+                            popover-class="width-170px"
+                            )  Save Graph 
+
+                      select#selectGraph.ng-cloak(
+                        style='width: 175px; height: 43px; position:absolute; left:44%;'
+                        ng-model='devDashboardCtrl.designApp.selectedGraph'
+                        ng-change='devDashboardCtrl.resetCurrentVegaPlotId(); devDashboardCtrl.showGraph()') 
+                        option.disabled.selected(value='')  -- Select Graph -- 
+                        option(value='lineChart')  Line Chart 
+                        option(value='barChart')  Bar Chart 
+                        option(value='stackedBarChart')  Stacked Bar Chart 
+                        option(value='areaChart')  Area Chart 
+                        option(value='stackedAreaChart')  Stacked Area Chart 
+                        option(value='donutChart')  Donut Chart 
+                        option(value='histogramChart')  Histogram Chart 
+                        option(value='boxPlotChart')  Box Plot Chart 
+                        option(value='contourPlotChart')  Contour Plot Chart 
+                        option(value='scatterPlotChart')  Scatter Plot Chart 
+
+                
+                      .row(style="margin-top: 50px;")
+
+                        .col-md-2
+                          button.btn.btn-default(style="margin-bottom: 6px;" ng-click="devDashboardCtrl.clearOperations()") Reset Operations
+                          ul.list-group(ng-if="devDashboardCtrl.designApp.savedGraphs && devDashboardCtrl.designApp.savedGraphs.length > 0")
+                            li.list-group-item.active(
+                              ng-click="devDashboardCtrl.setIsSavedGraphsCollapsed(!devDashboardCtrl.designApp.isSavedGraphsCollapsed)"
+                              style='text-align: center; cursor: pointer;') 
+                                | Saved Graphs
+                                i.fa.fa-caret-up(style="margin-left:10px;" ng-if="!devDashboardCtrl.designApp.isSavedGraphsCollapsed") 
+                                i.fa.fa-caret-down(style="margin-left:10px;" ng-if="devDashboardCtrl.designApp.isSavedGraphsCollapsed") 
+                            li.list-group-item(
+                              ng-show="!devDashboardCtrl.designApp.isSavedGraphsCollapsed"
+                              style='word-break: break-all; cursor:pointer'
+                              ng-repeat='graph in devDashboardCtrl.designApp.savedGraphs'
+                              ng-click="devDashboardCtrl.showGraphFromSavedOnClick(graph._id)"
+                              ng-style="devDashboardCtrl.designApp.currentVegaPlotId === graph._id  && {'background-color': '#c4ffc4'}")  {{ graph.vegaData.name }} 
+                          ul.list-group
+                            li.list-group-item.active(style='text-align: center; margin-bottom: -20px;')  Operations 
+                          #accordion.panel-group
+                            .panel.panel-default
+                              .panel-heading
+                                p.panel-title(style='font-size: 115%; word-break: break-all;')
+                                  a(data-toggle='collapse' data-parent='#accordion' href='#collapse1' ng-disabled="!devDashboardCtrl.isSelectedGraphSet()" ng-style="!devDashboardCtrl.isSelectedGraphSet() && {'cursor':'not-allowed'}") Remove Outliers
+                              #collapse1.panel-collapse.collapse
+                                .panel-body
+                                  .radio(ng-repeat='col in devDashboardCtrl.designApp.dataColumnsToVisualize')
+                                    label(style='word-break: break-all;')
+                                      input(value='{{col}}' ng-model='devDashboardCtrl.designApp.selectedColForVegaOperation' type='radio' required='')
+                                      |  {{ col }}
+                                  br
+                                  button.btn.btn-primary.pull-right(ng-click="devDashboardCtrl.applyOperation('removeOutliers')" ng-disabled="!devDashboardCtrl.isSelectedGraphSet() || !devDashboardCtrl.isSetSelectedColForVegaOperation()")  Apply 
+                            .panel.panel-default
+                              .panel-heading
+                                p.panel-title(style='font-size: 115%; word-break: break-all;')
+                                  a(data-toggle='collapse' data-parent='#accordion' href='#collapse2' ng-disabled="!devDashboardCtrl.isSelectedGraphSet()" ng-style="!devDashboardCtrl.isSelectedGraphSet() && {'cursor':'not-allowed'}") Sort in ascending order
+                              #collapse2.panel-collapse.collapse
+                                .panel-body
+                                  div(ng-repeat='col in devDashboardCtrl.designApp.dataColumnsToVisualize')
+                                    label(style='word-break: break-all;')
+                                      input(value='{{col}}' ng-model='devDashboardCtrl.designApp.selectedColForVegaOperation' type='radio' required='')
+                                      |  {{ col }}
+                                  br
+                                  button.btn.btn-primary.pull-right(ng-click="devDashboardCtrl.applyOperation('ascendingOrder')" ng-disabled="!devDashboardCtrl.isSelectedGraphSet() || !devDashboardCtrl.isSetSelectedColForVegaOperation()")  Apply 
+                            .panel.panel-default
+                              .panel-heading
+                                p.panel-title(style='font-size: 115%; word-break: break-all;')
+                                  a(data-toggle='collapse' data-parent='#accordion' href='#collapse3' ng-disabled="!devDashboardCtrl.isSelectedGraphSet()" ng-style="!devDashboardCtrl.isSelectedGraphSet() && {'cursor':'not-allowed'}") Sort in descending order
+                              #collapse3.panel-collapse.collapse
+                                .panel-body
+                                  div(ng-repeat='col in devDashboardCtrl.designApp.dataColumnsToVisualize')
+                                    label(style='word-break: break-all;')
+                                      input(value='{{col}}' ng-model='devDashboardCtrl.designApp.selectedColForVegaOperation' type='radio' required='')
+                                      |  {{ col }}
+                                  br
+                                  button.btn.btn-primary.pull-right(ng-click="devDashboardCtrl.applyOperation('descendingOrder')" ng-disabled="!devDashboardCtrl.isSelectedGraphSet() || !devDashboardCtrl.isSetSelectedColForVegaOperation()")  Apply 
+                            .panel.panel-default
+                              .panel-heading
+                                p.panel-title(style='font-size: 115%; word-break: break-all;')
+                                  a(data-toggle='collapse' data-parent='#accordion' href='#collapse4' ng-disabled="!devDashboardCtrl.isSelectedGraphSet()" ng-style="!devDashboardCtrl.isSelectedGraphSet() && {'cursor':'not-allowed'}") Top {x}%
+                              #collapse4.panel-collapse.collapse
+                                .panel-body
+                                  input#topPercent.form-control(type='text' placeholder='e.g. 40 (Top 40%)')
+                                  br
+                                  div(ng-repeat='col in devDashboardCtrl.designApp.dataColumnsToVisualize')
+                                    label(style='word-break: break-all;')
+                                      input(value='{{col}}' ng-model='devDashboardCtrl.designApp.selectedColForVegaOperation' type='radio' required='')
+                                      |  {{ col }}
+                                  br
+                                  button.btn.btn-primary.pull-right(ng-click="devDashboardCtrl.applyOperation('topPercent')" ng-disabled="!devDashboardCtrl.isSelectedGraphSet() || !devDashboardCtrl.isSetSelectedColForVegaOperation()")  Apply 
+                            .panel.panel-default
+                              .panel-heading
+                                p.panel-title(style='font-size: 115%; word-break: break-all;')
+                                  a(data-toggle='collapse' data-parent='#accordion' href='#collapse5' ng-disabled="!devDashboardCtrl.isSelectedGraphSet()" ng-style="!devDashboardCtrl.isSelectedGraphSet() && {'cursor':'not-allowed'}") Bottom {x}%
+                              #collapse5.panel-collapse.collapse
+                                .panel-body
+                                  input#bottomPercent.form-control(type='text' placeholder='e.g. 40 (Bottom 40%)')
+                                  br
+                                  div(ng-repeat='col in devDashboardCtrl.designApp.dataColumnsToVisualize')
+                                    label(style='word-break: break-all;')
+                                      input(value='{{col}}' ng-model='devDashboardCtrl.designApp.selectedColForVegaOperation' type='radio' required='')
+                                      |  {{ col }}
+                                  br
+                                  button.btn.btn-primary.pull-right(ng-click="devDashboardCtrl.applyOperation('bottomPercent')" ng-disabled="!devDashboardCtrl.isSelectedGraphSet() || !devDashboardCtrl.isSetSelectedColForVegaOperation()")  Apply 
+                            .panel.panel-default
+                              .panel-heading
+                                p.panel-title(style='font-size: 115%; word-break: break-all;')
+                                  a(data-toggle='collapse' data-parent='#accordion' href='#collapse6' ng-disabled="!devDashboardCtrl.isSelectedGraphSet()" ng-style="!devDashboardCtrl.isSelectedGraphSet() && {'cursor':'not-allowed'}") Range from {x}% to {y}%
+                              #collapse6.panel-collapse.collapse
+                                .panel-body
+                                  input#rangePercentBottom.form-control(type='text' placeholder='Bottom (e.g. 25)%')
+                                  input#rangePercentTop.form-control(type='text' placeholder='Top (e.g. 75)%')
+                                  br
+                                  div(ng-repeat='col in devDashboardCtrl.designApp.dataColumnsToVisualize')
+                                    label(style='word-break: break-all;')
+                                      input(value='{{col}}' ng-model='devDashboardCtrl.designApp.selectedColForVegaOperation' type='radio' required='')
+                                      |  {{ col }}
+                                  br
+                                  button.btn.btn-primary.pull-right(ng-click="devDashboardCtrl.applyOperation('rangePercent')" ng-disabled="!devDashboardCtrl.isSelectedGraphSet() || !devDashboardCtrl.isSetSelectedColForVegaOperation()")  Apply 
+                            .panel.panel-default
+                              .panel-heading
+                                p.panel-title(style='font-size: 115%; word-break: break-all;')
+                                  a(data-toggle='collapse' data-parent='#accordion' href='#collapse7' ng-disabled="!devDashboardCtrl.isSelectedGraphSet()" ng-style="!devDashboardCtrl.isSelectedGraphSet() && {'cursor':'not-allowed'}") Value in range {x} - {y}
+                              #collapse7.panel-collapse.collapse
+                                .panel-body
+                                  input#rangeValuesBottom.form-control(type='text' placeholder='Bottom (e.g. 50)')
+                                  input#rangeValuesTop.form-control(type='text' placeholder='Top (e.g. 200)')
+                                  br
+                                  div(ng-repeat='col in devDashboardCtrl.designApp.dataColumnsToVisualize')
+                                    label(style='word-break: break-all;')
+                                      input(value='{{col}}' ng-model='devDashboardCtrl.designApp.selectedColForVegaOperation' type='radio' required='')
+                                      |  {{ col }}
+                                  br
+                                  button.btn.btn-primary.pull-right(ng-click="devDashboardCtrl.applyOperation('rangeValues')" ng-disabled="!devDashboardCtrl.isSelectedGraphSet() || !devDashboardCtrl.isSetSelectedColForVegaOperation()")  Apply 
+                        
+                        .col-md-10
+                          #view.col(style='text-align: center;' ng-if="!devDashboardCtrl.shouldHidePlots()")
+                          div(ng-if="devDashboardCtrl.shouldHidePlots()")
+                            h2(style="text-align:center; color:#7b7b7b;")
+                              i(class="fa fa-exclamation-circle" aria-hidden="true" style="margin-right:10px; margin-top: 90px;") 
+                              | Select <strong>graph</strong> type
+                      
+                      hr(style="border-top: 1px solid #9a9a9a;")
+                      .row(style="margin-top: 50px;")
+                        .col-md-4.col-md-offset-4
+                          button.btn.btn-primary.btn-lg.btn-block(ng-click="devDashboardCtrl.setActiveTab(3)") 
+                            | Next
+                            i.fa.fa-arrow-right(style="margin-left: 8px;")
+
+                //- Data tables tab
+                uib-tab(
+                  index="3"
+                  ng-click="!(!devDashboardCtrl.designApp.selectedDatasets || devDashboardCtrl.designApp.selectedDatasets.length <= 0) && devDashboardCtrl.setActiveTab(3);"
+                  disable="!devDashboardCtrl.designApp.selectedDatasets || devDashboardCtrl.designApp.selectedDatasets.length <= 0")
+                  uib-tab-heading(style="font-size: 17px;")
+                    i.fa.fa-table(style="margin-right:7px;")
+                    | Data tables
+                  .row
+                    .col-md-12
+                      h3(style="text-align:center; color: #464646; font-size:20px;") 
+                        | Select the data you wish to show
+                      .row( style="margin-top:25px;")
+                        .col-md-4
+                          span(style="font-size:17px;font-weight:bold;") Select your dataset: 
+                          &nbsp;
+                          select.ng-cloak(
+                            ng-model="devDashboardCtrl.designApp.dataTablesViews_datasetToVisualize"
+                            ng-change="devDashboardCtrl.dataTablesViews_onDatasetToVisualizeChange()"
+                            ng-options="dataset as dataset.name for dataset in devDashboardCtrl.designApp.selectedDatasets")
+                            option.disabled.selected(value='') -- Select dataset --
+                        .col-md-8
+                          .col-md-2
+                            strong Data columns:
+                          .col-md-8
+                            label(ng-if="columnHeader !== '$$hashKey'" ng-repeat='columnHeader in devDashboardCtrl.dataTablesViews_extractColumnHeadersFromDatasetToVisualize()' style="cursor:pointer;margin-right:15px;")
+                              #[input(type="checkbox" ng-checked="devDashboardCtrl.dataTablesViews_isDataColumnSelectedToVisualize(columnHeader)" ng-click="devDashboardCtrl.dataTablesViews_toggleDataColumnToVisualize(columnHeader)" style="cursor:pointer;")] {{ columnHeader }}
+                  
+                  //- Special message if not selected
+                  div(ng-if="!(devDashboardCtrl.designApp.dataTablesViews_datasetToVisualize && devDashboardCtrl.designApp.dataTablesViews_dataColumnsToVisualize && devDashboardCtrl.designApp.dataTablesViews_dataColumnsToVisualize.length > 0)" style="margin-top:60px;")
+                    h3(style="text-align:center; color:#7b7b7b;")
+                      i(class="fa fa-exclamation-circle" aria-hidden="true" style="margin-right:10px;") 
+                      | Pick a <strong>dataset</strong> and <strong>columns</strong> in order to continue
+
+                  //- Tables Below here
+                  section.panel(style="margin-top: 50px;" ng-if="devDashboardCtrl.designApp.dataTablesViews_datasetToVisualize && devDashboardCtrl.designApp.dataTablesViews_dataColumnsToVisualize && devDashboardCtrl.designApp.dataTablesViews_dataColumnsToVisualize.length > 0" ) 
+                    header.panel-heading
+                      h2.panel-title Table Views   
+
+                    .panel-body
+                      .btn-toolbar(role='toolbar' style="margin-right:88px;")
+                        .btn-group(role='group')
+                          button.btn.btn-success(
+                            ng-click="devDashboardCtrl.setShowSaveTableViewPopover(true)"
+                            uib-popover-template="'saveTableName.html'"
+                            popover-trigger="'outsideClick'"
+                            popover-is-open="devDashboardCtrl.designApp.dataTablesViews_showSaveNewPopover"
+                            popover-placement="top-left"
+                            popover-class="width-170px"
+                          ) Save Table 
+                          
+                      .row
+                        .col-md-2
+                          ul.list-group(style="margin-top:25px;" ng-if="devDashboardCtrl.designApp.dataTableViews_savedTables && devDashboardCtrl.designApp.dataTableViews_savedTables.length > 0")
+                            li.list-group-item.active(style='text-align: center; cursor: pointer;') Saved Tables
+                            li.list-group-item(
+                              style='word-break: break-all; cursor:pointer'
+                              ng-repeat='table in devDashboardCtrl.designApp.dataTableViews_savedTables'
+                              ng-click="devDashboardCtrl.showTableFromSavedOnClick(table._id)"
+                              ng-style="devDashboardCtrl.designApp.dataTableViews_currentTableId === table._id  && {'background-color': '#c4ffc4'}")  {{ table.name }} 
+                        
+                        .col-md-10
+                          table.table(ng-if="!devDashboardCtrl.designApp.dataTableViews_savedTableViewShown")
+                            thead
+                              tr 
+                                th(ng-repeat="columnHeader in devDashboardCtrl.designApp.dataTablesViews_dataColumnsToVisualize") {{columnHeader}}
+                            tbody
+                              tr(ng-repeat="row in devDashboardCtrl.designApp.dataTablesViews_datasetToVisualize.sample")
+                                td(ng-repeat="column in devDashboardCtrl.designApp.dataTablesViews_dataColumnsToVisualize") {{row[column]}}
+                      
+                          table.table(ng-if="devDashboardCtrl.designApp.dataTableViews_savedTableViewShown")
+                            thead
+                              tr 
+                                th(ng-repeat="column in devDashboardCtrl.designApp.dataTableViews_savedTableViewShown.columnOrder") {{column}}
+                            tbody
+                              tr(ng-repeat="row in devDashboardCtrl.designApp.dataTableViews_savedTableViewShown.data")
+                                td(ng-repeat="column in devDashboardCtrl.designApp.dataTableViews_savedTableViewShown.columnOrder") {{row[column]}}
+
+                uib-tab(
+                  index="4"
+                  ng-click="!(!devDashboardCtrl.designApp.selectedDatasets || devDashboardCtrl.designApp.selectedDatasets.length <= 0) && devDashboardCtrl.setActiveTab(4);"
+                  disable="!devDashboardCtrl.designApp.selectedDatasets || devDashboardCtrl.designApp.selectedDatasets.length <= 0")    
+                  uib-tab-heading(style="font-size: 17px;")
+                    i.fa.fa-gear(style="margin-right:7px;")
+                    | Data instances
+                  .row
+                    .col-md-12
+                      h3(style="text-align:center; color: #464646; font-size:20px;") 
+                        | Select the data you wish to show
+                      .row( style="margin-top:25px;")
+                        .col-md-4
+                          span(style="font-size:17px;font-weight:bold;") Select your dataset: 
+                          &nbsp;
+                          select.ng-cloak(
+                            ng-model="devDashboardCtrl.designApp.dataInstancesViews_datasetToVisualize"
+                            ng-change="devDashboardCtrl.dataInstancesViews_onDatasetToVisualizeChange()"
+                            ng-options="dataset as dataset.name for dataset in devDashboardCtrl.designApp.selectedDatasets")
+                            option.disabled.selected(value='') -- Select dataset --
+                        .col-md-8
+                          .col-md-2
+                            strong Data columns:
+                          .col-md-8
+                            label(ng-if="columnHeader !== '$$hashKey'" ng-repeat='columnHeader in devDashboardCtrl.dataInstancesViews_extractColumnHeadersFromDatasetToVisualize()' style="cursor:pointer;margin-right:15px;")
+                              #[input(type="checkbox" ng-checked="devDashboardCtrl.dataInstancesViews_isDataColumnSelectedToVisualize(columnHeader)" ng-click="devDashboardCtrl.dataInstancesViews_toggleDataColumnToVisualize(columnHeader)" style="cursor:pointer;")] {{ columnHeader }}
+                  
+                  //- Special message if not selected
+                  div(ng-if="!(devDashboardCtrl.designApp.dataInstancesViews_datasetToVisualize && devDashboardCtrl.designApp.dataInstancesViews_dataColumnsToVisualize && devDashboardCtrl.designApp.dataInstancesViews_dataColumnsToVisualize.length > 0)" style="margin-top:60px;")
+                    h3(style="text-align:center; color:#7b7b7b;")
+                      i(class="fa fa-exclamation-circle" aria-hidden="true" style="margin-right:10px;") 
+                      | Pick a <strong>dataset</strong> and <strong>columns</strong> in order to continue
+
+                  //- //- Tables Below here
+                  section.panel(style="margin-top: 50px;" ng-if="devDashboardCtrl.designApp.dataInstancesViews_datasetToVisualize && devDashboardCtrl.designApp.dataInstancesViews_dataColumnsToVisualize && devDashboardCtrl.designApp.dataInstancesViews_dataColumnsToVisualize.length > 0" ) 
+                    header.panel-heading
+                      h2.panel-title Instance Views   
+
+                    .panel-body
+                      .btn-toolbar(role='toolbar' style="margin-right:88px;")
+                        .btn-group(role='group')
+                          button.btn.btn-success(
+                            ng-click="devDashboardCtrl.setShowSaveInstanceViewPopover(true)"
+                            uib-popover-template="'saveInstanceName.html'"
+                            popover-trigger="'outsideClick'"
+                            popover-is-open="devDashboardCtrl.designApp.dataInstancesViews_showSaveNewPopover"
+                            popover-placement="top-left"
+                            popover-class="width-170px"
+                          ) Save Instance 
+                          
+                      .row
+                        .col-md-4
+                          ul.list-group(style="margin-top:25px;" ng-if="devDashboardCtrl.designApp.dataInstancesViews_savedInstances && devDashboardCtrl.designApp.dataInstancesViews_savedInstances.length > 0")
+                            li.list-group-item.active(style='text-align: center; cursor: pointer;') Saved Instances
+                            li.list-group-item(
+                              style='word-break: break-all; cursor:pointer'
+                              ng-repeat='instance in devDashboardCtrl.designApp.dataInstancesViews_savedInstances'
+                              ng-click="devDashboardCtrl.showInstanceFromSavedOnClick(instance._id)"
+                              ng-style="devDashboardCtrl.designApp.dataInstancesViews_currentInstanceId === instance._id  && {'background-color': '#c4ffc4'}")  {{ instance.name }} 
+                        
+                        .col-md-6
+                          div(style="padding:10px; border:1px solid black; background-color: #f3f3f3" ng-if="!devDashboardCtrl.designApp.dataInstancesViews_savedInstanceShown")
+                            div(style="text-align:center;" ng-repeat="columnHeader in devDashboardCtrl.designApp.dataInstancesViews_dataColumnsToVisualize")
+                              span(style="font-weight: bold;") {{columnHeader}}:&nbsp;
+                              span {{devDashboardCtrl.designApp.dataInstancesViews_datasetToVisualize.sample[0][columnHeader]}}
+                          
+                          div(style="padding:10px; border:1px solid black; background-color: #f3f3f3" ng-if="devDashboardCtrl.designApp.dataInstancesViews_savedInstanceShown")
+                            div(style="text-align:center;" ng-repeat="columnHeader in devDashboardCtrl.designApp.dataInstancesViews_savedInstanceShown.columnOrder")
+                              span(style="font-weight: bold;") {{columnHeader}}:&nbsp;
+                              span {{devDashboardCtrl.designApp.dataInstancesViews_savedInstanceShown.data[columnHeader]}}
+                      
+
+      include ../static_content/dashboard_footer
+    
+    script(type="text/ng-template" id="saveGraphName.html")
+      div Graph name:
+      div.form-group
+        label
+          input(id="savePlotInput" ng-model="devDashboardCtrl.designApp.currentPlottedGraph.name" type="text" class="form-control" ng-keypress="devDashboardCtrl.onKeyPressSaveGraph($event)")
+        button.btn.btn-primary(type='button' ng-click='devDashboardCtrl.saveGraph()' ng-disabled="!(devDashboardCtrl.designApp.currentPlottedGraph && devDashboardCtrl.designApp.currentPlottedGraph.name && devDashboardCtrl.designApp.currentPlottedGraph.name !== undefined && devDashboardCtrl.designApp.currentPlottedGraph.name !== null && devDashboardCtrl.designApp.currentPlottedGraph.name !=='')") OK  
+
+    script(type="text/ng-template" id="saveTableName.html")
+      div TableView name:
+      div.form-group
+        label
+          input(
+            id="saveTableNameInput"
+            ng-model="devDashboardCtrl.designApp.dataTablesViews_saveNewName"
+            type="text"
+            class="form-control"
+            ng-keypress="devDashboardCtrl.onKeyPressSaveTable($event)")
+        button.btn.btn-primary(
+          type='button'
+          ng-click='devDashboardCtrl.saveTableView()'
+          ng-disabled="!(devDashboardCtrl.designApp.dataTablesViews_saveNewName && devDashboardCtrl.designApp.dataTablesViews_saveNewName !== undefined && devDashboardCtrl.designApp.dataTablesViews_saveNewName !== null && devDashboardCtrl.designApp.dataTablesViews_saveNewName !=='')") OK
+
+    script(type="text/ng-template" id="saveInstanceName.html")
+      div InstanceView name:
+      div.form-group
+        label
+          input(
+            id="saveInstanceNameInput"
+            ng-model="devDashboardCtrl.designApp.dataInstancesViews_saveNewName"
+            type="text"
+            class="form-control"
+            ng-keypress="devDashboardCtrl.onKeyPressSaveInstance($event)")
+        button.btn.btn-primary(
+          type='button'
+          ng-click='devDashboardCtrl.saveInstanceView()'
+          ng-disabled="!(devDashboardCtrl.designApp.dataInstancesViews_saveNewName && devDashboardCtrl.designApp.dataInstancesViews_saveNewName !== undefined && devDashboardCtrl.designApp.dataInstancesViews_saveNewName !== null && devDashboardCtrl.designApp.dataInstancesViews_saveNewName !=='')") OK   
+
+    script(type="text/ng-template" id="fullScreenModal.html")
+      .modal-body
+        <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>

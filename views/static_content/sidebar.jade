@@ -1,0 +1,76 @@
+if login
+  aside.main-sidebar.ng-cloak(style="position: fixed; overflow-y: auto; bottom: 0; top: 0;")
+    section.sidebar
+      .user-panel
+        .pull-left.image
+          img.img-circle(ng-src="{{devDashboardCtrl.avatar}}", alt='User Image')
+        .pull-left.info
+          p.ng-cloak {{ devDashboardCtrl.username }}
+      ul.sidebar-menu(data-widget='tree')
+        li.header DASHBOARD
+
+        li
+          a(href="../developers/my-applications")
+            i.fa.fa-dashboard
+            span My Applications
+        li
+          a(href="../developers/dashboard#new_app" ng-click="devDashboardCtrl.setCurrentApp(-1); devDashboardCtrl.setMainDashboard(false, 0);")
+            i(class="fa fa-plus" aria-hidden="true")
+            span.title New Application
+        li.treeview
+          a(href='#')
+            i.fa.fa-tablet
+            span Reusable UI Components
+            span.pull-right-container
+              i.fa.fa-angle-left.pull-right
+          ul.treeview-menu
+            li
+              a(href="../examples/widgets") Widgets
+            li
+              a(href="../examples/general") General
+            li
+              a(href="../examples/buttons") Buttons
+            li
+              a(href="../examples/modals") Modals
+            li
+              a(href="../examples/icons") Icons
+            li
+              a(href="../examples/timeline") Timeline
+            li
+              a(href="../examples/forms") Forms
+            li
+              a(href="../examples/tables") Tables
+            li
+              a(href="../examples/older-adults-friendly") OAF UI
+
+        li
+          a(href="../developers/favorite_components")
+            i(class="fa fa-star" aria-hidden="true")
+            span.title Favorite UI Components
+        
+        <br>
+        li.header DATA AND SERVICES
+
+        li.treeview
+          a(href='#')
+            i.fa.fa-database
+            span Datasets
+            span.pull-right-container
+              i.fa.fa-angle-left.pull-right
+          ul.treeview-menu
+            li
+              a(href="../developers/open_datasets") Available Datasets
+            li
+              a(href="../developers/upload_dataset") Upload new Dataset
+
+        li.treeview
+          a(href='#')
+            i.fa.fa-gear
+            span Services
+            span.pull-right-container
+              i.fa.fa-angle-left.pull-right
+          ul.treeview-menu
+            li
+              a(href="../developers/open_services") Available Services
+            li
+              a(href="../developers/upload_service") Upload new Service

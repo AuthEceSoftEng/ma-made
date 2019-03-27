@@ -1,0 +1,1327 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+    style.
+      .color-palette {
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+      }
+      .color-palette-set {
+          margin-bottom: 15px;
+      }
+      .color-palette span {
+          display: none;
+          font-size: 12px;
+      }
+      .color-palette:hover span {
+          display: block;
+      }
+      .color-palette-box h4 {
+          position: absolute;
+          top: 100%;
+          left: 25px;
+          margin-top: -40px;
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 12px;
+          display: block;
+          z-index: 7;
+      }
+    script(src="/dist/js/demo.js")
+    link(rel="stylesheet" href="/dist/css/bootstrap-tagsinput.css")
+    script(src="/dist/js/bootstrap-tagsinput.js")
+
+  body.hold-transition.skin-blue.sidebar-mini
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")      
+        section.content-header
+          h1
+            | General UI
+            small Preview of UI elements       
+          ol.breadcrumb
+            li
+              a(href='#')
+                i.fa.fa-dashboard
+                |  Home       
+            li
+              a(href='#') UI
+            li.active General
+        // Main content
+        section.content
+          #myModal.modal.fade(role='dialog', style="margin-top:150px;")
+            .modal-dialog
+              .modal-content
+                .modal-header
+                  button.close(type='button', data-dismiss='modal') ×
+                  h4.modal-title Add some labels
+                .modal-body
+                  label(for='pwd') Labels: &nbsp;
+                  input(id="tagsInput" type="text" value="" data-role="tagsinput" placeholder="Add tags here...")
+                .modal-footer
+                  button.btn.btn-primary(type='button', data-dismiss='modal', ng-click="devDashboardCtrl.saveUIComponent()") OK
+
+          .box.box-default.color-palette-box
+            .box-header.with-border
+              h3.box-title
+                i.fa.fa-tag
+                |  Color Palette
+            |         
+            .box-body
+              .row
+                .col-sm-4.col-md-2(id="color-palette-primary")
+                  div(id="color-palette-primary-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-primary');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-primary')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Primary
+                  |               
+                  .color-palette-set
+                    .bg-light-blue.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-light-blue.color-palette
+                      span #3c8dbc
+                    |                 
+                    .bg-light-blue-active.color-palette
+                      span Active
+                // /.col
+                .col-sm-4.col-md-2(id="color-palette-info")
+                  div(id="color-palette-info-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-info');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-info')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Info
+                  |               
+                  .color-palette-set
+                    .bg-aqua.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-aqua.color-palette
+                      span #00c0ef
+                    |                 
+                    .bg-aqua-active.color-palette
+                      span Active
+                // /.col
+                .col-sm-4.col-md-2(id="color-palette-success")
+                  div(id="color-palette-success-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-success');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-success')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Success
+                  |               
+                  .color-palette-set
+                    .bg-green.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-green.color-palette
+                      span #00a65a
+                    |                 
+                    .bg-green-active.color-palette
+                      span Active
+                // /.col
+                .col-sm-4.col-md-2(id="color-palette-warning")
+                  div(id="color-palette-warning-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-warning');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-warning')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Warning
+                  |               
+                  .color-palette-set
+                    .bg-yellow.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-yellow.color-palette
+                      span #f39c12
+                    |                 
+                    .bg-yellow-active.color-palette
+                      span Active
+                // /.col
+                .col-sm-4.col-md-2(id="color-palette-danger")
+                  div(id="color-palette-danger-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-danger');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-danger')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Danger
+                  |               
+                  .color-palette-set
+                    .bg-red.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-red.color-palette
+                      span #f56954
+                    |                 
+                    .bg-red-active.color-palette
+                      span Active
+                // /.col
+                .col-sm-4.col-md-2(id="color-palette-gray")
+                  div(id="color-palette-gray-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-gray');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-gray')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Gray
+                  |               
+                  .color-palette-set
+                    .bg-gray.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-gray.color-palette
+                      span #d2d6de
+                    |                 
+                    .bg-gray-active.color-palette
+                      span Active
+                // /.col
+              // /.row
+              .row
+                .col-sm-4.col-md-2(id="color-palette-navy")
+                  div(id="color-palette-navy-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-navy');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-navy')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Navy
+                  |               
+                  .color-palette-set
+                    .bg-navy.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-navy.color-palette
+                      span #001F3F
+                    |                 
+                    .bg-navy-active.color-palette
+                      span Active
+                // /.col
+                .col-sm-4.col-md-2(id="color-palette-teal")
+                  div(id="color-palette-teal-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-teal');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-teal')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Teal
+                  |               
+                  .color-palette-set
+                    .bg-teal.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-teal.color-palette
+                      span #39CCCC
+                    |                 
+                    .bg-teal-active.color-palette
+                      span Active
+                // /.col
+                .col-sm-4.col-md-2(id="color-palette-purple")
+                  div(id="color-palette-purple-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-purple');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-purple')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Purple
+                  |               
+                  .color-palette-set
+                    .bg-purple.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-purple.color-palette
+                      span #605ca8
+                    |                 
+                    .bg-purple-active.color-palette
+                      span Active
+                // /.col
+                .col-sm-4.col-md-2(id="color-palette-orange")
+                  div(id="color-palette-orange-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-orange');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-orange')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Orange
+                  |               
+                  .color-palette-set
+                    .bg-orange.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-orange.color-palette
+                      span #ff851b
+                    |                 
+                    .bg-orange-active.color-palette
+                      span Active
+                // /.col
+                .col-sm-4.col-md-2(id="color-palette-maroon")
+                  div(id="color-palette-maroon-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-maroon');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-maroon')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Maroon
+                  |               
+                  .color-palette-set
+                    .bg-maroon.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-maroon.color-palette
+                      span #D81B60
+                    |                 
+                    .bg-maroon-active.color-palette
+                      span Active
+                // /.col
+                .col-sm-4.col-md-2(id="color-palette-black")
+                  div(id="color-palette-black-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'color-palette','color-palette-black');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('color-palette-black')" style="position: relative; top: 3px; color: #008000;")
+                  h4.text-center Black
+                  |               
+                  .color-palette-set
+                    .bg-black.disabled.color-palette
+                      span Disabled
+                    |                 
+                    .bg-black.color-palette
+                      span #111111
+                    |                 
+                    .bg-black-active.color-palette
+                      span Active
+
+
+          // START ALERTS AND CALLOUTS
+          h2.page-header Alerts and Callouts
+          |       
+          .row
+            .col-md-6
+              .box.box-default
+                .box-header.with-border
+                  i.fa.fa-warning
+                  |               
+                  h3.box-title Alerts
+                // /.box-header
+                .box-body
+                  div(id="alert-danger")
+                    div(id="alert-danger-btn")
+                      a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                        i.fa.fa-plus(style="font-size: 18px")
+                      ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                        li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                          a(role="menuitem") Add element to Favorites
+                        li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                          a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'alert','alert-danger');") {{ app.name }}
+                            i.fa.fa-check.pull-right(ng-if="app.components.includes('alert-danger')" style="position: relative; top: 3px; color: #008000;")
+                    .alert.alert-danger.alert-dismissible
+                      button.close(type='button', data-dismiss='alert', aria-hidden='true') &times;
+                      |                 
+                      h4
+                        i.icon.fa.fa-ban
+                        |  Alert!
+                      |                 Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire
+                      |                 soul, like these sweet mornings of spring which I enjoy with my whole heart.
+
+                  div(id="alert-info")
+                    div(id="alert-info-btn")
+                      a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                        i.fa.fa-plus(style="font-size: 18px")
+                      ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                        li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                          a(role="menuitem") Add element to Favorites
+                        li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                          a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'alert','alert-info');") {{ app.name }}             
+                            i.fa.fa-check.pull-right(ng-if="app.components.includes('alert-info')" style="position: relative; top: 3px; color: #008000;")
+                    .alert.alert-info.alert-dismissible
+                      button.close(type='button', data-dismiss='alert', aria-hidden='true') &times;
+                      |                 
+                      h4
+                        i.icon.fa.fa-info
+                        |  Alert!
+                      |                 Info alert preview. This alert is dismissable.
+
+                  div(id="alert-warning")
+                    div(id="alert-warning-btn")
+                      a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                        i.fa.fa-plus(style="font-size: 18px")
+                      ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                        li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                          a(role="menuitem") Add element to Favorites
+                        li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                          a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'alert','alert-warning');") {{ app.name }}              
+                            i.fa.fa-check.pull-right(ng-if="app.components.includes('alert-warning')" style="position: relative; top: 3px; color: #008000;")
+                    .alert.alert-warning.alert-dismissible
+                      button.close(type='button', data-dismiss='alert', aria-hidden='true') &times;
+                      |                 
+                      h4
+                        i.icon.fa.fa-warning
+                        |  Alert!
+                      |                 Warning alert preview. This alert is dismissable.
+
+                  div(id="alert-success")
+                    div(id="alert-success-btn")
+                      a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                        i.fa.fa-plus(style="font-size: 18px")
+                      ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                        li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                          a(role="menuitem") Add element to Favorites
+                        li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                          a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'alert','alert-success');") {{ app.name }}             
+                            i.fa.fa-check.pull-right(ng-if="app.components.includes('alert-success')" style="position: relative; top: 3px; color: #008000;")
+                    .alert.alert-success.alert-dismissible
+                      button.close(type='button', data-dismiss='alert', aria-hidden='true') &times;
+                      |                 
+                      h4
+                        i.icon.fa.fa-check
+                        |  Alert!
+                      |                 Success alert preview. This alert is dismissable.
+
+
+            .col-md-6
+              .box.box-default
+                .box-header.with-border
+                  i.fa.fa-bullhorn
+                  |               
+                  h3.box-title Callouts
+                // /.box-header
+                .box-body
+                  div(id="callout-danger")
+                    div(id="callout-danger-btn")
+                      a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                        i.fa.fa-plus(style="font-size: 18px")
+                      ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                        li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                          a(role="menuitem") Add element to Favorites
+                        li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                          a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'callout','callout-danger');") {{ app.name }}
+                            i.fa.fa-check.pull-right(ng-if="app.components.includes('callout-danger')" style="position: relative; top: 3px; color: #008000;")
+                    .callout.callout-danger
+                      h4 I am a danger callout!
+                      |                 
+                      p
+                        | There is a problem that we need to fix. A wonderful serenity has taken possession of my entire soul,
+                        | like these sweet mornings of spring which I enjoy with my whole heart.
+
+                  div(id="callout-info")
+                    div(id="callout-info-btn")
+                      a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                        i.fa.fa-plus(style="font-size: 18px")
+                      ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                        li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                          a(role="menuitem") Add element to Favorites
+                        li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                          a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'callout','callout-info');") {{ app.name }}           
+                            i.fa.fa-check.pull-right(ng-if="app.components.includes('callout-info')" style="position: relative; top: 3px; color: #008000;")
+                    .callout.callout-info
+                      h4 I am an info callout!
+                      |                 
+                      p Follow the steps to continue to payment.
+
+                  div(id="callout-warning")
+                    div(id="callout-warning-btn")
+                      a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                        i.fa.fa-plus(style="font-size: 18px")
+                      ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                        li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                          a(role="menuitem") Add element to Favorites
+                        li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                          a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'callout','callout-warning');") {{ app.name }}
+                            i.fa.fa-check.pull-right(ng-if="app.components.includes('callout-warning')" style="position: relative; top: 3px; color: #008000;")
+                    .callout.callout-warning
+                      h4 I am a warning callout!
+                      |                 
+                      p This is a yellow callout.
+
+                  div(id="callout-success")
+                    div(id="callout-success-btn")
+                      a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                        i.fa.fa-plus(style="font-size: 18px")
+                      ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                        li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                          a(role="menuitem") Add element to Favorites
+                        li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                          a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'callout','callout-success');") {{ app.name }}
+                            i.fa.fa-check.pull-right(ng-if="app.components.includes('callout-success')" style="position: relative; top: 3px; color: #008000;")
+                    .callout.callout-success
+                      h4 I am a success callout!
+                      |                 
+                      p This is a green callout.
+          // END ALERTS AND CALLOUTS
+
+
+          // START CUSTOM TABS
+          h2.page-header AdminLTE Custom Tabs
+          |       
+          .row
+            .col-md-6(id="custom-tabs-left")
+              div(id="custom-tabs-left-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'custom-tabs','custom-tabs-left');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('custom-tabs-left')" style="position: relative; top: 3px; color: #008000;")
+              .nav-tabs-custom
+                ul.nav.nav-tabs
+                  li.active
+                    a(href='#tab_1', data-toggle='tab') Tab 1
+                  |               
+                  li
+                    a(href='#tab_2', data-toggle='tab') Tab 2
+                  |               
+                  li
+                    a(href='#tab_3', data-toggle='tab') Tab 3
+                  |               
+                  li.dropdown
+                    a.dropdown-toggle(data-toggle='dropdown', href='#')
+                      | Dropdown 
+                      span.caret
+                    |                 
+                    ul.dropdown-menu
+                      li(role='presentation')
+                        a(role='menuitem', tabindex='-1', href='#') Action
+                      |                   
+                      li(role='presentation')
+                        a(role='menuitem', tabindex='-1', href='#') Another action
+                      |                   
+                      li(role='presentation')
+                        a(role='menuitem', tabindex='-1', href='#') Something else here
+                      |                   
+                      li.divider(role='presentation')
+                      |                   
+                      li(role='presentation')
+                        a(role='menuitem', tabindex='-1', href='#') Separated link
+                  |               
+                  li.pull-right
+                    a.text-muted(href='#')
+                      i.fa.fa-gear
+                |             
+                .tab-content
+                  #tab_1.tab-pane.active
+                    b How to use:
+                    |                 
+                    p
+                      | Exactly like the original bootstrap tabs except you should use
+                      | the custom wrapper 
+                      code .nav-tabs-custom
+                      |  to achieve this style.
+                    |                 A wonderful serenity has taken possession of my entire soul,
+                    |                 like these sweet mornings of spring which I enjoy with my whole heart.
+                    |                 I am alone, and feel the charm of existence in this spot,
+                    |                 which was created for the bliss of souls like mine. I am so happy,
+                    |                 my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
+                    |                 that I neglect my talents. I should be incapable of drawing a single stroke
+                    |                 at the present moment; and yet I feel that I never was a greater artist than now.
+                  // /.tab-pane
+                  #tab_2.tab-pane
+                    | The European languages are members of the same family. Their separate existence is a myth.
+                    | For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                    | in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                    | new common language would be desirable: one could refuse to pay expensive translators. To
+                    | achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                    | words. If several languages coalesce, the grammar of the resulting language is more simple
+                    | and regular than that of the individual languages.
+                  // /.tab-pane
+                  #tab_3.tab-pane
+                    | Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    | Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s,
+                    | when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    | It has survived not only five centuries, but also the leap into electronic typesetting,
+                    | remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                    | sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                    | like Aldus PageMaker including versions of Lorem Ipsum.
+
+
+            .col-md-6(id="custom-tabs-right")
+              div(id="custom-tabs-right-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'custom-tabs','custom-tabs-right');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('custom-tabs-right')" style="position: relative; top: 3px; color: #008000;")
+              .nav-tabs-custom
+                ul.nav.nav-tabs.pull-right
+                  li.active
+                    a(href='#tab_1-1', data-toggle='tab') Tab 1
+                  |               
+                  li
+                    a(href='#tab_2-2', data-toggle='tab') Tab 2
+                  |               
+                  li
+                    a(href='#tab_3-2', data-toggle='tab') Tab 3
+                  |               
+                  li.dropdown
+                    a.dropdown-toggle(data-toggle='dropdown', href='#')
+                      | Dropdown 
+                      span.caret
+                    |                 
+                    ul.dropdown-menu
+                      li(role='presentation')
+                        a(role='menuitem', tabindex='-1', href='#') Action
+                      |                   
+                      li(role='presentation')
+                        a(role='menuitem', tabindex='-1', href='#') Another action
+                      |                   
+                      li(role='presentation')
+                        a(role='menuitem', tabindex='-1', href='#') Something else here
+                      |                   
+                      li.divider(role='presentation')
+                      |                   
+                      li(role='presentation')
+                        a(role='menuitem', tabindex='-1', href='#') Separated link
+                  |               
+                  li.pull-left.header
+                    i.fa.fa-th
+                    |  Custom Tabs
+                |             
+                .tab-content
+                  #tab_1-1.tab-pane.active
+                    b How to use:
+                    |                 
+                    p
+                      | Exactly like the original bootstrap tabs except you should use
+                      | the custom wrapper 
+                      code .nav-tabs-custom
+                      |  to achieve this style.
+                    |                 A wonderful serenity has taken possession of my entire soul,
+                    |                 like these sweet mornings of spring which I enjoy with my whole heart.
+                    |                 I am alone, and feel the charm of existence in this spot,
+                    |                 which was created for the bliss of souls like mine. I am so happy,
+                    |                 my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
+                    |                 that I neglect my talents. I should be incapable of drawing a single stroke
+                    |                 at the present moment; and yet I feel that I never was a greater artist than now.
+                  // /.tab-pane
+                  #tab_2-2.tab-pane
+                    | The European languages are members of the same family. Their separate existence is a myth.
+                    | For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                    | in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                    | new common language would be desirable: one could refuse to pay expensive translators. To
+                    | achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                    | words. If several languages coalesce, the grammar of the resulting language is more simple
+                    | and regular than that of the individual languages.
+                  // /.tab-pane
+                  #tab_3-2.tab-pane
+                    | Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    | Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s,
+                    | when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    | It has survived not only five centuries, but also the leap into electronic typesetting,
+                    | remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                    | sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                    | like Aldus PageMaker including versions of Lorem Ipsum.
+          // END CUSTOM TABS
+
+
+          // START PROGRESS BARS
+          h2.page-header Progress Bars
+          |       
+          .row
+            .col-md-6
+              .box.box-solid
+                .box-header.with-border
+                  h3.box-title Progress Bars Different Sizes
+                // /.box-header
+                .box-body
+                  div.pull-right(id="progress-bar-primary-striped-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'progress-bar','progress-bar-primary-striped');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('progress-bar-primary-striped')" style="position: relative; top: 3px; color: #008000;")
+                  p
+                    code .progress
+                  
+                  div(id="progress-bar-primary-striped")               
+                    .progress
+                      .progress-bar.progress-bar-primary.progress-bar-striped(role='progressbar', aria-valuenow='40', aria-valuemin='0', aria-valuemax='100', style='width: 40%')
+                        span.sr-only 40% Complete (success)
+
+                  div.pull-right(id="progress-bar-success-sm-striped-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'progress-bar','progress-bar-success-sm-striped');") {{ app.name }}             
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('progress-bar-success-sm-striped')" style="position: relative; top: 3px; color: #008000;")
+                  p
+                    | Class: 
+                    code .sm
+                                 
+                  .progress.progress-sm.active(id="progress-bar-success-sm-striped")
+                    .progress-bar.progress-bar-success.progress-bar-striped(role='progressbar', aria-valuenow='20', aria-valuemin='0', aria-valuemax='100', style='width: 20%')
+                      span.sr-only 20% Complete
+
+                  div.pull-right(id="progress-bar-warning-xs-striped-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'progress-bar','progress-bar-warning-xs-striped');") {{ app.name }}               
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('progress-bar-warning-xs-striped')" style="position: relative; top: 3px; color: #008000;")
+                  p
+                    | Class: 
+                    code .xs
+
+                  div(id="progress-bar-warning-xs-striped")               
+                    .progress.progress-xs
+                      .progress-bar.progress-bar-warning.progress-bar-striped(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 60%')
+                        span.sr-only 60% Complete (warning)
+
+                  div.pull-right(id="progress-bar-danger-xxs-striped-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'progress-bar','progress-bar-danger-xxs-striped');") {{ app.name }}               
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('progress-bar-danger-xxs-striped')" style="position: relative; top: 3px; color: #008000;")
+                  p
+                    | Class: 
+                    code .xxs
+                  div(id="progress-bar-danger-xxs-striped")               
+                    .progress.progress-xxs
+                      .progress-bar.progress-bar-danger.progress-bar-striped(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 60%')
+                        span.sr-only 60% Complete (warning)
+
+
+            .col-md-6
+              .box.box-solid
+                .box-header.with-border
+                  h3.box-title Progress bars
+                // /.box-header
+                .box-body
+                  div(id="progress-bar-green-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'progress-bar','progress-bar-green');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('progress-bar-green')" style="position: relative; top: 3px; color: #008000;")
+                  div(id="progress-bar-green")     
+                    .progress
+                      .progress-bar.progress-bar-green(role='progressbar', aria-valuenow='40', aria-valuemin='0', aria-valuemax='100', style='width: 40%')
+                        span.sr-only 40% Complete (success)
+
+                  div(id="progress-bar-aqua-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'progress-bar','progress-bar-aqua');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('progress-bar-aqua')" style="position: relative; top: 3px; color: #008000;")
+                  div(id="progress-bar-aqua")             
+                    .progress
+                      .progress-bar.progress-bar-aqua(role='progressbar', aria-valuenow='20', aria-valuemin='0', aria-valuemax='100', style='width: 20%')
+                        span.sr-only 20% Complete
+
+                  div(id="progress-bar-yellow-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'progress-bar','progress-bar-yellow');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('progress-bar-yellow')" style="position: relative; top: 3px; color: #008000;")
+                  div(id="progress-bar-yellow")               
+                    .progress
+                      .progress-bar.progress-bar-yellow(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 60%')
+                        span.sr-only 60% Complete (warning)
+
+                  div(id="progress-bar-red-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 18px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'progress-bar','progress-bar-red');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('progress-bar-red')" style="position: relative; top: 3px; color: #008000;")
+                  div(id="progress-bar-red")              
+                    .progress
+                      .progress-bar.progress-bar-red(role='progressbar', aria-valuenow='80', aria-valuemin='0', aria-valuemax='100', style='width: 80%')
+                        span.sr-only 80% Complete
+
+
+          .row
+            .col-md-6
+              div(id="progress-bar-vertical-sizes-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'progress-bar-vertical','progress-bar-vertical-sizes');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('progress-bar-vertical-sizes')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-solid
+                .box-header.with-border
+                  h3.box-title Vertical Progress Bars Different Sizes
+                // /.box-header
+                .box-body.text-center(id="progress-bar-vertical-sizes")
+                  p
+                    | By adding the class 
+                    code .vertical
+                    |  and 
+                    code .progress-sm
+                    | , 
+                    code .progress-xs
+                    |  or
+                    |                 
+                    code .progress-xxs
+                    |  we achieve:
+                  |               
+                  .progress.vertical.active
+                    .progress-bar.progress-bar-primary.progress-bar-striped(role='progressbar', aria-valuenow='40', aria-valuemin='0', aria-valuemax='100', style='height: 40%')
+                      span.sr-only 40%
+                  |               
+                  .progress.vertical.progress-sm
+                    .progress-bar.progress-bar-success(role='progressbar', aria-valuenow='20', aria-valuemin='0', aria-valuemax='100', style='height: 100%')
+                      span.sr-only 100%
+                  |               
+                  .progress.vertical.progress-xs
+                    .progress-bar.progress-bar-warning.progress-bar-striped(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='height: 60%')
+                      span.sr-only 60%
+                  |               
+                  .progress.vertical.progress-xxs
+                    .progress-bar.progress-bar-info.progress-bar-striped(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='height: 60%')
+                      span.sr-only 60%
+
+
+            .col-md-6
+              div(id="progress-bar-vertical-colors-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'progress-bar-vertical','progress-bar-vertical-colors');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('progress-bar-vertical-colors')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-solid
+                .box-header.with-border
+                  h3.box-title Vertical Progress bars
+                // /.box-header
+                .box-body.text-center(id="progress-bar-vertical-colors")
+                  p
+                    | By adding the class 
+                    code .vertical
+                    |  we achieve:
+                  |               
+                  .progress.vertical
+                    .progress-bar.progress-bar-green(role='progressbar', aria-valuenow='40', aria-valuemin='0', aria-valuemax='100', style='height: 40%')
+                      span.sr-only 40%
+                  |               
+                  .progress.vertical
+                    .progress-bar.progress-bar-aqua(role='progressbar', aria-valuenow='20', aria-valuemin='0', aria-valuemax='100', style='height: 20%')
+                      span.sr-only 20%
+                  |               
+                  .progress.vertical
+                    .progress-bar.progress-bar-yellow(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='height: 60%')
+                      span.sr-only 60%
+                  |               
+                  .progress.vertical
+                    .progress-bar.progress-bar-red(role='progressbar', aria-valuenow='80', aria-valuemin='0', aria-valuemax='100', style='height: 80%')
+                      span.sr-only 80%
+          // END PROGRESS BARS
+
+
+          // START ACCORDION & CAROUSEL
+          h2.page-header Bootstrap Accordion &amp; Carousel
+          |       
+          .row
+            .col-md-6
+              div(id="collapsible-accordion-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'collapsible-accordion','collapsible-accordion');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('collapsible-accordion')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-solid
+                .box-header.with-border
+                  h3.box-title Collapsible Accordion
+                // /.box-header
+                .box-body(id="collapsible-accordion")
+                  #accordion.box-group
+                    // we are adding the .panel class so bootstrap.js collapse plugin detects it
+                    .panel.box.box-primary
+                      .box-header.with-border
+                        h4.box-title
+                          a(data-toggle='collapse', data-parent='#accordion', href='#collapseOne')
+                            | Collapsible Group Item #1
+                      |                   
+                      #collapseOne.panel-collapse.collapse.in
+                        .box-body
+                          | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                          | wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                          | eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                          | assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                          | nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                          | farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them accusamus
+                          | labore sustainable VHS.
+                    |                 
+                    .panel.box.box-danger
+                      .box-header.with-border
+                        h4.box-title
+                          a(data-toggle='collapse', data-parent='#accordion', href='#collapseTwo')
+                            | Collapsible Group Danger
+                      |                   
+                      #collapseTwo.panel-collapse.collapse
+                        .box-body
+                          | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                          | wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                          | eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                          | assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                          | nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                          | farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them accusamus
+                          | labore sustainable VHS.
+                    |                 
+                    .panel.box.box-success
+                      .box-header.with-border
+                        h4.box-title
+                          a(data-toggle='collapse', data-parent='#accordion', href='#collapseThree')
+                            | Collapsible Group Success
+                      |                   
+                      #collapseThree.panel-collapse.collapse
+                        .box-body
+                          | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                          | wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
+                          | eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+                          | assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                          | nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                          | farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them accusamus
+                          | labore sustainable VHS.
+
+
+            .col-md-6
+              div(id="carousel-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'carousel','carousel');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('carousel')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-solid
+                .box-header.with-border
+                  h3.box-title Carousel
+                // /.box-header
+                .box-body(id="carousel")
+                  #carousel-example-generic.carousel.slide(data-ride='carousel')
+                    ol.carousel-indicators
+                      li.active(data-target='#carousel-example-generic', data-slide-to='0')
+                      |                   
+                      li(data-target='#carousel-example-generic', data-slide-to='1')
+                      |                   
+                      li(data-target='#carousel-example-generic', data-slide-to='2')
+                    |                 
+                    .carousel-inner
+                      .item.active
+                        img(src='http://placehold.it/900x500/39CCCC/ffffff&text=I+Love+Bootstrap', alt='First slide')
+                        |                     
+                        .carousel-caption
+                          | First Slide
+                      |                   
+                      .item
+                        img(src='http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap', alt='Second slide')
+                        |                     
+                        .carousel-caption
+                          | Second Slide
+                      |                   
+                      .item
+                        img(src='http://placehold.it/900x500/f39c12/ffffff&text=I+Love+Bootstrap', alt='Third slide')
+                        |                     
+                        .carousel-caption
+                          | Third Slide
+                    |                 
+                    a.left.carousel-control(href='#carousel-example-generic', data-slide='prev')
+                      span.fa.fa-angle-left
+                    |                 
+                    a.right.carousel-control(href='#carousel-example-generic', data-slide='next')
+                      span.fa.fa-angle-right
+          // END ACCORDION & CAROUSEL
+
+
+          // START TYPOGRAPHY
+          h2.page-header Typography
+          |       
+          .row
+            .col-md-6
+              .box.box-solid
+                .box-header.with-border
+                  i.fa.fa-text-width
+                  |               
+                  h3.box-title Headlines
+                // /.box-header
+                .box-body
+                  h1 h1. Bootstrap heading
+                  |               
+                  h2 h2. Bootstrap heading
+                  |               
+                  h3 h3. Bootstrap heading
+                  |               
+                  h4 h4. Bootstrap heading
+                  |               
+                  h5 h5. Bootstrap heading
+                  |               
+                  h6 h6. Bootstrap heading
+                // /.box-body
+              // /.box
+            // ./col
+            .col-md-6
+              .box.box-solid
+                .box-header.with-border
+                  i.fa.fa-text-width
+                  |               
+                  h3.box-title Text Emphasis
+                // /.box-header
+                .box-body
+                  p.lead Lead to emphasize importance
+                  |               
+                  p.text-green Text green to emphasize success
+                  |               
+                  p.text-aqua Text aqua to emphasize info
+                  |               
+                  p.text-light-blue Text light blue to emphasize info (2)
+                  |               
+                  p.text-red Text red to emphasize danger
+                  |               
+                  p.text-yellow Text yellow to emphasize warning
+                  |               
+                  p.text-muted Text muted to emphasize general
+                // /.box-body
+              // /.box
+            // ./col
+          // /.row
+          .row
+            .col-md-6
+              div(id="block-quotes-left-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'block-quotes','block-quotes-left');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('block-quotes-left')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-solid
+                .box-header.with-border
+                  i.fa.fa-text-width
+                  |               
+                  h3.box-title Block Quotes
+                // /.box-header
+                .box-body(id="block-quotes-left")
+                  blockquote
+                    p
+                      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+                    |                 
+                    small
+                      | Someone famous in 
+                      cite(title='Source Title') Source Title
+
+            .col-md-6
+              div(id="block-quotes-right-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'block-quotes','block-quotes-right');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('block-quotes-right')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-solid
+                .box-header.with-border
+                  i.fa.fa-text-width
+                  |               
+                  h3.box-title Block Quotes Pulled Right
+                // /.box-header
+                .box-body.clearfix(id="block-quotes-right")
+                  blockquote.pull-right
+                    p
+                      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+                    |                 
+                    small
+                      | Someone famous in 
+                      cite(title='Source Title') Source Title
+
+
+          .row
+            .col-md-4
+              div(id="unordered-list-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'list','unordered-list');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('unordered-list')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-solid
+                .box-header.with-border
+                  i.fa.fa-text-width
+                  |               
+                  h3.box-title Unordered List
+                // /.box-header
+                .box-body(id="unordered-list")
+                  ul
+                    li Lorem ipsum dolor sit amet
+                    |                 
+                    li Consectetur adipiscing elit
+                    |                 
+                    li Integer molestie lorem at massa
+                    |                 
+                    li Facilisis in pretium nisl aliquet
+                    |                 
+                    li
+                      | Nulla volutpat aliquam velit
+                      ul
+                        li Phasellus iaculis neque
+                        |                     
+                        li Purus sodales ultricies
+                        |                     
+                        li Vestibulum laoreet porttitor sem
+                        |                     
+                        li Ac tristique libero volutpat at
+                    |                 
+                    li Faucibus porta lacus fringilla vel
+                    |                 
+                    li Aenean sit amet erat nunc
+                    |                 
+                    li Eget porttitor lorem
+
+
+            .col-md-4
+              div(id="ordered-list-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'list','ordered-list');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('ordered-list')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-solid
+                .box-header.with-border
+                  i.fa.fa-text-width
+                  |               
+                  h3.box-title Ordered Lists
+                // /.box-header
+                .box-body(id="ordered-list")
+                  ol
+                    li Lorem ipsum dolor sit amet
+                    |                 
+                    li Consectetur adipiscing elit
+                    |                 
+                    li Integer molestie lorem at massa
+                    |                 
+                    li Facilisis in pretium nisl aliquet
+                    |                 
+                    li
+                      | Nulla volutpat aliquam velit
+                      ol
+                        li Phasellus iaculis neque
+                        |                     
+                        li Purus sodales ultricies
+                        |                     
+                        li Vestibulum laoreet porttitor sem
+                        |                     
+                        li Ac tristique libero volutpat at
+                    |                 
+                    li Faucibus porta lacus fringilla vel
+                    |                 
+                    li Aenean sit amet erat nunc
+                    |                 
+                    li Eget porttitor lorem
+
+
+            .col-md-4
+              div(id="unstyled-list-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'list','unstyled-list');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('unstyled-list')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-solid
+                .box-header.with-border
+                  i.fa.fa-text-width
+                  |               
+                  h3.box-title Unstyled List
+                // /.box-header
+                .box-body(id="unstyled-list")
+                  ul.list-unstyled
+                    li Lorem ipsum dolor sit amet
+                    |                 
+                    li Consectetur adipiscing elit
+                    |                 
+                    li Integer molestie lorem at massa
+                    |                 
+                    li Facilisis in pretium nisl aliquet
+                    |                 
+                    li
+                      | Nulla volutpat aliquam velit
+                      ul
+                        li Phasellus iaculis neque
+                        |                     
+                        li Purus sodales ultricies
+                        |                     
+                        li Vestibulum laoreet porttitor sem
+                        |                     
+                        li Ac tristique libero volutpat at
+                    |                 
+                    li Faucibus porta lacus fringilla vel
+                    |                 
+                    li Aenean sit amet erat nunc
+                    |                 
+                    li Eget porttitor lorem
+
+
+          .row
+            .col-md-6
+              div(id="description-vertical-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'description','description-vertical');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('description-vertical')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-solid
+                .box-header.with-border
+                  i.fa.fa-text-width
+                  |               
+                  h3.box-title Description
+                // /.box-header
+                .box-body(id="description-vertical")
+                  dl
+                    dt Description lists
+                    |                 
+                    dd A description list is perfect for defining terms.
+                    |                 
+                    dt Euismod
+                    |                 
+                    dd Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+                    |                 
+                    dd Donec id elit non mi porta gravida at eget metus.
+                    |                 
+                    dt Malesuada porta
+                    |                 
+                    dd Etiam porta sem malesuada magna mollis euismod.
+
+
+            .col-md-6
+              div(id="description-horizontal-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'description','description-horizontal');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('description-horizontal')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-solid
+                .box-header.with-border
+                  i.fa.fa-text-width
+                  |               
+                  h3.box-title Description Horizontal
+                // /.box-header
+                .box-body(id="description-horizontal")
+                  dl.dl-horizontal
+                    dt Description lists
+                    |                 
+                    dd A description list is perfect for defining terms.
+                    |                 
+                    dt Euismod
+                    |                 
+                    dd Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+                    |                 
+                    dd Donec id elit non mi porta gravida at eget metus.
+                    |                 
+                    dt Malesuada porta
+                    |                 
+                    dd Etiam porta sem malesuada magna mollis euismod.
+                    |                 
+                    dt Felis euismod semper eget lacinia
+                    |                 
+                    dd
+                      | Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo
+                      | sit amet risus.
+                // /.box-body
+              // /.box
+            // ./col
+          // /.row
+          // END TYPOGRAPH
+
+      include ../static_content/dashboard_footer

@@ -1,0 +1,131 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+
+  body.hold-transition.skin-blue.sidebar-mini.ng-cloak
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")
+        section.content-header
+          h1
+            | Upload
+            small Datasets
+          ol.breadcrumb
+            li
+              a(href='#')
+                i.fa.fa-upload
+                |  Upload
+            li.active Datasets
+
+        section.content
+          .row
+            .col-md-6
+              .box.box-primary
+                .box-header.with-border
+                  h3.box-title Select an open dataset to upoad
+                .box-body(ng-init="devDashboardCtrl.getSchemaTypes(); devDashboardCtrl.getLocaleList()")
+                  form(role="form")             
+                    .form-group
+                      .row
+                        .col-md-5
+                          label(for="inputFile") File input *
+                          input#inputFile(type="file" file-model="datasetFile")                   
+                          p.help-block Use only .csv files.
+                        
+                        .col-md-6
+                          label Data Separator *
+                          br
+                          select(ng-model="devDashboardCtrl.datasetSeparatorInput")
+                            option(value=",") Comma ","
+                            option(value=";") Question Mark ";"
+
+                      .row
+                        .col-md-12
+                          label(for="datasetNameInput") Dataset name *
+                          input.form-control#datasetNameInput(type='text' ng-model="devDashboardCtrl.datasetNameInput")
+                        .col-md-12
+                          label(for="inputDesc") Description *
+                          textarea.form-control#inputDesc(rows='3' placeholder="Give a small data description...")
+                        .col-md-5
+                          label(style="margin-top:10px;") Locale *
+                          input(
+                            style="display:block; margin:2px; padding: 0 0 0 5px; height:35px; font-size: 14px"
+                            type="text"
+                            ng-model="devDashboardCtrl.locale"
+                            placeholder="Filter locales..."
+                            uib-typeahead="locale for locale in devDashboardCtrl.localeList | filter:$viewValue | limitTo:8")
+                        .col-md-5.col-md-offset-1
+                          label(style="margin-top:10px;") Tags (optional)
+                          tags-input(ng-model="devDashboardCtrl.uploadTags" placeholder="Add tags...")
+                      .row(style="margin-top:15px;")
+                        .col-md-3
+                          <label>Third Party?: &nbsp;<input type="checkbox" ng-model="devDashboardCtrl.curator.isThirdParty" style="vertical-align: text-top;"></label><br/>
+                        .col-md-6(ng-if="devDashboardCtrl.curator && devDashboardCtrl.curator.isThirdParty")
+                          label Dataset Curator
+                          input.form-control(type='text' ng-model="devDashboardCtrl.curator.name")
+
+                .box-footer
+                  button.btn.btn-primary(type="button" ng-click="uploadFile()")
+                    span(class="glyphicon glyphicon-refresh glyphicon-spin", ng-show="devDashboardCtrl.uploadDataLoading", style="margin-right:10px;")
+                    | Upload Data
+
+          .row(ng-if="devDashboardCtrl.showSchema")
+            .col-md-12
+              .box.box-primary
+                .box-header.with-border
+                  h3.box-title Schema editor ({{ devDashboardCtrl.datasetName }})
+                .box-body
+                  .row
+                    .col-md-2(ng-repeat="(key,val) in devDashboardCtrl.schema")
+                      .form(role="form" class="ng-pristine ng-valid")
+                        .form-group
+                          label.control-label(style="display:inline; text-overflow: ellipsis; overflow: hidden; width: 200px; height: 1.2em; white-space: nowrap") "{{ key }}":&nbsp;
+                          span {{val.type}}
+                  //- Schema dot org
+                  div(style="margin-top:20px; padding:10px; border:1px solid #989898; padding-bottom:25px;")
+                    div(style="text-align:center;")
+                      strong Set Schema Type (optional)
+
+                    input(
+                      style="width:60%; margin:0 auto; margin-top:10px;"
+                      type="text"
+                      ng-model="devDashboardCtrl.schemaDotOrgType"
+                      placeholder="Filter schema types..."
+                      uib-typeahead="type for type in devDashboardCtrl.schemaDotOrgTypes | filter:$viewValue | limitTo:8"
+                      typeahead-on-select="devDashboardCtrl.getSchemaProperties($item)"
+                      class="form-control")
+
+                    div(
+                      ng-if="devDashboardCtrl.schemaDotOrgTypes.indexOf(devDashboardCtrl.schemaDotOrgType) !== -1"
+                      style="margin-top: 20px;")
+                      .row
+                        .col-md-3(ng-repeat="(key,val) in devDashboardCtrl.schema")
+                          .form-group
+                            label.control-label(style="text-align:center; text-overflow: ellipsis; overflow: hidden; width: 200px; height: 1.2em; white-space: nowrap") "{{ key }}"
+                            input(
+                              type="text"
+                              ng-model="val.property"
+                              placeholder="Set property..."
+                              uib-typeahead="property for property in devDashboardCtrl.schemaDotOrgProperties | filter:$viewValue | limitTo:8"
+                              class="form-control")
+
+                .box-footer
+                  button.btn.btn-primary.pull-right(type="button" ng-click="devDashboardCtrl.importData()")
+                    span(class="glyphicon glyphicon-refresh glyphicon-spin", ng-show="devDashboardCtrl.importDataLoading", style="margin-right:10px;")
+                    | Import Data
+
+          .row(ng-if="devDashboardCtrl.importDataFailLogs")
+            .col-md-8
+            .col-md-4
+              .box.box-danger
+                .box-header.with-border
+                  h3.box-title Import data fail logs
+                .box-body
+                  div(ng-repeat="log in devDashboardCtrl.failLogs")
+                    h5 {{ log }}
+
+      include ../static_content/dashboard_footer

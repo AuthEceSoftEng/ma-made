@@ -1,0 +1,208 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+    style.
+      .example-modal .modal {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        left: auto;
+        display: block;
+        z-index: 1;
+      }
+      .example-modal .modal {
+          background: transparent !important;
+      }
+    script(src="/dist/js/demo.js")
+    link(rel="stylesheet" href="/dist/css/bootstrap-tagsinput.css")
+    script(src="/dist/js/bootstrap-tagsinput.js")
+
+  body.hold-transition.skin-blue.sidebar-mini
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")        
+        section.content-header
+          h1
+            | Modals
+            small new       
+          ol.breadcrumb
+            li
+              a(href='#')
+                i.fa.fa-dashboard
+                |  Home       
+            li
+              a(href='#') UI       
+            li.active Modals
+
+        // Main content
+        section.content
+          #myModal.modal.fade(role='dialog', style="margin-top:150px;")
+            .modal-dialog
+              .modal-content
+                .modal-header
+                  button.close(type='button', data-dismiss='modal') ×
+                  h4.modal-title Add some labels
+                .modal-body
+                  label(for='pwd') Labels: &nbsp;
+                  input(id="tagsInput" type="text" value="" data-role="tagsinput" placeholder="Add tags here...")
+                .modal-footer
+                  button.btn.btn-primary(type='button', data-dismiss='modal', ng-click="devDashboardCtrl.saveUIComponent()") OK
+
+          .callout.callout-info
+            h4 Reminder!
+            |         Instructions for how to use modals are available on the
+            |         
+            a(href='http://getbootstrap.com/javascript/#modals') Bootstrap documentation
+          |       
+          .row
+            .col-xs-12
+              div(id="modals-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'modals','modals');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('modals')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-default
+                .box-header.with-border
+                  h3.box-title Modal Examples
+                |             
+                .box-body
+                  div(id="modals")
+                    button.btn.btn-default(type='button', data-toggle='modal', data-target='#modal-default')
+                      | Launch Default Modal
+                    |               
+                    button.btn.btn-info(type='button', data-toggle='modal', data-target='#modal-info')
+                      | Launch Info Modal
+                    |               
+                    button.btn.btn-danger(type='button', data-toggle='modal', data-target='#modal-danger')
+                      | Launch Danger Modal
+                    |               
+                    button.btn.btn-warning(type='button', data-toggle='modal', data-target='#modal-warning')
+                      | Launch Warning Modal
+                    |               
+                    button.btn.btn-success(type='button', data-toggle='modal', data-target='#modal-success')
+                      | Launch Success Modal
+          
+
+            #modal-default.modal.fade
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') &times;
+                    |                 
+                    h4.modal-title Default Modal
+                  |               
+                  .modal-body
+                    p One fine body&mldr;
+                  |               
+                  .modal-footer
+                    button.btn.btn-default.pull-left(type='button', data-dismiss='modal') Close
+                    |                 
+                    button.btn.btn-primary(type='button') Save changes
+                // /.modal-content
+              // /.modal-dialog
+            // /.modal
+
+            #modal-primary.modal.modal-primary.fade
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') &times;
+                    |                 
+                    h4.modal-title Primary Modal
+                  |               
+                  .modal-body
+                    p One fine body&mldr;
+                  |               
+                  .modal-footer
+                    button.btn.btn-outline.pull-left(type='button', data-dismiss='modal') Close
+                    |                 
+                    button.btn.btn-outline(type='button') Save changes
+                // /.modal-content
+              // /.modal-dialog
+            // /.modal
+            #modal-info.modal.modal-info.fade
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') &times;
+                    |                 
+                    h4.modal-title Info Modal
+                  |               
+                  .modal-body
+                    p One fine body&mldr;
+                  |               
+                  .modal-footer
+                    button.btn.btn-outline.pull-left(type='button', data-dismiss='modal') Close
+                    |                 
+                    button.btn.btn-outline(type='button') Save changes
+                // /.modal-content
+              // /.modal-dialog
+            // /.modal
+            #modal-warning.modal.modal-warning.fade
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') &times;
+                    |                 
+                    h4.modal-title Warning Modal
+                  |               
+                  .modal-body
+                    p One fine body&mldr;
+                  |               
+                  .modal-footer
+                    button.btn.btn-outline.pull-left(type='button', data-dismiss='modal') Close
+                    |                 
+                    button.btn.btn-outline(type='button') Save changes
+                // /.modal-content
+              // /.modal-dialog
+            // /.modal
+            #modal-success.modal.modal-success.fade
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') &times;
+                    |                 
+                    h4.modal-title Success Modal
+                  |               
+                  .modal-body
+                    p One fine body&mldr;
+                  |               
+                  .modal-footer
+                    button.btn.btn-outline.pull-left(type='button', data-dismiss='modal') Close
+                    |                 
+                    button.btn.btn-outline(type='button') Save changes
+                // /.modal-content
+              // /.modal-dialog
+            // /.modal
+            #modal-danger.modal.modal-danger.fade
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') &times;
+                    |                 
+                    h4.modal-title Danger Modal
+                  |               
+                  .modal-body
+                    p One fine body&mldr;
+                  |               
+                  .modal-footer
+                    button.btn.btn-outline.pull-left(type='button', data-dismiss='modal') Close
+                    |                 
+                    button.btn.btn-outline(type='button') Save changes
+
+      include ../static_content/dashboard_footer

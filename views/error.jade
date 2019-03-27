@@ -1,0 +1,10 @@
+extends layout
+
+block content
+
+  .ma-content-area.ma-colored.ma-top-80.ma-bottom-80.ma-height-100
+    section.ma-section#ma-error
+      .ma-error-container
+        i(class="fa fa-frown-o")
+        h1= error.status
+        h3= message

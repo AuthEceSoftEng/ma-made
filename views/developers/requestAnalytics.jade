@@ -1,0 +1,49 @@
+.box.box-warning
+  .box-header.with-border
+        h2.box-title Analytics
+        .box-tools.pull-right
+          a.btn.btn-default(href="https://analytics.scc-mobileage.lancs.ac.uk/" target="_blank" rel="noopener noreferrer")
+            i.fa.fa-external-link
+            &nbsp;
+            | Advanced analytics
+  .box-body.collapse.in#analytics-box
+    div(id="analytics_1" style="text-align:left;")
+      <span class="font-weight-normal">Click to get analytics</span>
+      button.btn.btn-success.btn-circle.btn-xl(
+        ng-if="devDashboardCtrl.canStop"
+        style="margin-left:10px;"
+        type='button'
+        title='Get Analytics Token'
+        ng-click="devDashboardCtrl.onRequestLighthouseAnalytics(devDashboardCtrl.appUrl)")
+        i.glyphicon.glyphicon-link
+      button.btn.btn-success.btn-circle.btn-xl(
+        ng-if="!devDashboardCtrl.canStop"
+        style="margin-left:10px; cursor:not-allowed;"
+        type='button'
+        title='Your application is not running!'
+        ng-disabled="true")
+        i.glyphicon.glyphicon-link
+    br
+    .nav-tabs-custom
+      ul(class="nav nav-tabs")
+        li.active
+          a(data-toggle="tab" href="#analytics-performance") Performance
+        li
+          a(data-toggle="tab" href="#analytics-audits") Audits
+      .tab-content
+        div#analytics-performance.tab-pane.active
+          #view
+        div#analytics-audits.tab-pane
+          table
+            thead
+              tr
+                th 
+                th(style="text-align:center;") Title
+                th(style="text-align:center;") Description
+            
+            tbody
+              tr(ng-repeat="audit in devDashboardCtrl.lighthouseAudits")
+                td 
+                  strong {{audit.id}}
+                td {{audit.title}}
+                td {{audit.description}}

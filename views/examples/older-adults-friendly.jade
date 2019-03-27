@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+  
+  body.hold-transition.skin-blue.sidebar-mini
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")
+        section.content-header
+          h1
+            | Older adults-friendly UI components
+          
+        section.content
+          embed(src="https://mobileage.ftb-esv.de/frontend/php/components.list.php" style="width:100%; height:80vh")
+
+                
+      include ../static_content/dashboard_footer

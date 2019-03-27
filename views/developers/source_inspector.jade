@@ -1,0 +1,15 @@
+.row
+  .col-md-12
+    .box.box-info
+      .box-header.with-border
+        h2.box-title Source Inspector
+        .box-tools.pull-right
+          button.btn.btn-box-tool(type='button', data-toggle='collapse', data-target="#source")
+            i.fa.fa-minus
+      .box-body.collapse.in#source
+        .col-md-6
+          .description-block
+            angular-chart(options='options', instance='instance')
+        .col-md-6
+          .description-block
+            angular-chart(options='options2', instance='instance')

@@ -1,0 +1,52 @@
+.box.box-danger
+  .box-header.with-border
+        h2.box-title Logs
+        .box-tools.pull-right
+          button.btn.btn-box-tool(type='button', data-toggle='collapse', data-target="#logs")
+            i.fa.fa-minus
+  .box-body.collapse.in#logs
+    .nav-tabs-custom
+      ul(class="nav nav-tabs")
+        li.active
+          a(data-toggle="tab" href="#logs_1") Container Logs ({{ devDashboardCtrl.logs.container_logs.length }})
+        li
+          a(data-toggle="tab" href="#logs_2") Application Logs ({{ devDashboardCtrl.logs.application_logs.length }})
+      .tab-content
+        div(id="logs_1" class="tab-pane active" style="overflow-x: auto; overflow-y: auto; height: 180px;")
+          table.table.table-bordered.table-hover
+            thead
+              tr
+                th(colspan='2', style='font-weight:bold;font-style:italic;text-align:center;') Action
+                th(colspan='2', style='font-weight:bold;font-style:italic;text-align:center;') Timestamp
+                th(colspan='3', style='font-weight:bold;font-style:italic;text-align:center;') Message
+                th(colspan='2', style='font-weight:bold;font-style:italic;text-align:center;') Elapsed Time
+                th(colspan='1', style='font-weight:bold;font-style:italic;text-align:center;') Result
+            tbody
+              tr(ng-repeat='(tool, value) in devDashboardCtrl.logs.container_logs')
+                td(colspan='2') {{ value.action }}
+                td(colspan='2') {{ value.timestamp }}
+                td(colspan='3') {{ value.message }}
+                td(colspan='2') {{ value.timeElapsed }}
+                td.success(colspan='1' ng-if="value.status == 'Success'", style="text-align:center;vertical-align: middle;")
+                  span(class='glyphicon glyphicon-thumbs-up', area-hidden='true')
+                td.danger(colspan='1' ng-if="value.status == 'Failure'", style="text-align:center;vertical-align: middle;")
+                  span(class='glyphicon glyphicon-thumbs-down', area-hidden='true')
+
+        div(id="logs_2" class="tab-pane" style="overflow-x: auto; overflow-y: auto; height: 220px;")
+          table.table.table-bordered.table-hover
+            tbody
+              tr
+                th(colspan='2', style='font-weight:bold;font-style:italic;text-align:center;') Action
+                th(colspan='2', style='font-weight:bold;font-style:italic;text-align:center;') Timestamp
+                th(colspan='3', style='font-weight:bold;font-style:italic;text-align:center;') Message
+                th(colspan='2', style='font-weight:bold;font-style:italic;text-align:center;') Elapsed Time
+                th(colspan='1', style='font-weight:bold;font-style:italic;text-align:center;') Result
+              tr(ng-repeat='(tool, value) in devDashboardCtrl.logs.application_logs')
+                td(colspan='2') {{ value.action }}
+                td(colspan='2') {{ value.timestamp }}
+                td(colspan='3') {{ value.message }}
+                td(colspan='2') {{ value.timeElapsed }}
+                td.success(colspan='1' ng-if="value.status == 'Success'", style="text-align:center;vertical-align: middle;")
+                  span(class='glyphicon glyphicon-thumbs-up', area-hidden='true')
+                td.danger(colspan='1' ng-if="value.status == 'Failure'", style="text-align:center;vertical-align: middle;")
+                  span(class='glyphicon glyphicon-thumbs-down', area-hidden='true')

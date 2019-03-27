@@ -1,0 +1,178 @@
+h2(style="text-align:left; font-style:italic;") Analytics
+.tab-content(ng-controller="OpenDatasetsCtrl as dataCtrl")
+  .row.clearfix
+    p
+      | The Mobile Age analytics module is a software-as-a-service (SaaS) component capable of capturing interaction event data (e.g. clicks, views, dwell time), supplemented with context information exchanged during user sessions with public services and IoT data. This software extends the idea of analytics to include a rich set of data relating to activities in both the digital and physical domain.
+    p
+      | This guide consists of how to register to use the Analytics software, installation and usage guidelines (including download links and code snippets), and finally details of how to view Analytics reports.
+    li
+      a(href='#analyticsInstall') Installation & Usage
+      ul
+        li
+          a(href='#analyticsJS') HTML/JavaScript
+        li
+          a(href='#analyticsPy') Python
+        li
+          a(href='#analyticsEvents') Analytics Events
+      hr
+      h2#analyticsInstall Installation & Usage
+      #analyticsJS.analyticsSection
+        h3 HTML/JavaScript
+        p
+          | Add the JavaScript library 
+          code maanalytics.js
+          |  to your project (
+          a(href='#', target='_blank') download
+          | ). A full example is given below in 
+          code index.html
+          |  and 
+          code sample-script.js
+          | :
+        h3 File: index.html
+        pre.prettyprint(style='text-align:left;')
+          code.lang-html
+            ol(style='list-style-position:inside;') 
+              li 
+                span(style='padding-left:5px;color:#0f7200;') &lt;html&gt;
+              li 
+                span(style='padding-left:35px;color:#0f7200;') &lt;head&gt;
+              li 
+                span(style='padding-left:65px;color: #b40000;') &lt;!-- Analytics library --&gt;
+              li 
+                span(style='padding-left:65px;') &lt;script type=&quot;text/javascript&quot; src=&quot;maanalytics.js&quot;&gt;&lt;/script&gt;
+              li 
+                span(style='padding-left:65px;color: #b40000;') &lt;!-- Developer's custom code --&gt;
+              li 
+                span(style='padding-left:65px;') &lt;script type=&quot;text/javascript&quot; src=&quot;sample-script.js&quot;&gt;&lt;/script&gt;
+              li 
+                span(style='padding-left:35px;color:#0f7200;') &lt;/head&gt;
+              li 
+                span(style='padding-left:35px;color:#0f7200;') &lt;body&gt;
+              li 
+                span(style='padding-left:65px;color: #b40000;') &lt;!-- Sample button --&gt;
+              li 
+                span(style='padding-left:65px;') &lt;input type=&quot;button&quot; id=&quot;myButton&quot; value=&quot;Click me&quot;&gt;&lt;/input&gt;
+              li 
+                span(style='padding-left:35px;color:#0f7200;') &lt;/body&gt;
+              li 
+                span(style='padding-left:5px;color:#0f7200;') &lt;/html&gt;
+        h3 File: sample-script.js
+        pre.prettyprint(style='text-align:left;')
+          code.lang-html
+            ol(style='list-style-position:inside;') 
+              li
+                span(style='') var maa = new Analytics({
+              li
+                span(style='padding-left:35px;') tid: 
+                  span(style='color:#0f7200;')
+                    | &quot;YOUR-TRACKING-ID-HERE&quot;,
+              li
+                span(style='padding-left:35px;') cid: 
+                  span(style='color:#0f7200;')
+                    | &quot;YOUR-CLIENT-ID-HERE&quot;
+              li
+                span(style='') });
+              li
+                span(style='') 
+              li
+                span(style='color: #b40000;') // Log an analytics event on a mouse click
+              li
+                span(style='') var myButton = 
+                  span(style='color:#0f7200;')
+                    | document.getElementById(&quot;myButton&quot;);
+              li
+                span(style='') myButton.addEventListener(&quot;click&quot;, function(){
+              li
+                span(style='padding-left:35px;color: #b40000;') // Variables to be passed as parameters
+              li
+                span(style='padding-left:35px;') var CATEGORY = 
+                  span(style='color:#0f7200;')
+                    | &quot;routing to location&quot;;
+              li
+                span(style='padding-left:35px;') var ACTION = 
+                  span(style='color:#0f7200;')
+                    | &quot;click&quot;;
+              li
+                span(style='padding-left:35px;') var VALUE = 
+                  span(style='color:#0f7200;')
+                    | 0;
+              li
+               span(style='padding-left:35px;') var LABEL = 
+                  span(style='color:#0f7200;')
+                    | &quot;This can be used for supplemental information&quot;;
+              li
+                span(style='padding-left:35px;color: #b40000;') // Log an event to the Analytics service
+              li
+                span(style='padding-left:35px;') maa.trackEvent(CATEGORY, ACTION, VALUE, LABEL);
+              li
+                span(style='') });
+        h3 Python
+        pre.prettyprint(style='text-align:left;')
+          code.lang-html
+            ol(style='list-style-position:inside;')
+              li
+                span(style='') from analyticsapi import MAAnalytics
+              li
+                span(style='') 
+              li
+                span(style='color: #b40000;') # Initialise the analytics library
+              li
+                span(style='') maa = MAAnalytics(tid=
+                  span(style='color:#0f7200;')
+                    | "YOUR-TRACKING-ID-HERE"
+                  | ,
+              li
+                span(style='padding-left:145px;') cid=
+                  span(style='color:#0f7200;')
+                    | "YOUR-CLIENT-ID-HERE"
+                  | ),
+              li
+                span(style='') 
+              li
+                span(style='color: #b40000;') # Log an analytics event
+              li
+                span(style='padding-left:70px;') maa.trackEvent(category=
+                  span(style='color:#0f7200;')
+                    | "my category"
+                  | ,
+              li
+                span(style='padding-left:70px;') action=
+                  span(style='color:#0f7200;')
+                    | "my action"
+                  | ,
+              li
+                span(style='padding-left:62px;') value=
+                  span(style='color:#0f7200;')
+                    | 0
+                  | ,
+              li
+                span(style='') label="supplemental information")
+    h3 Analytics Event Types
+    p
+      | The APIs ensure that submitting analytics events is as simple as possible. There are three main analytics event types to use: 
+      code Event
+      | , 
+      code Proximity
+      | , and 
+      code Interaction
+      | . For a complete description of the API, the  documentation can be found 
+      a(href='#') here
+      | .
+    .divTable
+      .divTableHeading
+        .divTableRow
+          .divTableCell Event Type
+          .divTableCell Description
+      .divTableBody
+        .divTableRow
+          .divTableCell Event
+          .divTableCell Sends a generic analytics event to the analytics server.
+        .divTableRow
+          .divTableCell Proximity
+          .divTableCell
+            | Sends a proximity analytics event to the analytics server (e.g. walking past a public display)
+        .divTableRow
+          .divTableCell Interaction
+          .divTableCell
+            | Sends an interaction analytics event to the analytics server (e.g. touching a touch screen).
+

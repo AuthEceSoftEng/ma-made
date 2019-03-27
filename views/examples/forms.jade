@@ -1,0 +1,1376 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+    link(rel="stylesheet", href="/bower_components/bootstrap-daterangepicker/daterangepicker.css")
+    link(rel="stylesheet", href="/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css")
+    link(rel="stylesheet", href="/plugins/iCheck/all.css")
+    link(rel="stylesheet", href="/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css")
+    link(rel="stylesheet", href="/plugins/timepicker/bootstrap-timepicker.min.css")
+    link(rel="stylesheet", href="/bower_components/select2/dist/css/select2.min.css")
+    link(rel="stylesheet", href="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css")
+    script(src="/dist/js/demo.js")
+    script(src="/bower_components/select2/dist/js/select2.full.min.js")
+    script(src="/plugins/input-mask/jquery.inputmask.js")
+    script(src="/plugins/input-mask/jquery.inputmask.date.extensions.js")
+    script(src="/plugins/input-mask/jquery.inputmask.extensions.js")
+    script(src="/bower_components/moment/min/moment.min.js")
+    script(src="/bower_components/bootstrap-daterangepicker/daterangepicker.js")
+    script(src="/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js")
+    script(src="/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js")
+    script(src="/plugins/timepicker/bootstrap-timepicker.min.js")
+    script(src="/plugins/iCheck/icheck.min.js")
+    script(src="/bower_components/ckeditor/ckeditor.js")
+    script(src="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")
+    link(rel="stylesheet" href="/dist/css/bootstrap-tagsinput.css")
+    script(src="/dist/js/bootstrap-tagsinput.js")
+
+
+  body.hold-transition.skin-blue.sidebar-mini
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")
+        section.content-header
+          h1
+            | General Form Elements
+            small Preview
+          |       
+          ol.breadcrumb
+            li
+              a(href="#")
+                i.fa.fa-dashboard
+                |  Home
+            |         
+            li
+              a(href="#") Forms
+            |         
+            li.active General Elements
+        // Main content
+        section.content
+          #myModal.modal.fade(role='dialog', style="margin-top:150px;")
+            .modal-dialog
+              .modal-content
+                .modal-header
+                  button.close(type='button', data-dismiss='modal') ×
+                  h4.modal-title Add some labels
+                .modal-body
+                  label(for='pwd') Labels: &nbsp;
+                  input(id="tagsInput" type="text" value="" data-role="tagsinput" placeholder="Add tags here...")
+                .modal-footer
+                  button.btn.btn-primary(type='button', data-dismiss='modal', ng-click="devDashboardCtrl.saveUIComponent()") OK
+
+          .row
+            // left column
+            .col-md-6
+              div(id="form-general-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'form','form-general');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('form-general')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-primary
+                .box-header.with-border
+                  h3.box-title Quick Example
+                // /.box-header
+                // form start
+                div(id="form-general")
+                  form(role="form")
+                    .box-body
+                      .form-group
+                        label(for="exampleInputEmail1") Email address
+                        |                   
+                        input#exampleInputEmail1.form-control(type="email", placeholder="Enter email")
+                      |                 
+                      .form-group
+                        label(for="exampleInputPassword1") Password
+                        |                   
+                        input#exampleInputPassword1.form-control(type="password", placeholder="Password")
+                      |                 
+                      .form-group
+                        label(for="exampleInputFile") File input
+                        |                   
+                        input#exampleInputFile(type="file")
+                        |                   
+                        p.help-block Example block-level help text here.
+                      |                 
+                      .checkbox
+                        label
+                          input(type="checkbox")
+                          |  Check me out
+                    // /.box-body
+                    .box-footer
+                      button.btn.btn-primary(type="submit") Submit
+
+              .box.box-success
+                .box-header.with-border
+                  h3.box-title Different Height
+                |             
+                .box-body
+                  div(id="input-lg-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 13px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'form-input','input-lg');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('input-lg')" style="position: relative; top: 3px; color: #008000;")
+                  div(id="input-lg")
+                    input.form-control.input-lg(type="text", placeholder=".input-lg")
+                                 
+                  br
+                  div(id="input-default-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 13px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'form-input','input-default');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('input-default')" style="position: relative; top: 3px; color: #008000;")
+                  div(id="input-default")               
+                    input.form-control(type="text", placeholder="Default input")
+                                 
+                  br
+                  div(id="input-sm-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 13px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'form-input','input-sm');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('input-sm')" style="position: relative; top: 3px; color: #008000;")
+                  div(id="input-sm")               
+                    input.form-control.input-sm(type="text", placeholder=".input-sm")
+                // /.box-body
+              // /.box
+              .box.box-danger
+                .box-header.with-border
+                  h3.box-title Different Width
+                |             
+                .box-body
+                  .row
+                    .col-xs-3
+                      input.form-control(type="text", placeholder=".col-xs-3")
+                    |                 
+                    .col-xs-4
+                      input.form-control(type="text", placeholder=".col-xs-4")
+                    |                 
+                    .col-xs-5
+                      input.form-control(type="text", placeholder=".col-xs-5")
+                // /.box-body
+              // /.box
+              // Input addon
+              .box.box-info
+                .box-header.with-border
+                  h3.box-title Input Addon
+                |             
+                .box-body
+                  .row
+                    .col-md-12(id="input-group-chars-btn")
+                      div
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-group','input-group-chars');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-group-chars')" style="position: relative; top: 3px; color: #008000;")
+                      div(id="input-group-chars")
+                        .input-group
+                          span.input-group-addon @
+                          |                 
+                          input.form-control(type="text", placeholder="Username")
+                                 
+                  br
+                  .row
+                    .col-md-12(id="input-group-nums-btn")
+                      div
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-group','input-group-nums');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-group-nums')" style="position: relative; top: 3px; color: #008000;")
+                      div(id="input-group-nums")            
+                        .input-group
+                          input.form-control(type="text")
+                          |                 
+                          span.input-group-addon .00
+                                
+                  br
+                  .row
+                    .col-md-12(id="input-group-nums-icons-btn")
+                      div
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-group','input-group-nums-icons');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-group-icons')" style="position: relative; top: 3px; color: #008000;")
+                      div(id="input-group-nums-icons")               
+                        .input-group
+                          span.input-group-addon $
+                          |                 
+                          input.form-control(type="text")
+                          |                 
+                          span.input-group-addon .00
+                                 
+                  h4 With icons
+                  .row
+                    .col-md-12(id="input-group-icons-left-btn")
+                      div
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-group','input-group-icons-left');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-group-icons-left')" style="position: relative; top: 3px; color: #008000;")
+                      div(id="input-group-icons-left")            
+                        .input-group
+                          span.input-group-addon
+                            i.fa.fa-envelope
+                          |                 
+                          input.form-control(type="email", placeholder="Email")
+                                 
+                  br
+                  .row
+                    .col-md-12(id="input-group-icons-right-btn")
+                      div
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-group','input-group-icons-right');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-group-icons-right')" style="position: relative; top: 3px; color: #008000;")
+                      div(id="input-group-icons-right")             
+                        .input-group
+                          input.form-control(type="text")
+                          |                 
+                          span.input-group-addon
+                            i.fa.fa-check
+                                
+                  br
+                  .row
+                    .col-md-12(id="input-group-icons-both-btn")
+                      div
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-group','input-group-icons-both');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-group-icons-both')" style="position: relative; top: 3px; color: #008000;")
+                      div(id="input-group-icons-both")             
+                        .input-group
+                          span.input-group-addon
+                            i.fa.fa-dollar
+                          |                 
+                          input.form-control(type="text")
+                          |                 
+                          span.input-group-addon
+                            i.fa.fa-ambulance
+                                
+                  h4 With checkbox and radio inputs
+                                 
+                  .row
+                    .col-lg-6
+                      div(id="input-group-checkbox-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-group','input-group-checkbox');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-group-checkbox')" style="position: relative; top: 3px; color: #008000;")
+                      div(id="input-group-checkbox")
+                        .input-group
+                          span.input-group-addon
+                            input(type="checkbox")
+                          |                     
+                          input.form-control(type="text")
+
+                    .col-lg-6
+                      div(id="input-group-radio-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-group','input-group-radio');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-group-radio')" style="position: relative; top: 3px; color: #008000;")
+                      div(id="input-group-radio")
+                        .input-group
+                          span.input-group-addon
+                            input(type="radio")
+                          |                     
+                          input.form-control(type="text")
+
+                  h4 With buttons
+                  |               
+                  
+                  .row
+                    .col-md-12(id="input-group-dropdown")
+                      div.pull-right(id="input-group-dropdown-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-group','input-group-dropdown');") {{ app.name }}            
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-group-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                      p.margin
+                        | Large: 
+                        code .input-group.input-group-lg
+                      .input-group.input-group-lg
+                        .input-group-btn
+                          button.btn.btn-warning.dropdown-toggle(type="button", data-toggle="dropdown")
+                            | Action
+                            span.fa.fa-caret-down
+                          |                   
+                          ul.dropdown-menu
+                            li
+                              a(href="#") Action
+                            |                     
+                            li
+                              a(href="#") Another action
+                            |                     
+                            li
+                              a(href="#") Something else here
+                            |                     
+                            li.divider
+                            |                     
+                            li
+                              a(href="#") Separated link
+                        // /btn-group
+                        input.form-control(type="text")
+
+                  .row
+                    .col-md-12(id="input-group-button-left")
+                      div.pull-right(id="input-group-button-left-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-group','input-group-button-left');") {{ app.name }}            
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-group-button-left')" style="position: relative; top: 3px; color: #008000;")
+                      p.margin Normal
+                      |               
+                      .input-group
+                        .input-group-btn
+                          button.btn.btn-danger(type="button") Action
+                        // /btn-group
+                        input.form-control(type="text")
+
+                  .row
+                    .col-md-12(id="input-group-button-right")
+                      div.pull-right(id="input-group-button-right-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-group','input-group-button-right');") {{ app.name }}            
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-group-button-right')" style="position: relative; top: 3px; color: #008000;")
+                      p.margin
+                        | Small 
+                        code .input-group.input-group-sm
+                      |               
+                      .input-group.input-group-sm
+                        input.form-control(type="text")
+                        |                     
+                        span.input-group-btn
+                          button.btn.btn-info.btn-flat(type="button") Go!
+
+            .col-md-6
+              div(id="form-horizontal-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'form','form-horizontal');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('form-horizontal')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-info
+                .box-header.with-border
+                  h3.box-title Horizontal Form
+                div(id="form-horizontal")
+                  form.form-horizontal
+                    .box-body
+                      .form-group
+                        label.col-sm-2.control-label(for="inputEmail3") Email
+                        |                   
+                        .col-sm-10
+                          input#inputEmail3.form-control(type="email", placeholder="Email")
+                      |                 
+                      .form-group
+                        label.col-sm-2.control-label(for="inputPassword3") Password
+                        |                   
+                        .col-sm-10
+                          input#inputPassword3.form-control(type="password", placeholder="Password")
+                      |                 
+                      .form-group
+                        .col-sm-offset-2.col-sm-10
+                          .checkbox
+                            label
+                              input(type="checkbox")
+                              |  Remember me
+                    // /.box-body
+                    .box-footer
+                      button.btn.btn-default(type="submit") Cancel
+                      |                 
+                      button.btn.btn-info.pull-right(type="submit") Sign in
+
+
+              .box.box-warning
+                .box-header.with-border
+                  h3.box-title General Elements
+                // /.box-header
+                .box-body
+                  form(role="form")
+                    // text input
+                    .form-group
+                      .row
+                        .col-md-12(id="input-text")
+                          div.pull-right(id="input-text-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-text');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-text')" style="position: relative; top: 3px; color: #008000;")
+                          label Text
+                          |                   
+                          input.form-control(type="text", placeholder="Enter ...")
+                    |                 
+                    .form-group
+                      .row
+                        .col-md-12(id="input-text-disabled")
+                          div.pull-right(id="input-text-disabled-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-text-disabled');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-text-disabled')" style="position: relative; top: 3px; color: #008000;")
+                          label Text Disabled
+                          |                   
+                          input.form-control(type="text", placeholder="Enter ...", disabled="")
+                    // textarea
+                    .form-group
+                      .row
+                        .col-md-12(id="input-textarea")
+                          div.pull-right(id="input-textarea-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-textarea');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-textarea')" style="position: relative; top: 3px; color: #008000;")
+                          label Textarea
+                          |                   
+                          textarea.form-control(rows="3", placeholder="Enter ...")
+                    |                 
+                    .form-group
+                      .row
+                        .col-md-12(id="input-textarea-disabled")
+                          div.pull-right(id="input-textarea-disabled-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-textarea-disabled');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-textarea-disabled')" style="position: relative; top: 3px; color: #008000;")
+                          label Textarea Disabled
+                          |                   
+                          textarea.form-control(rows="3", placeholder="Enter ...", disabled="")
+                    // input states
+                    .form-group.has-success
+                      .row
+                        .col-md-12(id="input-text-success")
+                          div.pull-right(id="input-text-success-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-text-success');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-text-success')" style="position: relative; top: 3px; color: #008000;")
+                          label.control-label(for="inputSuccess")
+                            i.fa.fa-check
+                            |  Input with success
+                          |                   
+                          input#inputSuccess.form-control(type="text", placeholder="Enter ...")
+                          |                   
+                          span.help-block Help block with success
+                                     
+                    .form-group.has-warning
+                      .row
+                        .col-md-12(id="input-text-warning")
+                          div.pull-right(id="input-text-warning-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-text-warning');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-text-warning')" style="position: relative; top: 3px; color: #008000;")
+                          label.control-label(for="inputWarning")
+                            i.fa.fa-bell-o
+                            |  Input with
+                            |                     warning
+                          |                   
+                          input#inputWarning.form-control(type="text", placeholder="Enter ...")
+                          |                   
+                          span.help-block Help block with warning
+                                    
+                    .form-group.has-error
+                      .row
+                        .col-md-12(id="input-text-error")
+                          div.pull-right(id="input-text-error-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-text-error');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-text-error')" style="position: relative; top: 3px; color: #008000;")
+                          label.control-label(for="inputError")
+                            i.fa.fa-times-circle-o
+                            |  Input with
+                            |                     error
+                          |                   
+                          input#inputError.form-control(type="text", placeholder="Enter ...")
+                          |                   
+                          span.help-block Help block with error
+                    // checkbox
+                    .form-group
+                      .row
+                        .col-md-12(id="input-checkbox")
+                          div(id="input-checkbox-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-checkbox');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-checkbox')" style="position: relative; top: 3px; color: #008000;")
+                          .checkbox
+                            label
+                              input(type="checkbox")
+                              |                       Checkbox 1
+                          |                   
+                          .checkbox
+                            label
+                              input(type="checkbox")
+                              |                       Checkbox 2
+                          |                   
+                          .checkbox
+                            label
+                              input(type="checkbox", disabled="")
+                              |                       Checkbox disabled
+                    // radio
+                    .form-group
+                      .row
+                        .col-md-12(id="input-radio")
+                          div(id="input-radio-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-radio');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-radio')" style="position: relative; top: 3px; color: #008000;")
+                          .radio
+                            label
+                              input#optionsRadios1(type="radio", name="optionsRadios", value="option1", checked="")
+                              |                       Option one is this and that—be sure to include why it's great
+                          |                   
+                          .radio
+                            label
+                              input#optionsRadios2(type="radio", name="optionsRadios", value="option2")
+                              |                       Option two can be something else and selecting it will deselect option one
+                          |                   
+                          .radio
+                            label
+                              input#optionsRadios3(type="radio", name="optionsRadios", value="option3", disabled="")
+                              |                       Option three is disabled
+                        // select
+                    .form-group
+                      .row
+                        .col-md-12(id="input-select")
+                          div.pull-right(id="input-select-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-select');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-select')" style="position: relative; top: 3px; color: #008000;")
+                          label Select
+                          |                   
+                          select.form-control
+                            option option 1
+                            |                     
+                            option option 2
+                            |                     
+                            option option 3
+                            |                     
+                            option option 4
+                            |                     
+                            option option 5
+                                    
+                    .form-group
+                      .row
+                        .col-md-12(id="input-select-disabled")
+                          div.pull-right(id="input-select-disabled-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-select-disabled');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-select-disabled')" style="position: relative; top: 3px; color: #008000;")
+                          label Select Disabled
+                          |                   
+                          select.form-control(disabled="")
+                            option option 1
+                            |                     
+                            option option 2
+                            |                     
+                            option option 3
+                            |                     
+                            option option 4
+                            |                     
+                            option option 5
+                    // Select multiple
+                    .form-group
+                      .row
+                        .col-md-12(id="input-select-multiple")
+                          div.pull-right(id="input-select-multiple-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-select-multiple');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-select-multiple')" style="position: relative; top: 3px; color: #008000;")
+                          label Select Multiple
+                          |                   
+                          select.form-control(multiple="")
+                            option option 1
+                            |                     
+                            option option 2
+                            |                     
+                            option option 3
+                            |                     
+                            option option 4
+                            |                     
+                            option option 5
+                    |                 
+                    .form-group
+                      .row
+                        .col-md-12(id="input-select-multiple-disabled")
+                          div.pull-right(id="input-select-multiple-disabled-btn")
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-select-multiple-disabled');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('input-select-multiple-disabled')" style="position: relative; top: 3px; color: #008000;")
+                          label Select Multiple Disabled
+                          |                   
+                          select.form-control(multiple="", disabled="")
+                            option option 1
+                            |                     
+                            option option 2
+                            |                     
+                            option option 3
+                            |                     
+                            option option 4
+                            |                     
+                            option option 5
+
+          h3 Advanced Form Elements
+
+          .box.box-default
+            .box-header.with-border
+              h3.box-title Select2
+              |           
+              .box-tools.pull-right
+                button.btn.btn-box-tool(type="button", data-widget="collapse")
+                  i.fa.fa-minus
+                |             
+                button.btn.btn-box-tool(type="button", data-widget="remove")
+                  i.fa.fa-remove
+            // /.box-header
+            .box-body
+              .row
+                .col-md-6
+                  .row
+                    .col-md-12(id="input-select2-minimal")
+                      div.pull-right(id="input-select2-minimal-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-select2-minimal');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-select2-minimal')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Minimal
+                        |                 
+                        select.form-control.select2(style="width: 100%;")
+                          option(selected="selected") Alabama
+                          |                   
+                          option Alaska
+                          |                   
+                          option California
+                          |                   
+                          option Delaware
+                          |                   
+                          option Tennessee
+                          |                   
+                          option Texas
+                          |                   
+                          option Washington
+              
+                  .row
+                    .col-md-12(id="input-select2-disabled")
+                      div.pull-right(id="input-select2-disabled-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-select2-disabled');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-select2-disabled')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Disabled
+                        |                 
+                        select.form-control.select2(disabled="disabled", style="width: 100%;")
+                          option(selected="selected") Alabama
+                          |                   
+                          option Alaska
+                          |                   
+                          option California
+                          |                   
+                          option Delaware
+                          |                   
+                          option Tennessee
+                          |                   
+                          option Texas
+                          |                   
+                          option Washington
+
+                .col-md-6
+                  .row
+                    .col-md-12(id="input-select2-multiple")
+                      div.pull-right(id="input-select2-multiple-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-select2-multiple');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-select2-multiple')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Multiple
+                        |                 
+                        select.form-control.select2(multiple="multiple", data-placeholder="Select a State", style="width: 100%;")
+                          option Alabama
+                          |                   
+                          option Alaska
+                          |                   
+                          option California
+                          |                   
+                          option Delaware
+                          |                   
+                          option Tennessee
+                          |                   
+                          option Texas
+                          |                   
+                          option Washington
+
+                  .row
+                    .col-md-12(id="input-select2-disabled-result")
+                      div.pull-right(id="input-select2-disabled-result-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input','input-select2-disabled-result');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-select2-disabled-result')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Disabled Result
+                        |                 
+                        select.form-control.select2(style="width: 100%;")
+                          option(selected="selected") Alabama
+                          |                   
+                          option Alaska
+                          |                   
+                          option(disabled="disabled") California (disabled)
+                          |                   
+                          option Delaware
+                          |                   
+                          option Tennessee
+                          |                   
+                          option Texas
+                          |                   
+                          option Washington
+
+            .box-footer
+              | Visit 
+              a(href="https://select2.github.io/") Select2 documentation
+              |  for more examples and information about
+              |           the plugin.
+
+
+          .row
+            .col-md-6
+              .box.box-danger
+                .box-header
+                  h3.box-title Input masks
+                |             
+                .box-body
+                  .row
+                    .col-md-12(id="input-masks-date1")
+                      div.pull-right(id="input-masks-date1-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-masks','input-masks-date1');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-masks-date1')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Date masks:
+                        |                 
+                        .input-group
+                          .input-group-addon
+                            i.fa.fa-calendar
+                          |                   
+                          input.form-control(type="text", data-inputmask="'alias': 'dd/mm/yyyy'", data-mask="")
+                  .row
+                    .col-md-12(id="input-masks-date2")
+                      div.pull-right(id="input-masks-date2-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-masks','input-masks-date2');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-masks-date2')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        .input-group
+                          .input-group-addon
+                            i.fa.fa-calendar
+                          |                   
+                          input.form-control(type="text", data-inputmask="'alias': 'mm/dd/yyyy'", data-mask="")
+
+                  .row
+                    .col-md-12(id="input-masks-phone")
+                      div.pull-right(id="input-masks-phone-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-masks','input-masks-phone');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-masks-phone')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label US phone mask:
+                        |                 
+                        .input-group
+                          .input-group-addon
+                            i.fa.fa-phone
+                          |                   
+                          input.form-control(type="text", data-inputmask='"mask": "(999) 999-9999"', data-mask="")
+
+                  .row
+                    .col-md-12(id="input-masks-phone-int")
+                      div.pull-right(id="input-masks-phone-int-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-masks','input-masks-phone-int');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-masks-phone-int')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Intl US phone mask:
+                        |                 
+                        .input-group
+                          .input-group-addon
+                            i.fa.fa-phone
+                          |                   
+                          input.form-control(type="text", data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']", data-mask="")
+
+                  .row
+                    .col-md-12(id="input-masks-ip")
+                      div.pull-right(id="input-masks-ip-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-masks','input-masks-ip');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-masks-ip')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label IP mask:
+                        |                 
+                        .input-group
+                          .input-group-addon
+                            i.fa.fa-laptop
+                          |                   
+                          input.form-control(type="text", data-inputmask="'alias': 'ip'", data-mask="")
+
+
+              .box.box-info
+                .box-header
+                  h3.box-title Color & Time Picker
+                |             
+                .box-body
+                  .row
+                    .col-md-12(id="input-picker-color")
+                      div.pull-right(id="input-picker-color-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-picker','input-picker-color');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-picker-color')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Color picker:
+                        |                 
+                        input.form-control.my-colorpicker1(type="text")
+
+                  .row
+                    .col-md-12(id="input-picker-color-addon")
+                      div.pull-right(id="input-picker-color-addon-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-picker','input-picker-color-addon');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-picker-color-addon')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Color picker with addon:
+                        |                 
+                        .input-group.my-colorpicker2
+                          input.form-control(type="text")
+                          |                   
+                          .input-group-addon
+                            i
+
+                  .row
+                    .col-md-12(id="input-picker-time")
+                      div.pull-right(id="input-picker-time-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-picker','input-picker-time');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-picker-time')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Time picker:
+                        |                   
+                        .input-group
+                          input.form-control.timepicker(type="text")
+                          |                     
+                          .input-group-addon
+                            i.fa.fa-clock-o
+
+
+            .col-md-6
+              .box.box-primary
+                .box-header
+                  h3.box-title Date picker
+                |             
+                .box-body
+                  .row
+                    .col-md-12(id="input-icheck-minimal-date")
+                      div.pull-right(id="input-icheck-minimal-date-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-picker','input-icheck-minimal-date');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-icheck-minimal-date')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Date:
+                        |                 
+                        .input-group.date
+                          .input-group-addon
+                            i.fa.fa-calendar
+                          |                   
+                          input#datepicker.form-control.pull-right(type="text")
+
+                  .row
+                    .col-md-12(id="input-picker-minimal-date-range")
+                      div.pull-right(id="input-picker-minimal-date-range-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-picker','input-picker-minimal-date-range');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-picker-minimal-date-range')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Date range:
+                        |                 
+                        .input-group
+                          .input-group-addon
+                            i.fa.fa-calendar
+                          |                   
+                          input#reservation.form-control.pull-right(type="text")
+
+                  .row
+                    .col-md-12(id="input-picker-minimal-date-time-range")
+                      div.pull-right(id="input-picker-minimal-date-time-range-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-picker','input-picker-minimal-date-time-range');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-picker-minimal-date-time-range')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Date and time range:
+                        |                 
+                        .input-group
+                          .input-group-addon
+                            i.fa.fa-clock-o
+                          |                   
+                          input#reservationtime.form-control.pull-right(type="text")
+
+                  .row
+                    .col-md-12(id="input-picker-minimal-date-range-button")
+                      div.pull-right(id="input-picker-minimal-date-range-button-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-picker','input-picker-minimal-date-range-button');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-picker-minimal-date-range-button')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label Date range button:
+                        |                 
+                        .input-group
+                          button#daterange-btn.btn.btn-default.pull-right(type="button")
+                            span
+                              i.fa.fa-calendar
+                              |  Date range picker
+                            |                     
+                            i.fa.fa-caret-down
+
+              .box.box-success
+                .box-header
+                  h3.box-title iCheck - Checkbox & Radio Inputs
+                |             
+                .box-body
+                  .row
+                    .col-md-12(id="input-icheck-minimal")
+                      div(id="input-icheck-minimal-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-icheck','input-icheck-minimal');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-icheck-minimal')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label
+                          input.minimal(type="checkbox", checked="")
+                        |                 
+                        label
+                          input.minimal(type="checkbox")
+                        |                 
+                        label
+                          input.minimal(type="checkbox", disabled="")
+                          |                   Minimal skin checkbox
+                      // radio
+                      .form-group
+                        label
+                          input.minimal(type="radio", name="r1", checked="")
+                        |                 
+                        label
+                          input.minimal(type="radio", name="r1")
+                        |                 
+                        label
+                          input.minimal(type="radio", name="r1", disabled="")
+                          |                   Minimal skin radio
+                  // Minimal red style
+                  // checkbox
+
+                  .row
+                    .col-md-12(id="input-icheck-minimal-red")
+                      div(id="input-icheck-minimal-red-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-icheck','input-icheck-minimal-red');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-icheck-minimal-red')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label
+                          input.minimal-red(type="checkbox", checked="")
+                        |                 
+                        label
+                          input.minimal-red(type="checkbox")
+                        |                 
+                        label
+                          input.minimal-red(type="checkbox", disabled="")
+                          |                   Minimal red skin checkbox
+                      // radio
+                      .form-group
+                        label
+                          input.minimal-red(type="radio", name="r2", checked="")
+                        |                 
+                        label
+                          input.minimal-red(type="radio", name="r2")
+                        |                 
+                        label
+                          input.minimal-red(type="radio", name="r2", disabled="")
+                          |                   Minimal red skin radio
+                  // Minimal red style
+                  // checkbox
+                  .row
+                    .col-md-12(id="input-icheck-flat-green")
+                      div(id="input-icheck-flat-green-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'input-icheck','input-icheck-flat-green');") {{ app.name }}
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('input-icheck-flat-green')" style="position: relative; top: 3px; color: #008000;")
+                      .form-group
+                        label
+                          input.flat-red(type="checkbox", checked="")
+                        |                 
+                        label
+                          input.flat-red(type="checkbox")
+                        |                 
+                        label
+                          input.flat-red(type="checkbox", disabled="")
+                          |                   Flat green skin checkbox
+                      // radio
+                      .form-group
+                        label
+                          input.flat-red(type="radio", name="r3", checked="")
+                        |                 
+                        label
+                          input.flat-red(type="radio", name="r3")
+                        |                 
+                        label
+                          input.flat-red(type="radio", name="r3", disabled="")
+                          |                   Flat green skin radio
+                // /.box-body
+                .box-footer
+                  | Many more skins available. 
+                  a(href="http://fronteed.com/iCheck/") Documentation
+              // /.box
+            // /.col (right)
+
+          h3 Text Editors
+          .row
+            .col-md-12
+              div(id="text-editor-ck-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'text-editor','text-editor-ck');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('text-editor-ck')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-info
+                .box-header
+                  h3.box-title
+                    | CK Editor
+                    small Advanced and full of features
+                  // tools box
+                  .pull-right.box-tools
+                    button.btn.btn-info.btn-sm(type="button", data-widget="collapse", data-toggle="tooltip", title="Collapse")
+                      i.fa.fa-minus
+                    |                 
+                    button.btn.btn-info.btn-sm(type="button", data-widget="remove", data-toggle="tooltip", title="Remove")
+                      i.fa.fa-times
+                  // /. tools
+                // /.box-header
+                .box-body.pad(id="text-editor-ck")
+                  form
+                    textarea#editor1(name="editor1", rows="10", cols="80")
+                      | This is my textarea to be replaced with CKEditor.
+          
+          .row
+            .col-md-12
+              div(id="text-editor-wysi-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'text-editor','text-editor-wysi');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('text-editor-wysi')" style="position: relative; top: 3px; color: #008000;")
+              .box
+                .box-header
+                  h3.box-title
+                    | Bootstrap WYSIHTML5
+                    small Simple and fast
+                  // tools box
+                  .pull-right.box-tools
+                    button.btn.btn-default.btn-sm(type="button", data-widget="collapse", data-toggle="tooltip", title="Collapse")
+                      i.fa.fa-minus
+                    |                 
+                    button.btn.btn-default.btn-sm(type="button", data-widget="remove", data-toggle="tooltip", title="Remove")
+                      i.fa.fa-times
+                  // /. tools
+                // /.box-header
+                .box-body.pad(id="text-editor-wysi")
+                  form
+                    textarea.textarea(placeholder="Place some text here", style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;")
+            // /.col
+
+      include ../static_content/dashboard_footer
+
+    script.
+      $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+        //Datemask dd/mm/yyyy
+        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+        //Datemask2 mm/dd/yyyy
+        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+        //Money Euro
+        $('[data-mask]').inputmask()
+        //Date range picker
+        $('#reservation').daterangepicker()
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+        //Date range as a button
+        $('#daterange-btn').daterangepicker(
+        {
+          ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+          },
+          startDate: moment().subtract(29, 'days'),
+          endDate  : moment()
+        },
+        function (start, end) {
+          $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+        }
+          )
+          //Date picker
+        $('#datepicker').datepicker({
+          autoclose: true
+        })
+        //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+          checkboxClass: 'icheckbox_minimal-blue',
+          radioClass   : 'iradio_minimal-blue'
+        })
+        //Red color scheme for iCheck
+        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+          checkboxClass: 'icheckbox_minimal-red',
+          radioClass   : 'iradio_minimal-red'
+        })
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+          checkboxClass: 'icheckbox_flat-green',
+          radioClass   : 'iradio_flat-green'
+        })
+        //Colorpicker
+        $('.my-colorpicker1').colorpicker()
+        //color picker with addon
+        $('.my-colorpicker2').colorpicker()
+        //Timepicker
+        $('.timepicker').timepicker({
+          showInputs: false
+        })
+        $('.slider').slider()
+      })
+
+    script.
+      $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('editor1')
+        //bootstrap WYSIHTML5 - text editor
+        $('.textarea').wysihtml5()
+      })

@@ -1,0 +1,61 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+
+    link(rel='stylesheet' href='/octopus/vendor/magnific-popup/magnific-popup.css')
+    link(rel='stylesheet' href='/octopus/vendor/bootstrap-datepicker/css/datepicker3.css')
+    link(rel='stylesheet' href='/octopus/vendor/select2/select2.css')
+    link(rel='stylesheet' href='/octopus/vendor/jquery-datatables-bs3/assets/css/datatables.css')
+    link(rel="stylesheet" href="/octopus/stylesheets/theme.css")
+    link(rel="stylesheet" href="/octopus/stylesheets/skins/default.css")
+    script(src='https://cdn.jsdelivr.net/npm/vega@4.4.0')
+
+  body.hold-transition.skin-blue.sidebar-mini.ng-cloak
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")
+        section.content-header
+          h1 
+            i.fa.fa-dashboard(style="margin-right:5px;")
+            | My applications
+
+          section.content.ng-cloak(ng-init="devDashboardCtrl.showFullScreenSpinner();")
+            a.btn.btn-primary(style="float: right;" href="/developers/dashboard#new_app") Add new application
+            input.form-control(placeholder="Filter applications..." ng-model="applicationFilterName.name" style="width:25%")
+            br
+            div(style="background-color: white; min-height: 40vh; padding: 25px;")
+              .row.row-eq-height(style="margin-top:15px;")
+                .col-xs-12.col-sm-6.col-md-3(ng-repeat="app in devDashboardCtrl.applications | filter: applicationFilterName")
+                  div.container-choose-component-no-hover
+                    h3(style="text-align:center; word-break: break-all;") {{app.name}}
+                    span(
+                     ng-style="app.containerStatus === 'running' && {'color':'green'}  || app.containerStatus === 'stopped' && {'color':'red'}  || app.containerStatus === 'not_assigned' && {'color':'grey'}"
+                     style="position:absolute; top:0; display: block; text-align:center; font-style:italic; font-size: 1.4rem")
+                      i.fa.fa-circle-o-notch.fa-spin(ng-if="app.containerStatus === 'running'")
+                      i.fa.fa-ban(ng-if="app.containerStatus === 'stopped'")
+                      i.fa.fa-circle-o(ng-if="app.containerStatus === 'not_assigned'")
+                      &nbsp;
+                      | {{app.containerStatus === 'running' ? 'Running' : app.containerStatus === 'stopped' ? 'Stopped': 'Not assigned'}}
+                      
+                    p(style="text-align:center;") {{app.description}}
+                    h4(style="text-align:center; word-break: break-all")
+                      span.label.label-info(ng-repeat="tag in app.tags" style="margin-right:5px; display:-webkit-inline-box") {{tag.text}}
+                    hr
+                    div(style="text-align:center; padding-bottom:10px;")
+                      a.btn.btn-primary(style="margin-right:12px;" ng-href="../developers/dashboard#apps" ng-click="devDashboardCtrl.setCurrentApp(app._id); devDashboardCtrl.setMainDashboard(false, 0);")
+                        i.fa.fa-cloud(style="margin-right: 8px;")
+                        | Deploy
+                      button.btn.btn-default(ng-click="devDashboardCtrl.goToDesignWithAppSelected(app._id)")
+                        i.fa.fa-pencil(style="margin-right:8px;")
+                        | Design
+              br
+
+      include ../static_content/dashboard_footer
+  
+  script(type="text/ng-template" id="fullScreenModal.html")
+    .modal-body
+      <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>

@@ -1,0 +1,2144 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+    script(src="/dist/js/demo.js")
+    link(rel="stylesheet" href="/dist/css/bootstrap-tagsinput.css")
+    script(src="/dist/js/bootstrap-tagsinput.js")
+
+  body.hold-transition.skin-blue.sidebar-mini
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")      
+        section.content-header
+          h1
+            | Buttons
+            small Control panel       
+          ol.breadcrumb
+            li
+              a(href='#')
+                i.fa.fa-dashboard
+                |  Home
+            |         
+            li
+              a(href='#') UI
+            |         
+            li.active Buttons
+
+        // Main content
+        section.content
+          #myModal.modal.fade(role='dialog', style="margin-top:150px;")
+            .modal-dialog
+              .modal-content
+                .modal-header
+                  button.close(type='button', data-dismiss='modal') ×
+                  h4.modal-title Add some labels
+                .modal-body
+                  label(for='pwd') Labels: &nbsp;
+                  input(id="tagsInput" type="text" value="" data-role="tagsinput" placeholder="Add tags here...")
+                .modal-footer
+                  button.btn.btn-primary(type='button', data-dismiss='modal', ng-click="devDashboardCtrl.saveUIComponent()") OK
+
+          .row
+            .col-md-12
+              .box.box-primary
+                .box-header
+                  i.fa.fa-edit
+                  |               
+                  h3.box-title Buttons
+                |             
+                .box-body.pad.table-responsive
+                  p
+                    | Various types of buttons. Using the base class 
+                    code .btn
+                  |               
+                  table.table.table-bordered.text-center
+                    tr
+                      th Normal
+                      |                   
+                      th
+                        | Large 
+                        code .btn-lg
+                      |                   
+                      th
+                        | Small 
+                        code .btn-sm
+                      |                   
+                      th
+                        | X-Small 
+                        code .btn-xs
+                      |                   
+                      th
+                        | Flat 
+                        code .btn-flat
+                      |                   
+                      th
+                        | Disabled 
+                        code .disabled
+                    |                 
+                    tr
+                      td(id="btn-default")
+                        .row(id="btn-default-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-default');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-default')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-default(type='button') Default
+                                         
+                      td(id="btn-default_btn-lg")
+                        .row(id="btn-default_btn-lg-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-default_btn-lg');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-default_btn-lg')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-default.btn-lg(type='button') Default
+                                         
+                      td(id="btn-default_btn-sm")
+                        .row(id="btn-default_btn-sm-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-default_btn-sm');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-default_btn-sm')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-default.btn-sm(type='button') Default
+                                         
+                      td(id="btn-default_btn-xs")
+                        .row(id="btn-default_btn-xs-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-default_btn-xs');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-default_btn-xs')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-default.btn-xs(type='button') Default
+                                         
+                      td(id="btn-default_btn-flat")
+                        .row(id="btn-default_btn-flat-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-default_btn-flat');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-default_btn-flat')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-default.btn-flat(type='button') Default
+                                         
+                      td(id="btn-default_disabled")
+                        .row(id="btn-default_disabled-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-default_disabled');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-default_disabled')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-default.disabled(type='button') Default
+                    |                 
+                    tr
+                      td(id="btn-primary")
+                        .row(id="btn-primary-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-primary');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-primary')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-primary(type='button') Primary
+                                         
+                      td(id="btn-primary_btn-lg")
+                        .row(id="btn-primary_btn-lg-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-primary_btn-lg');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-primary_btn-lg')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-primary.btn-lg(type='button') Primary
+                                         
+                      td(id="btn-primary_btn-sm")
+                        .row(id="btn-primary_btn-sm-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-primary_btn-sm');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-primary_btn-sm')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-primary.btn-sm(type='button') Primary
+                                         
+                      td(id="btn-primary_btn-xs")
+                        .row(id="btn-primary_btn-xs-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-primary_btn-xs');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-primary_btn-xs')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-primary.btn-xs(type='button') Primary
+                                         
+                      td(id="btn-primary_btn-flat")
+                        .row(id="btn-primary_btn-flat-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-primary_btn-flat');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-primary_btn-flat')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-primary.btn-flat(type='button') Primary
+                                         
+                      td(id="btn-primary_disabled")
+                        .row(id="btn-primary_disabled-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-primary_disabled');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-primary_disabled')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-primary.disabled(type='button') Primary
+                    |                 
+                    tr
+                      td(id="btn-success")
+                        .row(id="btn-success-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-success');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-success')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-success(type='button') Success
+                                         
+                      td(id="btn-success_btn-lg")
+                        .row(id="btn-success_btn-lg-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-success_btn-lg');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-success_btn-lg')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-success.btn-lg(type='button') Success
+                                         
+                      td(id="btn-success_btn-sm")
+                        .row(id="btn-success_btn-sm-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-success_btn-sm');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-success_btn-sm')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-success.btn-sm(type='button') Success
+                                         
+                      td(id="btn-success_btn-xs")
+                        .row(id="btn-success_btn-xs-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-success_btn-xs');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-success_btn-xs')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-success.btn-xs(type='button') Success
+                                         
+                      td(id="btn-success_btn-flat")
+                        .row(id="btn-success_btn-flat-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-success_btn-flat');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-success_btn-flat')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-success.btn-flat(type='button') Success
+                                         
+                      td(id="btn-success_disabled")
+                        .row(id="btn-success_disabled-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-success_disabled');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-success_disabled')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-success.disabled(type='button') Success
+                    |                 
+                    tr
+                      td(id="btn-info")
+                        .row(id="btn-info-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-info');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-info')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-info(type='button') Info
+                                         
+                      td(id="btn-info_btn-lg")
+                        .row(id="btn-info_btn-lg-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-info_btn-lg');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-info_btn-lg')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-info.btn-lg(type='button') Info
+                                         
+                      td(id="btn-info_btn-sm")
+                        .row(id="btn-info_btn-sm-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-info_btn-sm');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-info_btn-sm')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-info.btn-sm(type='button') Info
+                                         
+                      td(id="btn-info_btn-xs")
+                        .row(id="btn-info_btn-xs-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-info_btn-xs');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-info_btn-xs')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-info.btn-xs(type='button') Info
+                      
+                      td(id="btn-info_btn-flat")
+                        .row(id="btn-info_btn-flat-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-info_btn-flat');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-info_btn-flat')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-info.btn-flat(type='button') Info
+                                        
+                      td(id="btn-info_disabled")
+                        .row(id="btn-info_disabled-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-info_disabled');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-info_disabled')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-info.disabled(type='button') Info
+                    |                 
+                    tr
+                      td(id="btn-danger")
+                        .row(id="btn-danger-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-danger');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-danger')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-danger(type='button') Danger
+                                         
+                      td(id="btn-danger_btn-lg")
+                        .row(id="btn-danger_btn-lg-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-danger_btn-lg');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-danger_btn-lg')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-danger.btn-lg(type='button') Danger
+                                         
+                      td(id="btn-danger_btn-sm")
+                        .row(id="btn-danger_btn-sm-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-danger_btn-sm');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-danger_btn-sm')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-danger.btn-sm(type='button') Danger
+                                         
+                      td(id="btn-danger_btn-xs")
+                        .row(id="btn-danger_btn-xs-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-danger_btn-xs');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-danger_btn-xs')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-danger.btn-xs(type='button') Danger
+                                        
+                      td(id="btn-danger_btn-flat")
+                        .row(id="btn-danger_btn-flat-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-danger_btn-flat');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-danger_btn-flat')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-danger.btn-flat(type='button') Danger
+                                         
+                      td(id="btn-danger_disabled")
+                        .row(id="btn-danger_disabled-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-danger_disabled');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-danger_disabled')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-danger.disabled(type='button') Danger
+                    |                 
+                    tr
+                      td(id="btn-warning")
+                        .row(id="btn-warning-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-warning');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-warning')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-warning(type='button') Warning
+                                        
+                      td(id="btn-warning_btn-lg")
+                        .row(id="btn-warning_btn-lg-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-warning_btn-lg');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-warning_btn-lg')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-warning.btn-lg(type='button') Warning
+                                         
+                      td(id="btn-warning_btn-sm")
+                        .row(id="btn-warning_btn-sm-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-warning_btn-sm');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-warning_btn-sm')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-warning.btn-sm(type='button') Warning
+                                         
+                      td(id="btn-warning_btn-xs")
+                        .row(id="btn-warning_btn-xs-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-warning_btn-xs');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-warning_btn-xs')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-warning.btn-xs(type='button') Warning
+                                        
+                      td(id="btn-warning_btn-flat")
+                        .row(id="btn-warning_btn-flat-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-warning_btn-flat');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-warning_btn-flat')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-warning.btn-flat(type='button') Warning
+                                         
+                      td(id="btn-warning_disabled")
+                        .row(id="btn-warning_disabled-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-warning_disabled');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-warning_disabled')" style="position: relative; top: 3px; color: #008000;")
+                        button.btn.btn-block.btn-warning.disabled(type='button') Warning
+
+          .row
+            .col-md-6
+              // Block buttons
+              .box
+                .box-header
+                  h3.box-title Block Buttons
+                |             
+                .box-body
+                  div(id="btn-block_btn-default")
+                    div.pull-right(id="btn-block_btn-default-btn")
+                      a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                        i.fa.fa-plus(style="font-size: 13px")
+                      ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                        li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                          a(role="menuitem") Add element to Favorites
+                        li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                          a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-block_btn-default');") {{ app.name }}
+                            i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-block_btn-default')" style="position: relative; top: 3px; color: #008000;")
+                    button.btn.btn-default.btn-block(type='button') .btn-block
+
+                  div(id="btn-block_btn-default_btn-flat")
+                    div.pull-right(id="btn-block_btn-default_btn-flat-btn")
+                      a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                        i.fa.fa-plus(style="font-size: 13px")
+                      ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                        li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                          a(role="menuitem") Add element to Favorites
+                        li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                          a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-block_btn-default_btn-flat');") {{ app.name }}               
+                            i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-block_btn-default_btn-flat')" style="position: relative; top: 3px; color: #008000;")
+                    button.btn.btn-default.btn-block.btn-flat(type='button') .btn-block .btn-flat
+
+                  div(id="btn-block_btn-default_btn-sm")
+                    div.pull-right(id="btn-block_btn-default_btn-sm-btn")
+                      a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                        i.fa.fa-plus(style="font-size: 13px")
+                      ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                        li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                          a(role="menuitem") Add element to Favorites
+                        li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                          a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button','btn-block_btn-default_btn-sm');") {{ app.name }}
+                            i.fa.fa-check.pull-right(ng-if="app.components.includes('btn-block_btn-default_btn-sm')" style="position: relative; top: 3px; color: #008000;")
+                    button.btn.btn-default.btn-block.btn-sm(type='button') .btn-block .btn-sm
+
+
+              .box
+                .box-header
+                  h3.box-title Horizontal Button Group
+                |             
+                .box-body.table-responsive.pad
+                  p
+                    | Horizontal button groups are easy to create with bootstrap. Just add your buttons
+                    | inside 
+                    code &lt;div class=&quot;btn-group&quot;&gt;&lt;/div&gt;
+                  |               
+                  table.table.table-bordered
+                    tr
+                      th Button
+                      |                   
+                      th Icons
+                      |                   
+                      th Flat
+                      |                   
+                      th Dropdown
+                    // Default
+                    tr
+                      td(id="button-group-default")
+                        div(id="button-group-default-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-default');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-default')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-default(type='button') Left
+                          |                       
+                          button.btn.btn-default(type='button') Middle
+                          |                       
+                          button.btn.btn-default(type='button') Right
+                                         
+                      td(id="button-group-default-icons")
+                        div(id="button-group-default-icons-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-default-icons');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-default-icons')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-default(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-default(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-default(type='button')
+                            i.fa.fa-align-right
+                                         
+                      td(id="button-group-default-flat")
+                        div(id="button-group-default-flat-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-default-flat');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-default-flat')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-default.btn-flat(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-default.btn-flat(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-default.btn-flat(type='button')
+                            i.fa.fa-align-right
+                                         
+                      td(id="button-group-default-dropdown")
+                        div(id="button-group-default-dropdown-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-default-dropdown');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-default-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-default(type='button') 1
+                          |                       
+                          button.btn.btn-default(type='button') 2
+                          |                       
+                          .btn-group
+                            button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+                              span.caret
+                            |                         
+                            ul.dropdown-menu
+                              li
+                                a(href='#') Dropdown link
+                              |                           
+                              li
+                                a(href='#') Dropdown link
+
+
+                    tr
+                      td(id="button-group-info")
+                        div(id="button-group-info-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-info');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-info')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-info(type='button') Left
+                          |                       
+                          button.btn.btn-info(type='button') Middle
+                          |                       
+                          button.btn.btn-info(type='button') Right
+                                         
+                      td(id="button-group-info-icons")
+                        div(id="button-group-info-icons-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-info-icons');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-info-icons')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-info(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-info(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-info(type='button')
+                            i.fa.fa-align-right
+                                         
+                      td(id="button-group-info-flat")
+                        div(id="button-group-info-flat-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-info-flat');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-info-flat')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-info.btn-flat(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-info.btn-flat(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-info.btn-flat(type='button')
+                            i.fa.fa-align-right
+                                         
+                      td(id="button-group-info-dropdown")
+                        div(id="button-group-info-dropdown-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-info-dropdown');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-info-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-info(type='button') 1
+                          |                       
+                          button.btn.btn-info(type='button') 2
+                          |                       
+                          .btn-group
+                            button.btn.btn-info.dropdown-toggle(type='button', data-toggle='dropdown')
+                              span.caret
+                            |                         
+                            ul.dropdown-menu
+                              li
+                                a(href='#') Dropdown link
+                              |                           
+                              li
+                                a(href='#') Dropdown link
+
+                    tr
+                      td(id="button-group-danger")
+                        div(id="button-group-danger-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-danger');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-danger')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-danger(type='button') Left
+                          |                       
+                          button.btn.btn-danger(type='button') Middle
+                          |                       
+                          button.btn.btn-danger(type='button') Right
+                                        
+                      td(id="button-group-danger-icons")
+                        div(id="button-group-danger-icons-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-danger-icons');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-danger-icons')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-danger(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-danger(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-danger(type='button')
+                            i.fa.fa-align-right
+                                        
+                      td(id="button-group-danger-flat")
+                        div(id="button-group-danger-flat-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-danger-flat');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-danger-flat')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-danger.btn-flat(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-danger.btn-flat(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-danger.btn-flat(type='button')
+                            i.fa.fa-align-right
+                                         
+                      td(id="button-group-danger-dropdown")
+                        div(id="button-group-danger-dropdown-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-danger-dropdown');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-danger-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-danger(type='button') 1
+                          |                       
+                          button.btn.btn-danger(type='button') 2
+                          |                       
+                          .btn-group
+                            button.btn.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown')
+                              span.caret
+                            |                         
+                            ul.dropdown-menu
+                              li
+                                a(href='#') Dropdown link
+                              |                           
+                              li
+                                a(href='#') Dropdown link
+
+                    tr
+                      td(id="button-group-warning")
+                        div(id="button-group-warning-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-warning');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-warning')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-warning(type='button') Left
+                          |                       
+                          button.btn.btn-warning(type='button') Middle
+                          |                       
+                          button.btn.btn-warning(type='button') Right
+                                         
+                      td(id="button-group-warning-icons")
+                        div(id="button-group-warning-icons-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-warning-icons');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-warning-icons')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-warning(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-warning(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-warning(type='button')
+                            i.fa.fa-align-right
+                                         
+                      td(id="button-group-warning-flat")
+                        div(id="button-group-warning-flat-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-warning-flat');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-warning-flat')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-warning.btn-flat(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-warning.btn-flat(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-warning.btn-flat(type='button')
+                            i.fa.fa-align-right
+                                       
+                      td(id="button-group-warning-dropdown")
+                        div(id="button-group-warning-dropdown-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-warning-dropdown');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-warning-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-warning(type='button') 1
+                          |                       
+                          button.btn.btn-warning(type='button') 2
+                          |                       
+                          .btn-group
+                            button.btn.btn-warning.dropdown-toggle(type='button', data-toggle='dropdown')
+                              span.caret
+                            |                         
+                            ul.dropdown-menu
+                              li
+                                a(href='#') Dropdown link
+                              |                           
+                              li
+                                a(href='#') Dropdown link
+
+                    tr
+                      td(id="button-group-success")
+                        div(id="button-group-success-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-success');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-success')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-success(type='button') Left
+                          |                       
+                          button.btn.btn-success(type='button') Middle
+                          |                       
+                          button.btn.btn-success(type='button') Right
+                                        
+                      td(id="button-group-success-icons")
+                        div(id="button-group-success-icons-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-success-icons');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-success-icons')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-success(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-success(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-success(type='button')
+                            i.fa.fa-align-right
+                                        
+                      td(id="button-group-success-flat")
+                        div(id="button-group-success-flat-btn")
+                          a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                            i.fa.fa-plus(style="font-size: 13px")
+                          ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                            li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                              a(role="menuitem") Add element to Favorites
+                            li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                              a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-success-flat');") {{ app.name }}
+                                i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-success-flat')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-success.btn-flat(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-success.btn-flat(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-success.btn-flat(type='button')
+                            i.fa.fa-align-right
+                                         
+                      td(id="button-group-success-dropdown")
+                        .row(id="button-group-success-dropdown-btn")
+                          div
+                            a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                              i.fa.fa-plus(style="font-size: 13px")
+                            ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                              li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                a(role="menuitem") Add element to Favorites
+                              li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group','button-group-success-dropdown');") {{ app.name }}
+                                  i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-success-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group
+                          button.btn.btn-success(type='button') 1
+                          |                       
+                          button.btn.btn-success(type='button') 2
+                          |                       
+                          .btn-group
+                            button.btn.btn-success.dropdown-toggle(type='button', data-toggle='dropdown')
+                              span.caret
+                            |                         
+                            ul.dropdown-menu
+                              li
+                                a(href='#') Dropdown link
+                              |                           
+                              li
+                                a(href='#') Dropdown link
+
+
+              .box
+                .box-header
+                  h3.box-title Button Addon
+                |             
+                .box-body
+                  div(id="button-addon-dropdown-btn")
+                    a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 13px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-addon','button-addon-dropdown');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('button-addon-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                  p With dropdown
+                  div(id="button-addon-dropdown")               
+                    .input-group.margin
+                      .input-group-btn
+                        button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+                          | Action
+                          span.fa.fa-caret-down
+                        |                   
+                        ul.dropdown-menu
+                          li
+                            a(href='#') Action
+                          |                     
+                          li
+                            a(href='#') Another action
+                          |                     
+                          li
+                            a(href='#') Something else here
+                          |                     
+                          li.divider
+                          |                     
+                          li
+                            a(href='#') Separated link
+                      // /btn-group
+                      input.form-control(type='text')
+
+                  div(id="button-addon-normal-btn")
+                    a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 13px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-addon','button-addon-normal');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('button-addon-normal')" style="position: relative; top: 3px; color: #008000;")
+                  p Normal
+                  div(id="button-addon-normal")               
+                    .input-group.margin
+                      .input-group-btn
+                        button.btn.btn-danger(type='button') Action
+                      // /btn-group
+                      input.form-control(type='text')
+
+                  div(id="button-addon-flat-btn")
+                    a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 13px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-addon','button-addon-flat');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('button-addon-flat')" style="position: relative; top: 3px; color: #008000;")
+                  p Flat
+                  div(id="button-addon-flat")               
+                    .input-group.margin
+                      input.form-control(type='text')
+                      |                     
+                      span.input-group-btn
+                        button.btn.btn-info.btn-flat(type='button') Go!
+
+
+              .box
+                .box-header
+                  h3.box-title Split buttons
+                |             
+                .box-body
+                  div(id="split-buttons-normal-btn")
+                    a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 13px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'split-buttons','split-buttons-normal');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('split-buttons-normal')" style="position: relative; top: 3px; color: #008000;")
+                  p Normal split buttons:
+
+                  div(id="split-buttons-normal")              
+                    .margin
+                      .btn-group
+                        button.btn.btn-default(type='button') Action
+                        |                   
+                        button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+                          span.caret
+                          |                     
+                          span.sr-only Toggle Dropdown
+                        |                   
+                        ul.dropdown-menu(role='menu')
+                          li
+                            a(href='#') Action
+                          |                     
+                          li
+                            a(href='#') Another action
+                          |                     
+                          li
+                            a(href='#') Something else here
+                          |                     
+                          li.divider
+                          |                     
+                          li
+                            a(href='#') Separated link
+                      |                 
+                      .btn-group
+                        button.btn.btn-info(type='button') Action
+                        |                   
+                        button.btn.btn-info.dropdown-toggle(type='button', data-toggle='dropdown')
+                          span.caret
+                          |                     
+                          span.sr-only Toggle Dropdown
+                        |                   
+                        ul.dropdown-menu(role='menu')
+                          li
+                            a(href='#') Action
+                          |                     
+                          li
+                            a(href='#') Another action
+                          |                     
+                          li
+                            a(href='#') Something else here
+                          |                     
+                          li.divider
+                          |                     
+                          li
+                            a(href='#') Separated link
+                      |                 
+                      .btn-group
+                        button.btn.btn-danger(type='button') Action
+                        |                   
+                        button.btn.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown')
+                          span.caret
+                          |                     
+                          span.sr-only Toggle Dropdown
+                        |                   
+                        ul.dropdown-menu(role='menu')
+                          li
+                            a(href='#') Action
+                          |                     
+                          li
+                            a(href='#') Another action
+                          |                     
+                          li
+                            a(href='#') Something else here
+                          |                     
+                          li.divider
+                          |                     
+                          li
+                            a(href='#') Separated link
+                      |                 
+                      .btn-group
+                        button.btn.btn-success(type='button') Action
+                        |                   
+                        button.btn.btn-success.dropdown-toggle(type='button', data-toggle='dropdown')
+                          span.caret
+                          |                     
+                          span.sr-only Toggle Dropdown
+                        |                   
+                        ul.dropdown-menu(role='menu')
+                          li
+                            a(href='#') Action
+                          |                     
+                          li
+                            a(href='#') Another action
+                          |                     
+                          li
+                            a(href='#') Something else here
+                          |                     
+                          li.divider
+                          |                     
+                          li
+                            a(href='#') Separated link
+                      |                 
+                      .btn-group
+                        button.btn.btn-warning(type='button') Action
+                        |                   
+                        button.btn.btn-warning.dropdown-toggle(type='button', data-toggle='dropdown')
+                          span.caret
+                          |                     
+                          span.sr-only Toggle Dropdown
+                        |                   
+                        ul.dropdown-menu(role='menu')
+                          li
+                            a(href='#') Action
+                          |                     
+                          li
+                            a(href='#') Another action
+                          |                     
+                          li
+                            a(href='#') Something else here
+                          |                     
+                          li.divider
+                          |                     
+                          li
+                            a(href='#') Separated link
+                  
+                  div(id="split-buttons-flat-btn")
+                    a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 13px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'split-buttons','split-buttons-flat');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('split-buttons-flat')" style="position: relative; top: 3px; color: #008000;")
+                  p Flat split buttons:
+
+                  div(id="split-buttons-flat")              
+                    .margin
+                      .btn-group
+                        button.btn.btn-default.btn-flat(type='button') Action
+                        |                   
+                        button.btn.btn-default.btn-flat.dropdown-toggle(type='button', data-toggle='dropdown')
+                          span.caret
+                          |                     
+                          span.sr-only Toggle Dropdown
+                        |                   
+                        ul.dropdown-menu(role='menu')
+                          li
+                            a(href='#') Action
+                          |                     
+                          li
+                            a(href='#') Another action
+                          |                     
+                          li
+                            a(href='#') Something else here
+                          |                     
+                          li.divider
+                          |                     
+                          li
+                            a(href='#') Separated link
+                      |                 
+                      .btn-group
+                        button.btn.btn-info.btn-flat(type='button') Action
+                        |                   
+                        button.btn.btn-info.btn-flat.dropdown-toggle(type='button', data-toggle='dropdown')
+                          span.caret
+                          |                     
+                          span.sr-only Toggle Dropdown
+                        |                   
+                        ul.dropdown-menu(role='menu')
+                          li
+                            a(href='#') Action
+                          |                     
+                          li
+                            a(href='#') Another action
+                          |                     
+                          li
+                            a(href='#') Something else here
+                          |                     
+                          li.divider
+                          |                     
+                          li
+                            a(href='#') Separated link
+                      |                 
+                      .btn-group
+                        button.btn.btn-danger.btn-flat(type='button') Action
+                        |                   
+                        button.btn.btn-danger.btn-flat.dropdown-toggle(type='button', data-toggle='dropdown')
+                          span.caret
+                          |                     
+                          span.sr-only Toggle Dropdown
+                        |                   
+                        ul.dropdown-menu(role='menu')
+                          li
+                            a(href='#') Action
+                          |                     
+                          li
+                            a(href='#') Another action
+                          |                     
+                          li
+                            a(href='#') Something else here
+                          |                     
+                          li.divider
+                          |                     
+                          li
+                            a(href='#') Separated link
+                      |                 
+                      .btn-group
+                        button.btn.btn-success.btn-flat(type='button') Action
+                        |                   
+                        button.btn.btn-success.btn-flat.dropdown-toggle(type='button', data-toggle='dropdown')
+                          span.caret
+                          |                     
+                          span.sr-only Toggle Dropdown
+                        |                   
+                        ul.dropdown-menu(role='menu')
+                          li
+                            a(href='#') Action
+                          |                     
+                          li
+                            a(href='#') Another action
+                          |                     
+                          li
+                            a(href='#') Something else here
+                          |                     
+                          li.divider
+                          |                     
+                          li
+                            a(href='#') Separated link
+                      |                 
+                      .btn-group
+                        button.btn.btn-warning.btn-flat(type='button') Action
+                        |                   
+                        button.btn.btn-warning.btn-flat.dropdown-toggle(type='button', data-toggle='dropdown')
+                          span.caret
+                          |                     
+                          span.sr-only Toggle Dropdown
+                        |                   
+                        ul.dropdown-menu(role='menu')
+                          li
+                            a(href='#') Action
+                          |                     
+                          li
+                            a(href='#') Another action
+                          |                     
+                          li
+                            a(href='#') Something else here
+                          |                     
+                          li.divider
+                          |                     
+                          li
+                            a(href='#') Separated link
+
+              .box
+                .box-header
+                  h3.box-title
+                    | Social Buttons (By 
+                    a(href='https://github.com/lipis/bootstrap-social') Lipis
+                    | )
+                |             
+                .box-body
+                  div(id="social-buttons-block-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 13px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'social-buttons','social-buttons-block');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('social-buttons-block')" style="position: relative; top: 3px; color: #008000;")
+                  div(id="social-buttons-block")
+                    a.btn.btn-block.btn-social.btn-bitbucket
+                      i.fa.fa-bitbucket
+                      |  Sign in with Bitbucket
+                    |               
+                    a.btn.btn-block.btn-social.btn-dropbox
+                      i.fa.fa-dropbox
+                      |  Sign in with Dropbox
+                    |               
+                    a.btn.btn-block.btn-social.btn-facebook
+                      i.fa.fa-facebook
+                      |  Sign in with Facebook
+                    |               
+                    a.btn.btn-block.btn-social.btn-flickr
+                      i.fa.fa-flickr
+                      |  Sign in with Flickr
+                    |               
+                    a.btn.btn-block.btn-social.btn-foursquare
+                      i.fa.fa-foursquare
+                      |  Sign in with Foursquare
+                    |               
+                    a.btn.btn-block.btn-social.btn-github
+                      i.fa.fa-github
+                      |  Sign in with GitHub
+                    |               
+                    a.btn.btn-block.btn-social.btn-google
+                      i.fa.fa-google-plus
+                      |  Sign in with Google
+                    |               
+                    a.btn.btn-block.btn-social.btn-instagram
+                      i.fa.fa-instagram
+                      |  Sign in with Instagram
+                    |               
+                    a.btn.btn-block.btn-social.btn-linkedin
+                      i.fa.fa-linkedin
+                      |  Sign in with LinkedIn
+                    |               
+                    a.btn.btn-block.btn-social.btn-tumblr
+                      i.fa.fa-tumblr
+                      |  Sign in with Tumblr
+                    |               
+                    a.btn.btn-block.btn-social.btn-twitter
+                      i.fa.fa-twitter
+                      |  Sign in with Twitter
+                    |               
+                    a.btn.btn-block.btn-social.btn-vk
+                      i.fa.fa-vk
+                      |  Sign in with VK
+                                 
+                  br
+                  .row
+                    .col-md-12
+                      div(id="social-buttons-icons-btn")
+                        a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                          i.fa.fa-plus(style="font-size: 13px")
+                        ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                          li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                            a(role="menuitem") Add element to Favorites
+                          li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                            a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'social-buttons','social-buttons-icons');") {{ app.name }}            
+                              i.fa.fa-check.pull-right(ng-if="app.components.includes('social-buttons-icons')" style="position: relative; top: 3px; color: #008000;")
+
+                  .text-center(id="social-buttons-icons")
+                    a.btn.btn-social-icon.btn-bitbucket
+                      i.fa.fa-bitbucket
+                    |                 
+                    a.btn.btn-social-icon.btn-dropbox
+                      i.fa.fa-dropbox
+                    |                 
+                    a.btn.btn-social-icon.btn-facebook
+                      i.fa.fa-facebook
+                    |                 
+                    a.btn.btn-social-icon.btn-flickr
+                      i.fa.fa-flickr
+                    |                 
+                    a.btn.btn-social-icon.btn-foursquare
+                      i.fa.fa-foursquare
+                    |                 
+                    a.btn.btn-social-icon.btn-github
+                      i.fa.fa-github
+                    |                 
+                    a.btn.btn-social-icon.btn-google
+                      i.fa.fa-google-plus
+                    |                 
+                    a.btn.btn-social-icon.btn-instagram
+                      i.fa.fa-instagram
+                    |                 
+                    a.btn.btn-social-icon.btn-linkedin
+                      i.fa.fa-linkedin
+                    |                 
+                    a.btn.btn-social-icon.btn-tumblr
+                      i.fa.fa-tumblr
+                    |                 
+                    a.btn.btn-social-icon.btn-twitter
+                      i.fa.fa-twitter
+                    |                 
+                    a.btn.btn-social-icon.btn-vk
+                      i.fa.fa-vk
+              // /.box
+            // /.col
+            .col-md-6
+              div(id="application-buttons-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 13px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'applications-buttons','applications-buttons');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('application-buttons')" style="position: relative; top: 3px; color: #008000;")
+              .box
+                .box-header
+                  h3.box-title Application Buttons
+                |             
+                .box-body
+                  p
+                    | Add the classes 
+                    code .btn.btn-app
+                    |  to an 
+                    code &lt;a&gt;
+                    |  tag to achieve the following:
+                  div(id="applications-buttons")               
+                    a.btn.btn-app
+                      i.fa.fa-edit
+                      |  Edit
+                    |               
+                    a.btn.btn-app
+                      i.fa.fa-play
+                      |  Play
+                    |               
+                    a.btn.btn-app
+                      i.fa.fa-repeat
+                      |  Repeat
+                    |               
+                    a.btn.btn-app
+                      i.fa.fa-pause
+                      |  Pause
+                    |               
+                    a.btn.btn-app
+                      i.fa.fa-save
+                      |  Save
+                    |               
+                    a.btn.btn-app
+                      span.badge.bg-yellow 3
+                      |                 
+                      i.fa.fa-bullhorn
+                      |  Notifications
+                    |               
+                    a.btn.btn-app
+                      span.badge.bg-green 300
+                      |                 
+                      i.fa.fa-barcode
+                      |  Products
+                    |               
+                    a.btn.btn-app
+                      span.badge.bg-purple 891
+                      |                 
+                      i.fa.fa-users
+                      |  Users
+                    |               
+                    a.btn.btn-app
+                      span.badge.bg-teal 67
+                      |                 
+                      i.fa.fa-inbox
+                      |  Orders
+                    |               
+                    a.btn.btn-app
+                      span.badge.bg-aqua 12
+                      |                 
+                      i.fa.fa-envelope
+                      |  Inbox
+                    |               
+                    a.btn.btn-app
+                      span.badge.bg-red 531
+                      |                 
+                      i.fa.fa-heart-o
+                      |  Likes
+              .row
+                .col-md-12
+                  div(id="colors-buttons-btn")
+                    a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                      i.fa.fa-plus(style="font-size: 13px")
+                    ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                      li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                        a(role="menuitem") Add element to Favorites
+                      li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                        a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'buttons-colors','colors-buttons');") {{ app.name }}
+                          i.fa.fa-check.pull-right(ng-if="app.components.includes('colors-buttons')" style="position: relative; top: 3px; color: #008000;")
+              .box
+                .box-header
+                  h3.box-title Different colors
+                |             
+                .box-body(id="colors-buttons")
+                  p
+                    | Mix and match with various background colors. Use base class 
+                    code .btn
+                    |  and add any available
+                    |                 
+                    code .bg-*
+                    |  class
+                  //
+                    You may notice a .margin class added
+                    here but that's only to make the content
+                    display correctly without having to use a table
+                  p
+                    button.btn.bg-maroon.btn-flat.margin(type='button') .btn.bg-maroon.btn-flat
+                    |                 
+                    button.btn.bg-purple.btn-flat.margin(type='button') .btn.bg-purple.btn-flat
+                    |                 
+                    button.btn.bg-navy.btn-flat.margin(type='button') .btn.bg-navy.btn-flat
+                    |                 
+                    button.btn.bg-orange.btn-flat.margin(type='button') .btn.bg-orange.btn-flat
+                    |                 
+                    button.btn.bg-olive.btn-flat.margin(type='button') .btn.bg-olive.btn-flat
+                  |               
+                  p
+                    button.btn.bg-maroon.margin(type='button') .btn.bg-maroon
+                    |                 
+                    button.btn.bg-purple.margin(type='button') .btn.bg-purple
+                    |                 
+                    button.btn.bg-navy.margin(type='button') .btn.bg-navy
+                    |                 
+                    button.btn.bg-orange.margin(type='button') .btn.bg-orange
+                    |                 
+                    button.btn.bg-olive.margin(type='button') .btn.bg-olive
+              // /.box
+              // Vertical grouping
+              .box
+                .box-header
+                  h3.box-title Vertical Button Group
+                |             
+                .box-body.table-responsive.pad
+                  p
+                    | Vertical button groups are easy to create with bootstrap. Just add your buttons
+                    | inside 
+                    code &lt;div class=&quot;btn-group-vertical&quot;&gt;&lt;/div&gt;
+                  |               
+                  table.table.table-bordered
+                    tr
+                      th Button
+                      |                   
+                      th Icons
+                      |                   
+                      th Flat
+                      |                   
+                      th Dropdown
+                    // Default
+                    tr
+                      td(id="button-group-vertical-default")
+                        .row(id="button-group-vertical-default-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-default');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-default')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-default(type='button') Top
+                          |                       
+                          button.btn.btn-default(type='button') Middle
+                          |                       
+                          button.btn.btn-default(type='button') Bottom
+                      |                   
+                      td(id="button-group-vertical-default-icons")
+                        .row(id="button-group-vertical-default-icons-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-default-icons');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-default-icons')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-default(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-default(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-default(type='button')
+                            i.fa.fa-align-right
+                      |                   
+                      td(id="button-group-vertical-default-flat")
+                        .row(id="button-group-vertical-default-flat-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-default-flat');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-default-flat')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-default.btn-flat(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-default.btn-flat(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-default.btn-flat(type='button')
+                            i.fa.fa-align-right
+                      |                   
+                      td(id="button-group-vertical-default-dropdown")
+                        .row(id="button-group-vertical-default-dropdown-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-default-dropdown');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-default-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-default(type='button') 1
+                          |                       
+                          button.btn.btn-default(type='button') 2
+                          |                       
+                          .btn-group
+                            button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+                              span.caret
+                            |                         
+                            ul.dropdown-menu
+                              li
+                                a(href='#') Dropdown link
+                              |                           
+                              li
+                                a(href='#') Dropdown link
+                    // ./default
+                    // Info
+                    tr
+                      td(id="button-group-vertical-info")
+                        .row(id="button-group-vertical-info-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-info');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-info')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-info(type='button') Top
+                          |                       
+                          button.btn.btn-info(type='button') Middle
+                          |                       
+                          button.btn.btn-info(type='button') Bottom
+                      |                   
+                      td(id="button-group-vertical-info-icons")
+                        .row(id="button-group-vertical-info-icons-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-info-icons');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-info-icons')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-info(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-info(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-info(type='button')
+                            i.fa.fa-align-right
+                      |                   
+                      td(id="button-group-vertical-info-flat")
+                        .row(id="button-group-vertical-info-flat-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-info-flat');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-info-flat')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-info.btn-flat(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-info.btn-flat(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-info.btn-flat(type='button')
+                            i.fa.fa-align-right
+                      |                   
+                      td(id="button-group-vertical-info-dropdown")
+                        .row(id="button-group-vertical-info-dropdown-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-info-dropdown');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-info-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-info(type='button') 1
+                          |                       
+                          button.btn.btn-info(type='button') 2
+                          |                       
+                          .btn-group
+                            button.btn.btn-info.dropdown-toggle(type='button', data-toggle='dropdown')
+                              span.caret
+                            |                         
+                            ul.dropdown-menu
+                              li
+                                a(href='#') Dropdown link
+                              |                           
+                              li
+                                a(href='#') Dropdown link
+                    // /. info
+                    // /.danger
+                    tr
+                      td(id="button-group-vertical-danger")
+                        .row(id="button-group-vertical-danger-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-danger');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-danger')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-danger(type='button') Top
+                          |                       
+                          button.btn.btn-danger(type='button') Middle
+                          |                       
+                          button.btn.btn-danger(type='button') Bottom
+                      |                   
+                      td(id="button-group-vertical-danger-icons")
+                        .row(id="button-group-vertical-danger-icons-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-danger-icons');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-danger-icons')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-danger(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-danger(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-danger(type='button')
+                            i.fa.fa-align-right
+                      |                   
+                      td(id="button-group-vertical-danger-flat")
+                        .row(id="button-group-vertical-danger-flat-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-danger-flat');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-danger-icons')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-danger.btn-flat(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-danger.btn-flat(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-danger.btn-flat(type='button')
+                            i.fa.fa-align-right
+                      |                   
+                      td(id="button-group-vertical-danger-dropdown")
+                        .row(id="button-group-vertical-danger-dropdown-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-danger-dropdown');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-danger-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-danger(type='button') 1
+                          |                       
+                          button.btn.btn-danger(type='button') 2
+                          |                       
+                          .btn-group
+                            button.btn.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown')
+                              span.caret
+                            |                         
+                            ul.dropdown-menu
+                              li
+                                a(href='#') Dropdown link
+                              |                           
+                              li
+                                a(href='#') Dropdown link
+                    // /.danger
+                    // warning
+                    tr
+                      td(id="button-group-vertical-warning")
+                        .row(id="button-group-vertical-warning-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-warning');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-warning')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-warning(type='button') Top
+                          |                       
+                          button.btn.btn-warning(type='button') Middle
+                          |                       
+                          button.btn.btn-warning(type='button') Bottom
+                      |                   
+                      td(id="button-group-vertical-warning-icons")
+                        .row(id="button-group-vertical-warning-icons-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-warning-icons');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-warning-icons')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-warning(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-warning(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-warning(type='button')
+                            i.fa.fa-align-right
+                      |                   
+                      td(id="button-group-vertical-warning-flat")
+                        .row(id="button-group-vertical-warning-flat-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-warning-flat');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-warning-flat')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-warning.btn-flat(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-warning.btn-flat(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-warning.btn-flat(type='button')
+                            i.fa.fa-align-right
+                      |                   
+                      td(id="button-group-vertical-warning-dropdown")
+                        .row(id="button-group-vertical-warning-dropdown-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-warning-dropdown');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-warning-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-warning(type='button') 1
+                          |                       
+                          button.btn.btn-warning(type='button') 2
+                          |                       
+                          .btn-group
+                            button.btn.btn-warning.dropdown-toggle(type='button', data-toggle='dropdown')
+                              span.caret
+                            |                         
+                            ul.dropdown-menu
+                              li
+                                a(href='#') Dropdown link
+                              |                           
+                              li
+                                a(href='#') Dropdown link
+                    // /.warning
+                    // success
+                    tr
+                      td(id="button-group-vertical-success")
+                        .row(id="button-group-vertical-success-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-success');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-success')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-success(type='button') Top
+                          |                       
+                          button.btn.btn-success(type='button') Middle
+                          |                       
+                          button.btn.btn-success(type='button') Bottom
+                      |                   
+                      td(id="button-group-vertical-success-icons")
+                        .row(id="button-group-vertical-success-icons-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-success-icons');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-success-icons')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-success(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-success(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-success(type='button')
+                            i.fa.fa-align-right
+                      |                   
+                      td(id="button-group-vertical-success-flat")
+                        .row(id="button-group-vertical-success-flat-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-success-flat');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-success-flat')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-success.btn-flat(type='button')
+                            i.fa.fa-align-left
+                          |                       
+                          button.btn.btn-success.btn-flat(type='button')
+                            i.fa.fa-align-center
+                          |                       
+                          button.btn.btn-success.btn-flat(type='button')
+                            i.fa.fa-align-right
+                      |                   
+                      td(id="button-group-vertical-success-dropdown")
+                        .row(id="button-group-vertical-success-dropdown-btn")
+                          .col-md-12
+                            div.pull-right
+                              a.btn.btn-social-icon.pull-right(data-toggle="dropdown" href="#" aria-expanded="false")
+                                i.fa.fa-plus(style="font-size: 13px")
+                              ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                                li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                                  a(role="menuitem") Add element to Favorites
+                                li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                                  a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'button-group-vertical','button-group-vertical-success-dropdown');") {{ app.name }}
+                                    i.fa.fa-check.pull-right(ng-if="app.components.includes('button-group-vertical-success-dropdown')" style="position: relative; top: 3px; color: #008000;")
+                        .btn-group-vertical
+                          button.btn.btn-success(type='button') 1
+                          |                       
+                          button.btn.btn-success(type='button') 2
+                          |                       
+                          .btn-group
+                            button.btn.btn-success.dropdown-toggle(type='button', data-toggle='dropdown')
+                              span.caret
+                            |                         
+                            ul.dropdown-menu
+                              li
+                                a(href='#') Dropdown link
+                              |                           
+                              li
+                                a(href='#') Dropdown link
+                                
+
+      include ../static_content/dashboard_footer

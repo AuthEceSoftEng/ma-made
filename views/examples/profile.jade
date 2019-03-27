@@ -1,0 +1,84 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+    script(src="/dist/js/demo.js")
+
+  body.hold-transition.skin-blue.sidebar-mini
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")
+        section.content-header
+          h1
+            | User Profile
+                
+          ol.breadcrumb
+            li
+              a(href="#")
+                i.fa.fa-dashboard
+                |  Home      
+            li.active User profile
+        // Main content
+        section.content
+          .row
+            .col-md-3
+              // Profile Image
+              .box.box-primary
+                .box-body.box-profile
+                  img.profile-user-img.img-responsive.img-circle(ng-src="{{devDashboardCtrl.avatar}}", alt="User profile picture")
+                  |               
+                  h3.profile-username.text-center {{ devDashboardCtrl.username }}
+                  ul.list-group.list-group-unbordered
+                    li.list-group-item
+                      b Email
+                      p.pull-right {{ devDashboardCtrl.email }}
+                    li.list-group-item
+                      b Name
+                      p.pull-right {{ devDashboardCtrl.name }}
+              
+  
+            .col-md-9
+              .box.box-primary
+                .box-header
+                  h3.box-title Settings
+                .box-body
+                  form.form-horizontal()
+                    .form-group
+                      label.col-sm-2.control-label(for="inputName") Name
+                      |                     
+                      .col-sm-10
+                        input.form-control(ng-model="devDashboardCtrl.model.inputName" type="text", placeholder="Name")
+                    |                   
+                    .form-group
+                      label.col-sm-2.control-label(for="inputEmail") Email
+                      |                     
+                      .col-sm-10
+                        input.form-control(ng-model="devDashboardCtrl.model.inputEmail" type="text", placeholder="Email")
+                    |                   
+                    .form-group
+                      label.col-sm-2.control-label(for="inputCurrentPassword") Current Password
+                      |                     
+                      .col-sm-10
+                        input.form-control(ng-model="devDashboardCtrl.model.inputCurrentPassword" type="password", placeholder="Current Password")
+                    |                   
+                    .form-group
+                      label.col-sm-2.control-label(for="inputNewPassword") New Password
+                      |                     
+                      .col-sm-10
+                        input.form-control(ng-model="devDashboardCtrl.model.inputNewPassword" type="password", placeholder="New Password")
+                    |                   
+                    .form-group
+                      label.col-sm-2.control-label(for="inputPasswordConfiramtion") Password Confirmation
+                      |                     
+                      .col-sm-10
+                        input.form-control(ng-model="devDashboardCtrl.model.inputPasswordConfirmation" type="password", placeholder="Password Confirmation")
+                    |                   
+                    .form-group
+                      .col-sm-offset-2.col-sm-10
+                        button.btn.btn-danger(type="button", ng-click="devDashboardCtrl.updateInfo();") Submit
+
+
+      include ../static_content/dashboard_footer

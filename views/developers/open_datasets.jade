@@ -1,0 +1,138 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+    
+    link(rel='stylesheet' href='/octopus/vendor/magnific-popup/magnific-popup.css')
+    link(rel='stylesheet' href='/octopus/vendor/bootstrap-datepicker/css/datepicker3.css')
+    link(rel='stylesheet' href='/octopus/vendor/select2/select2.css')
+    link(rel='stylesheet' href='/octopus/vendor/jquery-datatables-bs3/assets/css/datatables.css')
+    link(rel="stylesheet" href="/octopus/stylesheets/theme.css")
+    link(rel="stylesheet" href="/octopus/stylesheets/skins/default.css")
+
+  body.hold-transition.skin-blue.sidebar-mini.ng-cloak
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")
+        section.content-header
+          h1
+            i.fa.fa-database(style="margin-right: 7px;")
+            | Datasets
+            small Available
+          ol.breadcrumb
+            li
+              a(href='#')
+                i.fa.fa-gear
+                |  Services
+            li.active Available
+
+        section.content.ng-cloak(ng-init="devDashboardCtrl.showFullScreenSpinner(); devDashboardCtrl.getDatasets()")
+          a.btn.btn-default(style="float:right; margin-left:15px;" href="http://marketplace.mappingpedia.linkeddata.es/login" target="_blank" rel="noopener noreferrer")
+            | Fully annotated datasets
+            &nbsp;
+            i.fa.fa-external-link 
+          a.btn.btn-primary(style="float: right;" href="/developers/upload_dataset") Add new dataset
+          input.form-control(placeholder="Filter datasets..." ng-model="devDashboardCtrl.datasetAndServicefilterInput" style="width:25%")
+          br
+          div(style="background-color: white; min-height: 50vh; padding: 25px;")
+            .row.row-eq-height(style="margin-top:15px;")
+              .col-xs-12.col-sm-6.col-md-4(ng-repeat="dataset in devDashboardCtrl.datasets | filter: devDashboardCtrl.myFilter")
+                pre(ng-style="(!dataset.appliedFilters || devDashboardCtrl.isObjectEmpty(dataset.appliedFilters)) && {display:'none'}") {{dataset.appliedFilters | json}} 
+                div.container-choose-component(
+                  ng-click="devDashboardCtrl.openDatasetsModal(dataset)")
+                  h3(style="text-align:center; word-break: break-all;") {{dataset.name}}
+                  hr
+                  p(style="text-align:center;") {{dataset.description}}
+                  h4(style="text-align:center; word-break: break-all")
+                    span.label.label-info(ng-repeat="tag in dataset.tags" style="margin-right:5px; display:-webkit-inline-box") {{tag.text}}
+            br
+      
+      include ../static_content/dashboard_footer
+
+  script(type="text/ng-template" id="fullScreenModal.html")
+    .modal-body
+      <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  
+  script(type="text/ng-template" id="datasetModal.html")
+    .modal-header
+      button.close(type='button' ng-click="devDashboardCtrl.closeDatasetsModal()") &times;
+      h3.modal-title(style="text-align: center;") 
+        i.fa.fa-database(style="margin-right:7px;FG")
+        | {{ devDashboardCtrl.openDatasetForModal.name }}
+      h4(style="text-align:center")
+        span.label.label-info(ng-repeat="tag in devDashboardCtrl.openDatasetForModal.tags" style="margin-right:5px;") {{tag.text}}
+    .modal-body 
+      h3 
+        a(href="{{devDashboardCtrl.openDatasetForModal.url}}" target='_blank') {{ devDashboardCtrl.openDatasetForModal.url }}
+      div(style="font-size:1.7rem")
+        .row
+          .col-md-6
+            .row
+              .col-md-12
+                strong Description:
+                &nbsp; 
+                span {{ devDashboardCtrl.openDatasetForModal.description }}
+              .col-md-12
+                strong Locale: 
+                &nbsp;
+                span {{ devDashboardCtrl.openDatasetForModal.locale  || 'en-GB'}}
+          .col-md-6
+            .row
+              .col-md-12
+                span(ng-if="devDashboardCtrl.openDatasetForModal.curator &&  devDashboardCtrl.openDatasetForModal.curator.isThirdParty")
+                  strong Data Curator:
+                  &nbsp;
+                  span {{devDashboardCtrl.openDatasetForModal.curator.name}}
+              .col-md-12
+                span(ng-if="devDashboardCtrl.openDatasetForModal.schemaDotOrg && devDashboardCtrl.openDatasetForModal.schemaDotOrg.type")
+                  strong Schema Type:
+                  &nbsp;
+                  span {{devDashboardCtrl.openDatasetForModal.schemaDotOrg.type}}
+      .box(style="margin-top:25px;")
+        .box-header
+          h3.box-title Endpoints
+        .box-body
+          table.table.table-hover
+            thead
+              th(style='font-weight:bold; width:1px; white-space:nowrap;') Method
+              th(style='font-weight:bold; width:1px; white-space:nowrap;') Endpoint
+              th(style='font-weight:bold; width:1px; white-space:nowrap;') Description
+            tbody
+              tr
+                td 
+                  span.label.label-primary GET
+                td {{devDashboardCtrl.openDatasetForModal.url}}
+                td Get dataset content.
+              tr
+                td 
+                  span.label.label-primary GET
+                td {{devDashboardCtrl.openDatasetForModal.url}}?where={"variable":"value"}
+                td Get all dataset rows where <code>variable</code> = <code>value</code>. You can use more than one variables.
+              tr
+                td 
+                  span.label.label-primary GET
+                td {{devDashboardCtrl.openDatasetForModal.url}}?where={"variable":{"function":"value"}}
+                td Get all dataset rows where <code>variable</code> meets the function requirements. A function could be <code>$gte</code>, <code>$lte</code>, <code>$not</code> etc.
+              tr
+                td 
+                  span.label.label-primary GET
+                td {{devDashboardCtrl.openDatasetForModal.url}}?sort=[("variable",order)]
+                td Get all dataset rows in asceding (<code>order</code> = 1) or descending order (<code>order</code> = -1) of <code>variable</code>. You can use more than one variables for sorting.
+              tr
+                td 
+                  span.label.label-primary GET
+                td {{devDashboardCtrl.openDatasetForModal.url}}?projection={"variable":0}
+                td Get all dataset fields except <code>variable</code>. You can use more than one variables.
+              tr
+                td 
+                  span.label.label-primary GET
+                td {{devDashboardCtrl.openDatasetForModal.url}}?projection={"variable":1}
+                td Get only <code>variable</code> field. You can use more than one variables.      
+    .modal-footer
+      button.btn.btn-danger.btn-sm(ng-click="devDashboardCtrl.deleteDataset(devDashboardCtrl.openDatasetForModal._id)")
+        i.fa.fa-trash 
+        &nbsp;
+        | Delete dataset

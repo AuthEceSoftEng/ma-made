@@ -1,0 +1,54 @@
+.row
+  .col-md-12
+    .box.box-success
+      .box-header.with-border
+        h2.box-title Source Code
+        .box-tools.pull-right
+          button.btn.btn-box-tool(type='button', data-toggle='collapse', data-target="#code")
+            i.fa.fa-minus
+      .box-body.collapse.in#code
+        .ma-sourcecode
+          .ma-sourcecode-content
+            .row
+              .col-xs-12
+                .col-md-4.ma-sourcecode-left-column
+                  h4 
+                    i(class="fa fa-folder-open")
+                    |  Working Directory
+                  ul(style='list-style-type:none;padding-left:20px;')
+                    li(ng-repeat='object in devDashboardCtrl.fileTree.data.tree' )
+                      span(class='glyphicon glyphicon-folder-open', style='padding-right:8px;' area-hidden='true' ng-if="object.type == 'tree' ") 
+                      span(class='glyphicon glyphicon-file', style='padding-right:8px;' area-hidden='true' ng-if="object.type == 'blob' ") 
+                      | {{ object.name }}
+
+                .col-md-8.ma-sourcecode-right-column
+                  p(style='float:right; width:100%; margin-top:20px;')
+                    button.btn.btn-success.pull-right(type='button', style="width: 195px", data-toggle="modal", data-target="#myModal", ng-disabled="devDashboardCtrl.syncLoading || !devDashboardCtrl.canSync")
+                      span(class="glyphicon glyphicon-refresh glyphicon-spin", ng-show="devDashboardCtrl.syncLoading", style="margin-right:10px;")
+                      {{ devDashboardCtrl.syncBtnText }}
+                  p(style='float:right; width:100%; margin-top:5px;')
+                    button.btn.btn-warning.pull-right(type='button', style="width: 195px", ng-click="devDashboardCtrl.installAppDependencies()")
+                      span(class="glyphicon glyphicon-refresh glyphicon-spin", ng-show="devDashboardCtrl.installDepLoading", style="margin-right:10px;")
+                      {{ devDashboardCtrl.installDepBtnText }}
+                  p(style='float:right; width:100%; margin-top:5px;')
+                    button.btn.btn-primary.pull-right(type='button', style="width: 195px", ng-click="devDashboardCtrl.deployApp()", ng-disabled="devDashboardCtrl.deployLoading || !devDashboardCtrl.canDeploy")
+                      span(class="glyphicon glyphicon-refresh glyphicon-spin", ng-show="devDashboardCtrl.deployLoading", style="margin-right:10px;")
+                      {{ devDashboardCtrl.deployBtnText }}
+                  p(style='float:right; width:100%; margin-top:5px;')
+                    button.btn.btn-danger.pull-right(type='button', style="width: 195px", ng-click="devDashboardCtrl.stopApp()", ng-disabled="devDashboardCtrl.stopLoading || !devDashboardCtrl.canStop")
+                      span(class="glyphicon glyphicon-refresh glyphicon-spin", ng-show="devDashboardCtrl.stopLoading", style="margin-right:10px;")
+                      {{ devDashboardCtrl.stopBtnText }}
+                  p(style='float:right; width:100%; margin-top:5px;')
+                    a.btn.btn-default.pull-right(target='_blank', ng-href="{{ devDashboardCtrl.appUrl }}", style="width: 195px", ng-disabled="!devDashboardCtrl.canPreview") Preview Application
+
+  #myModal.modal.fade(role='dialog', style="margin-top:150px;")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal') ×
+          h4.modal-title Please provide password
+        .modal-body
+          label(for='pwd') Password:
+          input(type="password", class="form-control", name="pwd", ng-model="repo.pass")
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal', ng-click="devDashboardCtrl.sync(repo.pass)") OK

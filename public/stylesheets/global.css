@@ -1,0 +1,618 @@
+
+/* global.css */
+
+/*--------------------------------------------------------------
+* >>> TABLE OF CONTENTS:
+*--------------------------------------------------------------
+* 0.0 - Fonts
+* 1.0 - Reset
+* 2.0 - Typography
+* 3.0 - Elements
+* 4.0 - Forms
+* 5.0 - Clearings
+* 6.0 - Repeatable Patterns
+* 7.0 - Basic Structure
+
+
+/*-----------------------------------------------------------------------------
+* 0.0 Fonts
+* -----------------------------------------------------------------------------
+*/
+@font-face {
+
+}
+
+
+/*-----------------------------------------------------------------------------
+* 1.0 Reset
+* -----------------------------------------------------------------------------
+*/
+html, body, div, span, applet, object, iframe, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  border: 0;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+html,
+body {
+  width: 100%;
+  position: relative;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  color: #303031;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+*,
+*:before,
+*:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+article,
+aside,
+figcaption,
+figure,
+footer,
+header,
+main,
+nav,
+section {
+  display: block;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+table {
+  word-wrap: break-word;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+caption,
+th,
+td {
+	font-weight: normal;
+	text-align: left;
+}
+
+embed,
+iframe,
+object,
+video {
+  max-width: 100%;
+}
+
+a {
+  background-color: transparent;
+  color: #469AAF;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover,
+a:focus,
+a:active,
+a:visited {
+  color: #469AAF;
+  text-decoration: none;
+  outline: 0;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a img {
+  border: 0;
+}
+
+/*-----------------------------------------------------------------------------
+* 2.0 Typography
+* -----------------------------------------------------------------------------
+*/
+button,
+input,
+select,
+textarea {
+  color: #303031;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  color: #303031;
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  line-height: 1.4em;
+}
+
+h4, h5, h6 {
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 22px;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+h3 {
+  font-size: 15px;
+}
+
+h4 {
+  font-size: 15px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  font-size: 13px;
+}
+
+p {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+p + p {
+  margin-top: 10px;
+}
+
+b,
+strong {
+  font-weight: 700;
+}
+
+dfn,
+cite,
+em,
+i {
+  font-style: italic;
+}
+
+sup,
+sub {
+  height: 0;
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+
+sup {
+  bottom: 1ex;
+}
+
+sub {
+  top: 0.5ex;
+}
+
+small,
+.small {
+  font-size: 85%;
+}
+
+big {
+  font-size: 125%;
+}
+
+
+/*-----------------------------------------------------------------------------
+* 3.0 Elements
+* -----------------------------------------------------------------------------
+*/
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #E0E0E0;
+}
+
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: disc;
+}
+
+ol {
+  list-style: decimal;
+}
+
+ul li,
+ol li {
+  padding: 5px 0;
+}
+
+li > ul,
+li > ol {
+  margin-bottom: 0;
+}
+
+dl {
+  margin-bottom: 1.6em;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin-bottom: 1.6em;
+}
+
+table,
+th,
+td {
+  border: 1px solid rgba(51,51,51,0.1);
+}
+
+table {
+  width: 100%;
+  margin: 0 0 1.6em;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-width: 1px 0 0 1px;
+  table-layout: fixed; /* Prevents HTML tables from becoming too wide */
+}
+
+th,
+td {
+  font-weight: normal;
+  text-align: left;
+}
+
+img {
+  vertical-align: middle;
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}
+
+caption {
+  color: inherit;
+  text-align: center;
+}
+
+figure {
+  margin: 0;
+}
+
+del {
+  opacity: 0.8;
+}
+
+label {
+  margin-bottom: 4px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+i {
+  padding-right: 5px;
+}
+
+
+/*-----------------------------------------------------------------------------
+* 4.0 Forms
+* -----------------------------------------------------------------------------
+*/
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+}
+
+input,
+textarea,
+.form-control {
+  border-color: #D0D0D0;
+  border-radius: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button {
+  overflow: visible;
+}
+
+
+/*-----------------------------------------------------------------------------
+* 5.0 Clearings
+* -----------------------------------------------------------------------------
+*/
+.clearfix {
+  clear: both;
+  overflow: hidden;
+}
+
+
+/*-----------------------------------------------------------------------------
+* 6.0 Repeatable Patterns
+* -----------------------------------------------------------------------------
+*/
+.no-margin {
+  margin: 0 !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.margin-top-0 {
+   margin-top: 0 !important;
+}
+
+.margin-top-5 {
+  margin-top: 5px !important;
+}
+
+.margin-top-10 {
+  margin-top: 10px !important;
+}
+
+.margin-top-20 {
+  margin-top: 20px !important;
+}
+
+.margin-top-30 {
+  margin-top: 30px !important;
+}
+
+.margin-top-40 {
+  margin-top: 40px !important;
+}
+
+.margin-bottom-5 {
+  margin-bottom: 5px !important;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px !important;
+}
+
+.margin-bottom-20 {
+  margin-bottom: 20px !important;
+}
+
+.margin-bottom-30 {
+  margin-bottom: 30px !important;
+}
+
+.margin-bottom-40 {
+  margin-bottom: 40px !important;
+}
+
+.margin-bottom-60 {
+  margin-bottom: 60px !important;
+}
+
+.margin-left-5 {
+  margin-left: 5px !important;
+}
+
+.margin-left-10 {
+  margin-left: 10px !important;
+}
+
+.margin-left-20 {
+  margin-left: 20px !important;
+}
+
+.margin-left-30 {
+  margin-left: 30px !important;
+}
+
+.margin-left-40 {
+  margin-left: 40px !important;
+}
+
+.margin-right-5 {
+  margin-right: 5px !important;
+}
+
+.margin-right-10 {
+  margin-right: 10px !important;
+}
+
+.margin-right-20 {
+  margin-right: 20px !important;
+}
+
+.margin-right-30 {
+  margin-right: 30px !important;
+}
+
+.margin-right-40 {
+  margin-right: 40px !important;
+}
+
+.padding-top-10 {
+  padding-top: 10px !important;
+}
+
+.padding-top-15 {
+  padding-top: 15px !important;
+}
+
+.padding-top-20 {
+  padding-top: 20px !important;
+}
+
+.padding-top-30 {
+  padding-top: 30px !important;
+}
+
+.padding-top-40 {
+  padding-top: 40px !important;
+}
+
+.padding-bottom-10 {
+  padding-bottom: 10px !important;
+}
+
+.padding-bottom-15 {
+  padding-bottom: 15px !important;
+}
+
+.padding-bottom-20 {
+  padding-bottom: 20px !important;
+}
+
+.padding-bottom-30 {
+  padding-bottom: 30px !important;
+}
+
+.padding-bottom-40 {
+  padding-bottom: 40px !important;
+}
+
+.padding-bottom-60 {
+  padding-bottom: 60px !important;
+}
+
+.padding-right-10 {
+  padding-right: 10px !important;
+}
+
+.padding-right-15 {
+  padding-right: 15px !important;
+}
+
+.padding-right-20 {
+  padding-right: 20px !important;
+}
+
+.padding-right-30 {
+  padding-right: 30px !important;
+}
+
+.padding-left-10 {
+  padding-left: 10px !important;
+}
+
+.padding-left-15 {
+  padding-left: 15px !important;
+}
+
+.padding-left-20 {
+  padding-left: 20px !important;
+}
+
+.padding-left-30 {
+  padding-left: 30px !important;
+}
+
+.width-100 {
+  width: 100% !important;
+}
+
+.width-80 {
+  width: 80% !important;
+}
+
+.width-60 {
+  width: 60% !important;
+}
+
+.width-40 {
+  width: 40% !important;
+}
+
+.width-20 {
+  width: 20% !important;
+}
+
+
+/*-----------------------------------------------------------------------------
+* 7.0 Basic Structure
+* -----------------------------------------------------------------------------
+*/
+
+/* Tabs */
+.tab-content {
+  padding: 40px 25px;
+}
+
+/* Popover */
+.popover {
+  padding: 8px 8px;
+  border-radius: 0;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.23);
+}
+
+.popover.top {
+    margin-top: -15px;
+}

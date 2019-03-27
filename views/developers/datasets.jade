@@ -1,0 +1,53 @@
+h2(style="text-align:left; font-style:italic;") Open Datasets Seach
+.tab-content(ng-controller="OpenDatasetsCtrl as dataCtrl")
+  .row.clearfix
+    form.form-horizontal(name="search_datasets")
+      .col-md-6
+        input.form-control(type="text" name="category" placeholder="Category (E.g. pharmacies)" ng-model="dataCtrl.category", style="margin:10px;")
+        input.form-control(type="text" name="type" placeholder="Type (E.g. xml)" ng-model="dataCtrl.type", ng-required="required", style="margin:10px;")
+        //input.form-control(type="text" name="publisher" placeholder="Publisher (E.g. )" ng-model="dataCtrl.publisher", style="margin:10px;")
+        //input.form-control(type="text" name="language" placeholder="Language (E.g. es)" ng-model="dataCtrl.language", style="margin:10px;")
+        select(ng-model="dataCtrl.selLanguage", style="float:left;margin:10px;")
+          option(disabled='', selected='', value='') -- Select among the available languages --
+          option(ng-repeat="(key,language) in dataCtrl.languages", value='{{ key }}') {{ language.name }}
+        select(ng-model="dataCtrl.publisher", style="float:left;margin:10px;")
+          option(disabled='', selected='', value='') -- Select among the available publishers --
+          option(ng-repeat="pub in dataCtrl.publishers.result", value='{{ pub }}') {{ pub }}
+        select(ng-model="dataCtrl.licence", style="float:left;margin:10px;")
+          option(disabled='', selected='', value='') -- Select among the available licences --
+          option(ng-repeat="license in dataCtrl.licenses.result", value='{{ license.title }}') {{ license.title }}
+        //input.form-control(type="text" name="licence" placeholder="Licence (E.g. open)" ng-model="dataCtrl.licence", style="margin:10px;")
+      .col-md-6
+        button(type="submit" class="ma-button margin-top-20" ng-click="dataCtrl.getDatasets()") 
+          span(class="glyphicon glyphicon-refresh glyphicon-spin", ng-show="", style="margin-right:10px;")
+          | Search
+  div(ng-if="dataCtrl.hasSearched")
+    p(style="text-align: left;font-size: 25px;padding: 15px;") Results ({{ dataCtrl.datasets_info.info.length }} found)
+    table.table.table-striped(ng-repeat="dataset in dataCtrl.datasets_info.info")
+      thead
+        tr
+          th.info(colspan='8', style='font-weight:bold;font-style:italic;') {{ dataset.name }} (Owned by: {{ dataset.organization.name }} )
+      tbody
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;vertical-align: middle;') Description
+          th(colspan='6', style='text-align:center;') {{ dataset.notes }}
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;') Access URL
+          th(colspan='6', style='text-align:center;') {{ dataset.resources[0].url }}
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;') Format
+          th(colspan='6', style='text-align:center;') {{ dataset.resources[0].format }}
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;') Licence
+          th(colspan='6', style='text-align:center;') {{ dataset.license_title }} 
+            span(style='font-weight:bold;padding-left:15px;') Available at: 
+            | {{ dataset.license_url }}
+        tr
+          th(colspan='2', style='font-weight:bold;text-align:center;') Maintainer
+          th(colspan='6', style='text-align:center;') {{ dataset.maintainer }}
+        tr(ng-repeat="extra in dataset.extras")
+          th(colspan='2', style='font-weight:bold;text-align:center;') {{ extra.key }}
+          th(colspan='6', style='text-align:center;') {{ extra.value }}
+        tr(ng-repeat="resource in dataset.resources" ng-if="resource.format=='TXT'")
+          th(colspan='2', style='font-weight:bold;text-align:center;vertical-align:middle;') Annotations
+          th(colspan='6', style='text-align:center;') <b>Mapping file: </b>{{ resource.mapping_document_download_url }} <br/><br/> <b>Annotated dataset: </b> {{ resource.url }}

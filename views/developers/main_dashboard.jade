@@ -1,0 +1,93 @@
+section.content-header(ng-init="devDashboardCtrl.mainDashboardContent();")
+  a.btn.btn-success(style="float:right;" href="#" onclick="window.open(window.location.protocol + '//' + window.location.hostname + ':8080', '_blank')") 
+    | Go to Gitlab
+    &nbsp;
+    i.fa.fa-external-link
+  h1
+    | Dashboard
+    small Main
+
+section.content.ng-cloak(ng-if="devDashboardCtrl.isLoading")
+  div(style="position: fixed; top: 50%; left: 53%; margin-top: -50px; margin-left: -30px;")
+    img(src="http://i49.tinypic.com/j5z8mb.gif" alt="Loading...")
+section.content.ng-cloak(ng-if="!devDashboardCtrl.isLoading")
+  .row
+    .col-md-12
+      div.inner
+  .row
+    .col-md-3.col-sm-6.col-xs-12
+      .info-box(style="cursor: pointer;" onclick="window.location.replace('/developers/my-applications')")
+        span.info-box-icon.bg-aqua
+          i.ion.ion-android-apps
+        .info-box-content
+          span.info-box-text Applications
+          span.info-box-number
+            | {{ devDashboardCtrl.applications.length }}
+
+    .col-md-3.col-sm-6.col-xs-12
+      .info-box(style="cursor: pointer;" onclick="window.location.replace('/developers/my-applications')")
+        span.info-box-icon.bg-red
+          i.ion.ion-ios-gear-outline
+        .info-box-content
+          span.info-box-text Active Containers
+          span.info-box-number {{ devDashboardCtrl.activeContainers }}
+
+    .clearfix.visible-sm-block
+    .col-md-3.col-sm-6.col-xs-12
+      .info-box(style="cursor: pointer;" onclick="window.open(`${window.location.protocol}//${window.location.hostname}:8080`,'_blank')")
+        span.info-box-icon.bg-green
+          i.ion.ion-ios-information
+        .info-box-content
+          span.info-box-text Open Issues
+          span.info-box-number {{ devDashboardCtrl.openIssues }}
+
+    .col-md-3.col-sm-6.col-xs-12
+      .info-box(style="cursor: pointer;" onclick="window.open(`${window.location.protocol}//${window.location.hostname}:8080`,'_blank')")
+        span.info-box-icon.bg-yellow
+          i.ion.ion-ios-people-outline
+        .info-box-content
+          span.info-box-text Commits
+          span.info-box-number {{ devDashboardCtrl.commits }}
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          h3.box-title Monthly Report
+          .box-tools.pull-right
+            button.btn.btn-box-tool(type='button', data-toggle='collapse', data-target=".multi-collapse#chart")
+              i.fa.fa-minus
+        .box-body.collapse.in.multi-collapse#chart
+          .row
+            .col-md-12
+              p.text-center
+                strong Issues and Commits: {{ devDashboardCtrl.curMonth }}, {{ devDashboardCtrl.year }}
+              .chart
+                canvas#monthlyChart(style='height: 229px; width: 1031px;', width="1031", height="229")
+            
+  .row
+    .col-md-12
+      .box.box-info
+        .box-header.with-border
+          h3.box-title Latest Events
+          .box-tools.pull-right
+            button.btn.btn-box-tool(type='button', data-toggle='collapse', data-target="#table")
+              i.fa.fa-minus
+        .box-body.collapse.in#table
+          div(ng-if="devDashboardCtrl.latestEvents.length !== 0" style="overflow-x: auto; overflow-y: auto; height: 400px;")
+            .table-responsive
+              table.table.no-margin
+                thead
+                  tr
+                    th Title
+                    th Type
+                    th Timestamp
+                    th Actor
+                tbody
+                  tr(ng-repeat="event in devDashboardCtrl.latestEvents")
+                    td
+                      span {{ event.title }}
+                    td {{ event.type }}
+                    td
+                      span {{ event.timestamp }}
+                    td {{ event.author }}

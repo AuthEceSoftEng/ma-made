@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  head
+    include static_content/head
+  body.hold-transition.skin-blue.sidebar-mini
+    .wrapper
+      include static_content/navbar
+
+      .ma-content-area
+        #ma-home.ma-hero.ma-home-hero
+          .container-fluid.ma-hero-container
+            .row.ma-hero-content
+              .ma-ds-table
+                .ma-ds-table-cell.hidden-sm.hidden-xs
+                  .col-xs-12.ma-hero-left
+                    .ma-hero-image
+                      img(src="/images/home.png" width="100%" alt="")
+                .ma-ds-table-cell
+                  .col-xs-12.ma-hero-right
+                    .ma-hero-text
+                      .ma-hero-text-content
+                        h1 Welcome to Mobile-Age
+                        h4.margin-bottom-30 Open Senior Citizen Public Services Engagement Platform
+                        .ma-button-group
+                          a(href="/developers/signIn" class="ma-button") Sign in
+                      .ma-hero-text-footer
+                        p.no-margin Don't have an account? 
+                          //-a(href="/signUp/developer") Register Now
+                          a(href="/signup/developers") Register Now

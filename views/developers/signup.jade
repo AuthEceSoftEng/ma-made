@@ -1,0 +1,65 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+
+  body.hold-transition.skin-blue.sidebar-mini
+    .wrapper
+      include ../static_content/navbar
+
+      .ma-content-area.ma-colored.ma-top-80.ma-bottom-80.ma-height-100(ng-controller="SignUpCtrl as signUpCtrl")
+        section.ma-section#ma-signup
+          .container.ma-signup-container
+            .row
+              .col-md-6.col-sm-4.col-xs-12
+                .ma-signup-infobox
+                  .ma-signup-infobox-container
+                    p.margin-bottom-20
+                      strong Mobile Age Platform 
+                      | sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+                    h4.margin-bottom-20 
+                      strong Create a new account
+                    .ma-signup-button
+                      a(class="ma-button ma-button-xs" title="Sign up as developer" href="/signup/developers")
+                        span(class="fa fa-user")
+                        span(class="fa fa-code")
+                    span.ma-separator OR
+                    .ma-signup-button
+                      a(class="ma-button ma-button-xs" title="Sign up as ODP" href="/odps/signup")
+                        span(class="fa fa-user")
+                        span(class="fa fa-database")      
+              .col-md-6.col-sm-8.col-xs-12
+                .ma-signup-form-container
+                  .ma-signup-form-content
+                    h1.margin-bottom-30 Sign Up As Developer
+                    form(action="/developers/add" method="post" name="signup-form" role="form")
+                      if message
+                        .alert.alert-danger.ma-alert
+                          p.margin-bottom-5 Validation errors exist:
+                          ul
+                            for error in message
+                              li!= error.msg
+                      .form-group.text-left.ma-relative-pos
+                        label 
+                          i(class="fa fa-user ma-signup-icon") 
+                          | Username
+                        input(type="text" class="form-control" name="username")
+                      .form-group.text-left.ma-relative-pos
+                        label 
+                          i(class="fa fa-envelope ma-signup-icon") 
+                          | Email
+                        input(type="text" class="form-control" name="email")
+                      .form-group.text-left
+                        label 
+                          i(class="fa fa-lock ma-signup-icon")
+                          | Password  
+                        input(type="password" class="form-control" name="password")
+                      .form-group.text-left
+                        label Confirm Password
+                        input(type="password" class="form-control" name="passwordConfirm")
+                      .form-group
+                        input(type="submit" class="ma-button margin-top-20" value="Sign Up")
+                  .ma-signup-form-footer
+                    p.no-margin Already have an account? 
+                      a(href="/developers/signIn") Sign In

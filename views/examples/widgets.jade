@@ -1,0 +1,1068 @@
+extends ../layout
+
+block content
+  head
+    include ../static_content/head
+    script(src="/dist/js/demo.js")
+    link(rel="stylesheet" href="/dist/css/bootstrap-tagsinput.css")
+    script(src="/dist/js/bootstrap-tagsinput.js")
+
+  body.hold-transition.skin-blue.sidebar-mini
+    .wrapper
+      include ../static_content/navbar
+      include ../static_content/sidebar
+
+      .content-wrapper(style="margin-top: 50px;")
+        section.content-header
+          h1
+            | Widgets
+            small Preview page
+          ol.breadcrumb
+            li
+              a(href='#')
+                i.fa.fa-dashboard
+                |  Examples
+            li.active Widgets
+
+        section.content
+          #myModal.modal.fade(role='dialog', style="margin-top:150px;")
+            .modal-dialog
+              .modal-content
+                .modal-header
+                  button.close(type='button', data-dismiss='modal') ×
+                  h4.modal-title Add some labels
+                .modal-body
+                  label(for='pwd') Labels: &nbsp;
+                  input(id="tagsInput" type="text" value="" data-role="tagsinput" placeholder="Add tags here...")
+                .modal-footer
+                  button.btn.btn-primary(type='button', data-dismiss='modal', ng-click="devDashboardCtrl.saveUIComponent()") OK
+
+          .row
+            .col-md-3.col-sm-6.col-xs-12(id="info-box-aqua")
+              div(id="info-box-aqua-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'info-box','info-box-aqua');") {{ app.name }} 
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('info-box-aqua')" style="position: relative; top: 3px; color: #008000;")
+              .info-box
+                span.info-box-icon.bg-aqua
+                  i.fa.fa-envelope-o
+                .info-box-content
+                  span.info-box-text Messages
+                  span.info-box-number 1,410
+
+            .col-md-3.col-sm-6.col-xs-12(id="info-box-green")
+              div(id="info-box-green-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'info-box','info-box-green');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('info-box-green')" style="position: relative; top: 3px; color: #008000;")
+              .info-box
+                span.info-box-icon.bg-green
+                  i.fa.fa-flag-o
+                .info-box-content
+                  span.info-box-text Bookmarks
+                  span.info-box-number 410
+
+            .col-md-3.col-sm-6.col-xs-12(id="info-box-yellow")
+              div(id="info-box-yellow-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'info-box','info-box-yellow');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('info-box-yellow')" style="position: relative; top: 3px; color: #008000;")
+              .info-box
+                span.info-box-icon.bg-yellow
+                  i.fa.fa-files-o
+                .info-box-content
+                  span.info-box-text Uploads
+                  span.info-box-number 13,648
+
+            .col-md-3.col-sm-6.col-xs-12(id="info-box-red")
+              div(id="info-box-red-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'info-box','info-box-red');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('info-box-red')" style="position: relative; top: 3px; color: #008000;")
+              .info-box
+                span.info-box-icon.bg-red
+                  i.fa.fa-star-o
+                .info-box-content
+                  span.info-box-text Likes
+                  span.info-box-number 93,139
+
+          .row
+            .col-md-3.col-sm-6.col-xs-12(id="info-box-bg-aqua")
+              div(id="info-box-bg-aqua-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'info-box-bg','info-box-bg-aqua');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('info-box-bg-aqua')" style="position: relative; top: 3px; color: #008000;")
+              .info-box.bg-aqua
+                span.info-box-icon
+                  i.fa.fa-bookmark-o
+                .info-box-content
+                  span.info-box-text Bookmarks
+                  span.info-box-number 41,410
+                  .progress
+                    .progress-bar(style='width: 70%')
+                  span.progress-description
+                    | 70% Increase in 30 Days
+
+            .col-md-3.col-sm-6.col-xs-12(id="info-box-bg-green")
+              div(id="info-box-bg-green-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'info-box-bg','info-box-bg-green');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('info-box-bg-green')" style="position: relative; top: 3px; color: #008000;")
+              .info-box.bg-green
+                span.info-box-icon
+                  i.fa.fa-thumbs-o-up
+                .info-box-content
+                  span.info-box-text Likes
+                  span.info-box-number 41,410
+                  .progress
+                    .progress-bar(style='width: 70%')
+                  span.progress-description
+                    | 70% Increase in 30 Days
+
+            .col-md-3.col-sm-6.col-xs-12(id="info-box-bg-yellow")
+              div(id="info-box-bg-yellow-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'info-box-bg','info-box-bg-yellow');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('info-box-bg-yellow')" style="position: relative; top: 3px; color: #008000;")
+              .info-box.bg-yellow
+                span.info-box-icon
+                  i.fa.fa-calendar
+                .info-box-content
+                  span.info-box-text Events
+                  span.info-box-number 41,410
+                  .progress
+                    .progress-bar(style='width: 70%')
+                  span.progress-description
+                    | 70% Increase in 30 Days
+
+            .col-md-3.col-sm-6.col-xs-12(id="info-box-bg-red")
+              div(id="info-box-bg-red-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'info-box-bg','info-box-bg-red');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('info-box-bg-red')" style="position: relative; top: 3px; color: #008000;")
+              .info-box.bg-red
+                span.info-box-icon
+                  i.fa.fa-comments-o
+                .info-box-content
+                  span.info-box-text Comments
+                  span.info-box-number 41,410
+                  .progress
+                    .progress-bar(style='width: 70%')
+                  span.progress-description
+                    | 70% Increase in 30 Days
+
+          .row
+            .col-lg-3.col-xs-6(id="small-box-aqua")
+              div(id="small-box-aqua-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'small-box','small-box-aqua');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('small-box-aqua')" style="position: relative; top: 3px; color: #008000;")
+              .small-box.bg-aqua
+                .inner
+                  h3 150
+                  p New Orders
+                .icon
+                  i.fa.fa-shopping-cart
+                a.small-box-footer(href='#')
+                  | More info 
+                  i.fa.fa-arrow-circle-right
+                
+            .col-lg-3.col-xs-6(id="small-box-green")
+              div(id="small-box-green-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'small-box','small-box-green');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('small-box-green')" style="position: relative; top: 3px; color: #008000;")
+              .small-box.bg-green
+                .inner
+                  h3
+                    | 53
+                    sup(style='font-size: 20px') %
+                  p Bounce Rate
+                .icon
+                  i.ion.ion-stats-bars
+                a.small-box-footer(href='#')
+                  | More info 
+                  i.fa.fa-arrow-circle-right
+
+            .col-lg-3.col-xs-6(id="small-box-yellow")
+              div(id="small-box-yellow-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'small-box','small-box-yellow');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('small-box-yellow')" style="position: relative; top: 3px; color: #008000;")
+              .small-box.bg-yellow
+                .inner
+                  h3 44
+                  p User Registrations
+                .icon
+                  i.ion.ion-person-add
+                a.small-box-footer(href='#')
+                  | More info 
+                  i.fa.fa-arrow-circle-right
+
+            .col-lg-3.col-xs-6(id="small-box-red")
+              div(id="small-box-red-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'small-box','small-box-red');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('small-box-red')" style="position: relative; top: 3px; color: #008000;")
+              .small-box.bg-red
+                .inner
+                  h3 65
+                  p Unique Visitors
+                .icon
+                  i.ion.ion-pie-graph
+                a.small-box-footer(href='#')
+                  | More info 
+                  i.fa.fa-arrow-circle-right
+
+
+          .row
+            .col-md-3(id="box-expandable")
+              div(id="box-expandable-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box','box-expandable');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-expandable')" style="position: relative; top: 3px; color: #008000;")
+              .box
+                .box-header.with-border
+                  h3.box-title Expandable
+                  .box-tools.pull-right
+                    button.btn.btn-box-tool(type='button', data-toggle='collapse', data-target="#tab1collapse")
+                      i.fa.fa-minus
+                  .box-body.collapse#tab1collapse
+                    | The body of the box
+
+            .col-md-3(id="box-removable")
+              div(id="box-removable-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-success','box-removable');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-removable')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-success
+                .box-header.with-border
+                  h3.box-title Removable
+                  .box-tools.pull-right
+                    button.btn.btn-box-tool(type='button', data-widget='remove')
+                      i.fa.fa-times
+                  .box-body
+                    | The body of the box
+
+            .col-md-3(id="box-collapsable")
+              div(id="box-collapsable-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-warning','box-collapsable');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-collapsable')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-warning
+                .box-header.with-border
+                  h3.box-title Collapsable
+                  .box-tools.pull-right
+                    button.btn.btn-box-tool(type='button', data-toggle='collapse', data-target="#tab1expand")
+                      i.fa.fa-minus
+                  .box-body.collapse.in#tab1expand
+                    | The body of the box
+
+            .col-md-3(id="box-loading")
+              div(id="box-loading-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-danger','box-loading');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-loading')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-danger
+                .box-header
+                  h3.box-title Loading state
+                .box-body
+                  | The body of the box
+                .overlay
+                  i.fa.fa-refresh.fa-spin
+
+
+          .row
+            .col-md-3(id="box-solid-expandable")
+              div(id="box-solid-expandable-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-solid','box-solid-expandable');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-solid-expandable')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-default.box-solid
+                .box-header.with-border
+                  h3.box-title Expandable
+                  .box-tools.pull-right
+                    button.btn.btn-box-tool(type='button', data-toggle='collapse', data-target="#tab2collapse")
+                      i.fa.fa-minus
+                  .box-body.collapse#tab2collapse
+                    | The body of the box
+
+            .col-md-3(id="box-solid-removable")
+              div(id="box-solid-removable-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-solid-success','box-solid-removable');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-solid-removable')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-success.box-solid
+                .box-header.with-border
+                  h3.box-title Removable
+                  .box-tools.pull-right
+                    button.btn.btn-box-tool(type='button', data-widget='remove')
+                      i.fa.fa-times
+                  .box-body
+                    | The body of the box
+
+            .col-md-3(id="box-solid-collapsable")
+              div(id="box-solid-collapsable-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-solid-warning','box-solid-collapsable');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-solid-collapsable')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-warning.box-solid
+                .box-header.with-border
+                  h3.box-title Collapsable
+                  .box-tools.pull-right
+                    button.btn.btn-box-tool(type='button', data-toggle='collapse', data-target="#tab2expand")
+                      i.fa.fa-minus
+                  .box-body.collapse.in#tab2expand
+                    | The body of the box
+
+            .col-md-3(id="box-solid-loading")
+              div(id="box-solid-loading-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-solid-danger','box-solid-loading');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-solid-loading')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-danger.box-solid
+                .box-header
+                  h3.box-title Loading state
+                .box-body
+                  | The body of the box
+                .overlay
+                  i.fa.fa-refresh.fa-spin
+
+
+          .row
+            .col-md-3(id="box-direct-chat-primary")
+              div(id="box-direct-chat-primary-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-direct-chat','box-direct-chat-primary');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-direct-chat-primary')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-primary.direct-chat.direct-chat-primary
+                .box-header.with-border
+                  h3.box-title Direct Chat
+                  |               
+                  .box-tools.pull-right
+                    span.badge.bg-light-blue(data-toggle='tooltip', title='3 New Messages') 3
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-widget='collapse')
+                      i.fa.fa-minus
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-toggle='tooltip', title='Contacts', data-widget='chat-pane-toggle')
+                      i.fa.fa-comments
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-widget='remove')
+                      i.fa.fa-times
+                .box-body
+                  // Conversations are loaded here
+                  .direct-chat-messages
+                    // Message. Default to the left
+                    .direct-chat-msg
+                      .direct-chat-info.clearfix
+                        span.direct-chat-name.pull-left Alexander Pierce
+                        |                     
+                        span.direct-chat-timestamp.pull-right 23 Jan 2:00 pm
+                      // /.direct-chat-info
+                      img.direct-chat-img(src='../dist/img/user1-128x128.jpg', alt='Message User Image')
+                      // /.direct-chat-img
+                      .direct-chat-text
+                        | Is this template really for free? That&apos;s unbelievable!
+                      // /.direct-chat-text
+                    // /.direct-chat-msg
+                    // Message to the right
+                    .direct-chat-msg.right
+                      .direct-chat-info.clearfix
+                        span.direct-chat-name.pull-right Sarah Bullock
+                        |                     
+                        span.direct-chat-timestamp.pull-left 23 Jan 2:05 pm
+                      // /.direct-chat-info
+                      img.direct-chat-img(src='../dist/img/user3-128x128.jpg', alt='Message User Image')
+                      // /.direct-chat-img
+                      .direct-chat-text
+                        | You better believe it!
+                      // /.direct-chat-text
+                    // /.direct-chat-msg
+                  // /.direct-chat-messages
+                  // Contacts are loaded here
+                  .direct-chat-contacts
+                    ul.contacts-list
+                      li
+                        a(href='#')
+                          img.contacts-list-img(src='../dist/img/user1-128x128.jpg', alt='User Image')
+                          |                       
+                          .contacts-list-info
+                            span.contacts-list-name
+                              | Count Dracula
+                              small.contacts-list-date.pull-right 2/28/2015
+                            |                         
+                            span.contacts-list-msg How have you been? I was...
+                          // /.contacts-list-info
+                .box-footer
+                  form(action='#', method='post')
+                    .input-group
+                      input.form-control(type='text', name='message', placeholder='Type Message ...')
+                      |                       
+                      span.input-group-btn
+                        button.btn.btn-primary.btn-flat(type='submit') Send
+
+            .col-md-3(id="box-direct-chat-success")
+              div(id="box-direct-chat-success-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-direct-chat','box-direct-chat-success');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-direct-chat-success')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-success.direct-chat.direct-chat-success
+                .box-header.with-border
+                  h3.box-title Direct Chat
+                  |               
+                  .box-tools.pull-right
+                    span.badge.bg-green(data-toggle='tooltip', title='3 New Messages') 3
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-widget='collapse')
+                      i.fa.fa-minus
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-toggle='tooltip', title='Contacts', data-widget='chat-pane-toggle')
+                      i.fa.fa-comments
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-widget='remove')
+                      i.fa.fa-times
+                // /.box-header
+                .box-body
+                  // Conversations are loaded here
+                  .direct-chat-messages
+                    // Message. Default to the left
+                    .direct-chat-msg
+                      .direct-chat-info.clearfix
+                        span.direct-chat-name.pull-left Alexander Pierce
+                        |                     
+                        span.direct-chat-timestamp.pull-right 23 Jan 2:00 pm
+                      // /.direct-chat-info
+                      img.direct-chat-img(src='../dist/img/user1-128x128.jpg', alt='Message User Image')
+                      // /.direct-chat-img
+                      .direct-chat-text
+                        | Is this template really for free? That&apos;s unbelievable!
+                      // /.direct-chat-text
+                    // /.direct-chat-msg
+                    // Message to the right
+                    .direct-chat-msg.right
+                      .direct-chat-info.clearfix
+                        span.direct-chat-name.pull-right Sarah Bullock
+                        |                     
+                        span.direct-chat-timestamp.pull-left 23 Jan 2:05 pm
+                      // /.direct-chat-info
+                      img.direct-chat-img(src='../dist/img/user3-128x128.jpg', alt='Message User Image')
+                      // /.direct-chat-img
+                      .direct-chat-text
+                        | You better believe it!
+                      // /.direct-chat-text
+                    // /.direct-chat-msg
+                  // /.direct-chat-messages
+                  // Contacts are loaded here
+                  .direct-chat-contacts
+                    ul.contacts-list
+                      li
+                        a(href='#')
+                          img.contacts-list-img(src='../dist/img/user1-128x128.jpg', alt='User Image')
+                          |                       
+                          .contacts-list-info
+                            span.contacts-list-name
+                              | Count Dracula
+                              small.contacts-list-date.pull-right 2/28/2015
+                            |                         
+                            span.contacts-list-msg How have you been? I was...
+                          // /.contacts-list-info
+                      // End Contact Item
+                    // /.contatcts-list
+                  // /.direct-chat-pane
+                // /.box-body
+                .box-footer
+                  form(action='#', method='post')
+                    .input-group
+                      input.form-control(type='text', name='message', placeholder='Type Message ...')
+                      |                       
+                      span.input-group-btn
+                        button.btn.btn-success.btn-flat(type='submit') Send
+
+            .col-md-3(id="box-direct-chat-warning")
+              div(id="box-direct-chat-warning-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-direct-chat','box-direct-chat-warning');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-direct-chat-warning')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-warning.direct-chat.direct-chat-warning
+                .box-header.with-border
+                  h3.box-title Direct Chat
+                  |               
+                  .box-tools.pull-right
+                    span.badge.bg-yellow(data-toggle='tooltip', title='3 New Messages') 3
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-widget='collapse')
+                      i.fa.fa-minus
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-toggle='tooltip', title='Contacts', data-widget='chat-pane-toggle')
+                      i.fa.fa-comments
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-widget='remove')
+                      i.fa.fa-times
+                // /.box-header
+                .box-body
+                  // Conversations are loaded here
+                  .direct-chat-messages
+                    // Message. Default to the left
+                    .direct-chat-msg
+                      .direct-chat-info.clearfix
+                        span.direct-chat-name.pull-left Alexander Pierce
+                        |                     
+                        span.direct-chat-timestamp.pull-right 23 Jan 2:00 pm
+                      // /.direct-chat-info
+                      img.direct-chat-img(src='../dist/img/user1-128x128.jpg', alt='Message User Image')
+                      // /.direct-chat-img
+                      .direct-chat-text
+                        | Is this template really for free? That&apos;s unbelievable!
+                      // /.direct-chat-text
+                    // /.direct-chat-msg
+                    // Message to the right
+                    .direct-chat-msg.right
+                      .direct-chat-info.clearfix
+                        span.direct-chat-name.pull-right Sarah Bullock
+                        |                     
+                        span.direct-chat-timestamp.pull-left 23 Jan 2:05 pm
+                      // /.direct-chat-info
+                      img.direct-chat-img(src='../dist/img/user3-128x128.jpg', alt='Message User Image')
+                      // /.direct-chat-img
+                      .direct-chat-text
+                        | You better believe it!
+                      // /.direct-chat-text
+                    // /.direct-chat-msg
+                  // /.direct-chat-messages
+                  // Contacts are loaded here
+                  .direct-chat-contacts
+                    ul.contacts-list
+                      li
+                        a(href='#')
+                          img.contacts-list-img(src='../dist/img/user1-128x128.jpg', alt='User Image')
+                          |                       
+                          .contacts-list-info
+                            span.contacts-list-name
+                              | Count Dracula
+                              small.contacts-list-date.pull-right 2/28/2015
+                            |                         
+                            span.contacts-list-msg How have you been? I was...
+                          // /.contacts-list-info
+                      // End Contact Item
+                    // /.contatcts-list
+                  // /.direct-chat-pane
+                // /.box-body
+                .box-footer
+                  form(action='#', method='post')
+                    .input-group
+                      input.form-control(type='text', name='message', placeholder='Type Message ...')
+                      |                       
+                      span.input-group-btn
+                        button.btn.btn-warning.btn-flat(type='submit') Send
+
+            .col-md-3(id="box-direct-chat-danger")
+              div(id="box-direct-chat-danger-btn")
+                a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                  i.fa.fa-plus(style="font-size: 18px")
+                ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                  li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                    a(role="menuitem") Add element to Favorites
+                  li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                    a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-direct-chat','box-direct-chat-danger');") {{ app.name }}
+                      i.fa.fa-check.pull-right(ng-if="app.components.includes('box-direct-chat-danger')" style="position: relative; top: 3px; color: #008000;")
+              .box.box-danger.direct-chat.direct-chat-danger
+                .box-header.with-border
+                  h3.box-title Direct Chat
+                  |               
+                  .box-tools.pull-right
+                    span.badge.bg-red(data-toggle='tooltip', title='3 New Messages') 3
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-widget='collapse')
+                      i.fa.fa-minus
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-toggle='tooltip', title='Contacts', data-widget='chat-pane-toggle')
+                      i.fa.fa-comments
+                    |                 
+                    button.btn.btn-box-tool(type='button', data-widget='remove')
+                      i.fa.fa-times
+                // /.box-header
+                .box-body
+                  // Conversations are loaded here
+                  .direct-chat-messages
+                    // Message. Default to the left
+                    .direct-chat-msg
+                      .direct-chat-info.clearfix
+                        span.direct-chat-name.pull-left Alexander Pierce
+                        |                     
+                        span.direct-chat-timestamp.pull-right 23 Jan 2:00 pm
+                      // /.direct-chat-info
+                      img.direct-chat-img(src='../dist/img/user1-128x128.jpg', alt='Message User Image')
+                      // /.direct-chat-img
+                      .direct-chat-text
+                        | Is this template really for free? That&apos;s unbelievable!
+                      // /.direct-chat-text
+                    // /.direct-chat-msg
+                    // Message to the right
+                    .direct-chat-msg.right
+                      .direct-chat-info.clearfix
+                        span.direct-chat-name.pull-right Sarah Bullock
+                        |                     
+                        span.direct-chat-timestamp.pull-left 23 Jan 2:05 pm
+                      // /.direct-chat-info
+                      img.direct-chat-img(src='../dist/img/user3-128x128.jpg', alt='Message User Image')
+                      // /.direct-chat-img
+                      .direct-chat-text
+                        | You better believe it!
+                      // /.direct-chat-text
+                    // /.direct-chat-msg
+                  // /.direct-chat-messages
+                  // Contacts are loaded here
+                  .direct-chat-contacts
+                    ul.contacts-list
+                      li
+                        a(href='#')
+                          img.contacts-list-img(src='../dist/img/user1-128x128.jpg', alt='User Image')
+                          |                       
+                          .contacts-list-info
+                            span.contacts-list-name
+                              | Count Dracula
+                              small.contacts-list-date.pull-right 2/28/2015
+                            |                         
+                            span.contacts-list-msg How have you been? I was...
+                          // /.contacts-list-info
+                      // End Contact Item
+                    // /.contatcts-list
+                  // /.direct-chat-pane
+                // /.box-body
+                .box-footer
+                  form(action='#', method='post')
+                    .input-group
+                      input.form-control(type='text', name='message', placeholder='Type Message ...')
+                      |                       
+                      span.input-group-btn
+                        button.btn.btn-danger.btn-flat(type='submit') Send
+
+          <br><br>
+          h2.page-header Social Widgets
+            <br><br>  
+            .row
+              .col-md-4(id="box-widget-user-yellow")
+                div(id="box-widget-user-yellow-btn")
+                  a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                    i.fa.fa-plus(style="font-size: 18px")
+                  ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                    li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                      a(role="menuitem") Add element to Favorites
+                    li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                      a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-widget-user','box-widget-user-yellow');") {{ app.name }}
+                        i.fa.fa-check.pull-right(ng-if="app.components.includes('box-widget-user-yellow')" style="position: relative; top: 3px; color: #008000;")
+                .box.box-widget.widget-user-2
+                  // Add the bg color to the header using any of the bg-* classes
+                  .widget-user-header.bg-yellow
+                    .widget-user-image
+                      img.img-circle(src='../dist/img/user7-128x128.jpg', alt='User Avatar')
+                    // /.widget-user-image
+                    h3.widget-user-username Nadia Carmichael
+                    |               
+                    h5.widget-user-desc Lead Developer
+                  |             
+                  .box-footer.no-padding
+                    ul.nav.nav-stacked
+                      li
+                        a(href='#')
+                          | Projects 
+                          span.pull-right.badge.bg-blue 31
+                      |                 
+                      li
+                        a(href='#')
+                          | Tasks 
+                          span.pull-right.badge.bg-aqua 5
+                      |                 
+                      li
+                        a(href='#')
+                          | Completed Projects 
+                          span.pull-right.badge.bg-green 12
+                      |                 
+                      li
+                        a(href='#')
+                          | Followers 
+                          span.pull-right.badge.bg-red 842
+
+              .col-md-4(id="box-widget-user-aqua")
+                div(id="box-widget-user-aqua-btn")
+                  a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                    i.fa.fa-plus(style="font-size: 18px")
+                  ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                    li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                      a(role="menuitem") Add element to Favorites
+                    li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                      a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-widget-user','box-widget-user-aqua');") {{ app.name }}
+                        i.fa.fa-check.pull-right(ng-if="app.components.includes('box-widget-user-aqua')" style="position: relative; top: 3px; color: #008000;")
+                .box.box-widget.widget-user
+                  // Add the bg color to the header using any of the bg-* classes
+                  .widget-user-header.bg-aqua-active
+                    h3.widget-user-username Alexander Pierce
+                    |               
+                    h5.widget-user-desc Founder &amp; CEO
+                  |             
+                  .widget-user-image
+                    img.img-circle(src='../dist/img/user1-128x128.jpg', alt='User Avatar')
+                  |             
+                  .box-footer
+                    .row
+                      .col-sm-4.border-right
+                        .description-block
+                          h5.description-header 3,200
+                          |                     
+                          span.description-text SALES
+                        // /.description-block
+                      // /.col
+                      .col-sm-4.border-right
+                        .description-block
+                          h5.description-header 13,000
+                          |                     
+                          span.description-text FOLLOWERS
+                        // /.description-block
+                      // /.col
+                      .col-sm-4
+                        .description-block
+                          h5.description-header 35
+                          |                     
+                          span.description-text PRODUCTS
+
+
+              .col-md-4(id="box-widget-user-black")
+                div(id="box-widget-user-black-btn")
+                  a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                    i.fa.fa-plus(style="font-size: 18px")
+                  ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                    li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                      a(role="menuitem") Add element to Favorites
+                    li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                      a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-widget-user','box-widget-user-black');") {{ app.name }}
+                        i.fa.fa-check.pull-right(ng-if="app.components.includes('box-widget-user-black')" style="position: relative; top: 3px; color: #008000;")
+                .box.box-widget.widget-user
+                  // Add the bg color to the header using any of the bg-* classes
+                  .widget-user-header.bg-black(style="background: url('../dist/img/photo1.png') center center;")
+                    h3.widget-user-username Elizabeth Pierce
+                    |               
+                    h5.widget-user-desc Web Designer
+                  |             
+                  .widget-user-image
+                    img.img-circle(src='../dist/img/user3-128x128.jpg', alt='User Avatar')
+                  |             
+                  .box-footer
+                    .row
+                      .col-sm-4.border-right
+                        .description-block
+                          h5.description-header 3,200
+                          |                     
+                          span.description-text SALES
+                        // /.description-block
+                      // /.col
+                      .col-sm-4.border-right
+                        .description-block
+                          h5.description-header 13,000
+                          |                     
+                          span.description-text FOLLOWERS
+                        // /.description-block
+                      // /.col
+                      .col-sm-4
+                        .description-block
+                          h5.description-header 35
+                          |                     
+                          span.description-text PRODUCTS
+
+
+            .row
+              .col-md-6(id="box-comment-1")
+                div(id="box-comment-1-btn")
+                  a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                    i.fa.fa-plus(style="font-size: 18px")
+                  ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                    li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                      a(role="menuitem") Add element to Favorites
+                    li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                      a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-comment','box-comment-1');") {{ app.name }}
+                        i.fa.fa-check.pull-right(ng-if="app.components.includes('box-comment-1')" style="position: relative; top: 3px; color: #008000;")
+                .box.box-widget
+                  .box-header.with-border
+                    .user-block
+                      img.img-circle(src='../dist/img/user1-128x128.jpg', alt='User Image')                 
+                      span.username
+                        a(href='#') Jonathan Burke Jr.                
+                      span.description Shared publicly - 7:30 PM Today
+                    // /.user-block
+                    .box-tools
+                      button.btn.btn-box-tool(type='button', data-toggle='tooltip', title='Mark as read')
+                        i.fa.fa-circle-o                 
+                      button.btn.btn-box-tool(type='button', data-widget='collapse')
+                        i.fa.fa-minus                 
+                      button.btn.btn-box-tool(type='button', data-widget='remove')
+                        i.fa.fa-times
+                    // /.box-tools
+                  // /.box-header
+                  .box-body
+                    img.img-responsive.pad(src='../dist/img/photo2.png', alt='Photo')              
+                    p I took this photo this morning. What do you guys think?              
+                    button.btn.btn-default.btn-xs(type='button')
+                      i.fa.fa-share
+                      |  Share              
+                    button.btn.btn-default.btn-xs(type='button')
+                      i.fa.fa-thumbs-o-up
+                      |  Like               
+                    span.pull-right.text-muted 127 likes - 3 comments
+                  // /.box-body
+                  .box-footer.box-comments
+                    .box-comment
+                      // User image
+                      img.img-circle.img-sm(src='../dist/img/user3-128x128.jpg', alt='User Image')                
+                      .comment-text
+                        span.username
+                          | Maria Gonzales
+                          span.text-muted.pull-right 8:03 PM Today
+                        // /.username
+                        | It is a long established fact that a reader will be distracted
+                        | by the readable content of a page when looking at its layout.
+                      // /.comment-text
+                    // /.box-comment
+                    .box-comment
+                      // User image
+                      img.img-circle.img-sm(src='../dist/img/user4-128x128.jpg', alt='User Image')                
+                      .comment-text
+                        span.username
+                          | Luna Stark
+                          span.text-muted.pull-right 8:03 PM Today
+                        // /.username
+                        | It is a long established fact that a reader will be distracted
+                        | by the readable content of a page when looking at its layout.
+                      // /.comment-text
+                    // /.box-comment
+                  // /.box-footer
+                  .box-footer
+                    form(action='#', method='post')
+                      img.img-responsive.img-circle.img-sm(src='../dist/img/user4-128x128.jpg', alt='Alt Text')
+                      // .img-push is used to add margin to elements next to floating images
+                      .img-push
+                        input.form-control.input-sm(type='text', placeholder='Press enter to post comment')
+
+              .col-md-6(id="box-comment-2")
+                div(id="box-comment-2-btn")
+                  a.btn.btn-social-icon(data-toggle="dropdown" href="#" aria-expanded="false")
+                    i.fa.fa-plus(style="font-size: 18px")
+                  ul.dropdown-menu(ng-if="devDashboardCtrl.applications.length > 0" style="position: absolute; top: 33px; left: 10px")
+                    li(style="cursor: pointer; pointer-events:none; opacity: 0.6;" role="presentation")
+                      a(role="menuitem") Add element to Favorites
+                    li(style="cursor: pointer;" role="presentation" ng-repeat="app in devDashboardCtrl.applications")
+                      a(role="menuitem" data-toggle="modal" data-target="#myModal" ng-click="devDashboardCtrl.addUIComponent(app.repo_id,'box-comment','box-comment-2');") {{ app.name }}
+                        i.fa.fa-check.pull-right(ng-if="app.components.includes('box-comment-2')" style="position: relative; top: 3px; color: #008000;")
+                .box.box-widget
+                  .box-header.with-border
+                    .user-block
+                      img.img-circle(src='../dist/img/user1-128x128.jpg', alt='User Image')
+                      |                 
+                      span.username
+                        a(href='#') Jonathan Burke Jr.
+                      |                 
+                      span.description Shared publicly - 7:30 PM Today
+                    // /.user-block
+                    .box-tools
+                      button.btn.btn-box-tool(type='button', data-toggle='tooltip', title='Mark as read')
+                        i.fa.fa-circle-o
+                      |                 
+                      button.btn.btn-box-tool(type='button', data-widget='collapse')
+                        i.fa.fa-minus
+                      |                 
+                      button.btn.btn-box-tool(type='button', data-widget='remove')
+                        i.fa.fa-times
+                    // /.box-tools
+                  // /.box-header
+                  .box-body
+                    // post text
+                    p
+                      | Far far away, behind the word mountains, far from the
+                      | countries Vokalia and Consonantia, there live the blind
+                      | texts. Separated they live in Bookmarksgrove right at
+                    |               
+                    p
+                      | the coast of the Semantics, a large language ocean.
+                      | A small river named Duden flows by their place and supplies
+                      | it with the necessary regelialia. It is a paradisematic
+                      | country, in which roasted parts of sentences fly into
+                      | your mouth.
+                    // Attachment
+                    .attachment-block.clearfix
+                      img.attachment-img(src='../dist/img/photo1.png', alt='Attachment Image')
+                      |                 
+                      .attachment-pushed
+                        h4.attachment-heading
+                          a(href='http://www.lipsum.com/') Lorem ipsum text generator
+                        |                   
+                        .attachment-text
+                          | Description about the attachment can be placed here.
+                          | Lorem Ipsum is simply dummy text of the printing and typesetting industry... 
+                          a(href='#') more
+                        // /.attachment-text
+                      // /.attachment-pushed
+                    // /.attachment-block
+                    // Social sharing buttons
+                    button.btn.btn-default.btn-xs(type='button')
+                      i.fa.fa-share
+                      |  Share
+                    |               
+                    button.btn.btn-default.btn-xs(type='button')
+                      i.fa.fa-thumbs-o-up
+                      |  Like
+                    |               
+                    span.pull-right.text-muted 45 likes - 2 comments
+                  // /.box-body
+                  .box-footer.box-comments
+                    .box-comment
+                      // User image
+                      img.img-circle.img-sm(src='../dist/img/user3-128x128.jpg', alt='User Image')
+                      |                 
+                      .comment-text
+                        span.username
+                          | Maria Gonzales
+                          span.text-muted.pull-right 8:03 PM Today
+                        // /.username
+                        | It is a long established fact that a reader will be distracted
+                        | by the readable content of a page when looking at its layout.
+                      // /.comment-text
+                    // /.box-comment
+                    .box-comment
+                      // User image
+                      img.img-circle.img-sm(src='../dist/img/user5-128x128.jpg', alt='User Image')
+                      |                 
+                      .comment-text
+                        span.username
+                          | Nora Havisham
+                          span.text-muted.pull-right 8:03 PM Today
+                        // /.username
+                        | The point of using Lorem Ipsum is that it has a more-or-less
+                        | normal distribution of letters, as opposed to using
+                        | &apos;Content here, content here&apos;, making it look like readable English.
+                      // /.comment-text
+                    // /.box-comment
+                  // /.box-footer
+                  .box-footer
+                    form(action='#', method='post')
+                      img.img-responsive.img-circle.img-sm(src='../dist/img/user4-128x128.jpg', alt='Alt Text')
+                      // .img-push is used to add margin to elements next to floating images
+                      .img-push
+                        input.form-control.input-sm(type='text', placeholder='Press enter to post comment')
+
+
+      include ../static_content/dashboard_footer
+
