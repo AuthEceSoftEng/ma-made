@@ -16,7 +16,7 @@ mainApp.controller('mainAppController', function ($rootScope, $scope, $compile, 
 	/**
 	 * **Constants**
 	 */
-	const API_KEY = 'AIzaSyDUWrqIHmcVhEFmVUgkgRrQU7_SM6H1Hd8';
+	const API_KEY = 'your_google_api_key';
 	const defaultOptions = [
 		{
 			'name': 'Placeholder text',
