@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Heroic Example</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="/css/heroic-features.css" rel="stylesheet">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/vega@4.4.0"></script>
+
+	<!-- Styles from Octopus application -->
+	<link rel="stylesheet" href="/octopus/font-awesome/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="/octopus/angular-ui-notification/dist/angular-ui-notification.min.css" />
+	<link rel="stylesheet" href="/octopus/AdminLTE.min.css" />
+
+	<!-- JS included frameworks from Octopus application -->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/octopus/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- <script src="/octopus/jquery-ui/jquery-ui.min.js"></script> -->
+	<script src="/octopus/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="/octopus/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
+	<script src="/octopus/adminlte.min.js"></script>
+
+	<!-- Angular Controller -->
+	<script src="/index.js"></script>
+
+</head>
+
+<body ng-app="mainApp" ng-controller="mainAppController as appCtrl">
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div ng-if="applicationName" class="container" style="display: block; text-align: center;">
+			<span style="float: left;">
+				<a style="color: white; vertical-align: text-top;" class="btn btn-sm btn-danger"
+					ng-click="setShowPublishIssuesPopover(true)" uib-popover-template="'gitlabPasswordForm.html'"
+					popover-trigger="'outsideClick'" popover-is-open="showPublishIssuesPopover"
+					popover-placement="bottom" popover-class="opacity-1">Publish Issues
+					<i class="fa fa-gitlab"></i></a>
+			</span>
+			<span style="float: right;">
+				<a style="color: white; vertical-align: text-top;" class="btn btn-sm" href="#"
+					onclick="window.open(window.location.protocol + '//' + window.location.hostname + ':8080', '_blank')">Go
+					to Gitlab&nbsp;
+					<i class="fa fa-external-link"></i>
+				</a>
+			</span>
+			<span class="navbar-brand">{{applicationName}}</span>
+		</div>
+	</nav>
+
+	<!-- Page Content -->
+	<div class="container container-less-width">
+		<br>
+		<!-- Top -->
+		<button class="btn btn-sm btn-primary float-lg-right" ng-click="addRow()">
+			Add row
+		</button> <br><br>
+		<div id="area1" class="jumbotron">
+			<div id="area1_row" class="row">
+				<div id="select0" class="col-md-12 text-center">
+					<div class="row sketch-row" ng-repeat="_row in grid.rows" ng-init="rowIndex = $index">
+						<button style="position: absolute; left: -120px;" class="btn btn-sm btn-primary"
+							ng-if="_row.cols.length <= 5" ng-click="addCol(_row._id)">
+							Add Column
+						</button>
+						<button style="position: absolute; right: -125px;" class="btn btn-sm btn-danger"
+							ng-if="grid.rows.length > 1" ng-click="removeRow( _row._id)">
+							Remove Row
+						</button>
+						<div ng-attr-id="{{ 'col-' + _col._id }}" ng-class="calcCol(_row.cols.length)"
+							ng-repeat="_col in _row.cols" ng-init="colIndex = $index" class='col-sketch'>
+							<div ng-if="options && options.length > 0" style="position: absolute; top:-40px;">
+								<select class="my-select-component"
+									ng-options="option as option.name group by option.type for option in options"
+									ng-model="_col.selectedOption"
+									ng-change="renderColumnContent( _row._id, _col, true)">
+									<option value="" disabled selected> Select Tile </option>
+								</select>
+							</div>
+							<button style="position: absolute; top:-40px; right:0px;" type="button" class="close"
+								aria-label="Close" ng-if="_row.cols.length > 1"
+								ng-click="removeCol( _row._id, _col._id)">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<div class="column-content"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<br><br>
+
+	</div>
+
+	<script type='text/ng-template' id="gitlabPasswordForm.html">
+		<div style="padding:20px; padding-bottom:0px; text-align: center;">
+			<strong>Your Password:</strong>
+			<br/>
+			<div class="form-group">
+				<!-- <label> -->
+					<input 
+						id="gitlabPasswordInput"
+						type="password" 
+						ng-model="password.text" 
+						type="text"
+						class="form-control"
+						ng-keypress="onKeyPressPassword($event)"/>
+				<!-- </label> -->
+				<button
+					style="margin-top:10px;"
+					class="btn btn-danger"
+					type='button'
+					ng-style="(!password || !password.text || password.text.trim() == '') && {'cursor': 'not-allowed' }"
+					ng-disabled="(!password || !password.text || password.text.trim() == '')"
+					ng-click='makeGitlabIssues()'
+					>
+					<i class="fa fa-check"></i>&nbsp;
+					Publish
+				</button>
+			
+		</div>
+		</div>
+	</script>
+
+	<script type='text/ng-template' id="fullScreenModal.html">
+		<div class='modal-body'>
+			<div class="lds-default">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+	</script>
+
+</body>
+
+</html>
