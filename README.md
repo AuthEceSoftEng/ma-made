@@ -1,4 +1,4 @@
-# odsp-webserver
+# ma-made-webserver
 The Open Data and Services Platform (ODSP) webserver
 
 ## Developer guidelines
