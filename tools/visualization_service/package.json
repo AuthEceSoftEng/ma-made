@@ -1,0 +1,32 @@
+{
+  "name": "dataservice",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nodemon server.js | ./node_modules/bunyan/bin/bunyan",
+    "prod": "node server.js"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "bunyan": "^1.8.12",
+    "compute.io": "^0.106.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-validator": "^4.3.0",
+    "request": "^2.83.0",
+    "simple-statistics": "^7.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "dotenv": "^4.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "jest": "^22.4.3",
+    "jest-cli": "^22.4.3",
+    "jest-coverage-badges": "^1.0.0",
+    "nodemon": "^1.12.1"
+  },
+  "author": "Michail Papamichail",
+  "license": "MIT"
+}
